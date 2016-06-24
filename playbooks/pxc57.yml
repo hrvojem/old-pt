@@ -16,12 +16,13 @@
 #  - name: copy apt-cacher-ng proxy file
 #    copy: src=/home/hrvoje/worktable/package-testing/01proxy dest=/etc/apt/apt.conf.d/
 #    when: ansible_os_family == "Debian"
-  - name: install vim, pv, python-mysqldb, and PXC-5.6
+  - name: install vim, pv, python-mysqldb, and PXC-5.7
     apt: name={{item}} update_cache=yes
     with_items:
     - vim
     - pv
-    - percona-xtradb-cluster-full-56
+    - percona-xtradb-cluster-full-57 
+#   - percona-xtradb-cluster-57
     - python-mysqldb
   # stop mysql service
   - service: name=mysql pattern=/usr/bin/mysqld_safe state=stopped 
@@ -32,10 +33,10 @@
   #bootstrap the cluster
   - command: service mysql bootstrap-pxc
   #add sstuser
-  - mysql_user: name=sstuser password=s3cretPass priv="*.*:RELOAD,LOCK TABLES,REPLICATION CLIENT" state=present
-  - command: /vagrant/plugins_test_56.sh 
-  - name: install 3rd party packages
-    apt: name={{item}} 
-    with_items:
-    - cacti
-    - rsyslog-mysql
+  - mysql_user: name=sstuser password=s3cretPass priv="*.*:RELOAD,PROCESS,LOCK TABLES,REPLICATION CLIENT" state=present
+  - command: /vagrant/plugins_test_57.sh 
+# - name: install 3rd party packages
+#   apt: name={{item}} 
+#   with_items:
+#   - cacti
+#   - rsyslog-mysql
