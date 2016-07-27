@@ -1,0 +1,18 @@
+---
+# This playbook sets up the garbd 
+
+- hosts: all
+  sudo: yes
+
+  tasks:
+  - name: add the repo
+    apt_repository: repo='deb [arch=amd64] http://192.168.88.9/apt {{ansible_lsb.codename}} main testing experimental' state=present
+  # Add an Apt signing key, will not download if present
+  - apt_key: id=CD2EFD2A keyserver=keys.gnupg.net state=present
+  - name: install garbd
+    apt: name={{ item }} update_cache=yes
+    with_items: 
+#   - language-pack-hr
+    - vim
+    - pv
+    - proxysql

@@ -2,7 +2,7 @@
 
 deb_version="5.6"
 rpm_version="56"
-version="5.6.30-rel76.3"
+version="5.5.50-rel38.0"
 log="/tmp/ps_run.log"
 echo -n > /tmp/ps_run.log
 
@@ -19,6 +19,7 @@ if [ -f /etc/redhat-release ]; then
                         else
                                 echo "WARNING: ${package}-${version} is not installed"
                         fi
+			exit 1
                 done
         fi
 else
@@ -27,12 +28,13 @@ else
         else
                 for package in percona-server-server-${deb_version} percona-server-test-${deb_version} percona-server-${deb_version}-dbg percona-server-source-${deb_version} percona-server-tokudb-${deb_version} percona-server-common-${deb_version}; do
 			deb_version="$(dpkg -l | grep ${package} | awk '{print $3}')"
-			echo ${package}-${deb_version}
-                        if [ "$(dpkg -l | grep ${package} | grep -c ${deb_version})" != 0 ]; then
+			echo ${package}${deb_version}
+                        if [ "$(dpkg -l | grep ${package}${deb_version} | grep -c ${version})" != 0 ]; then
                                 echo "$(date +%Y%m%d%H%M%S): ${package} is installed" 
                         else
-                                echo "WARNING: ${package} is not installed"
+                                echo "ERROR: ${package} is not installed"
                         fi
+			exit 1
                 done
         fi
 fi
