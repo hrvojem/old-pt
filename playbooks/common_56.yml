@@ -41,7 +41,7 @@
     - percona-server-tokudb-5.6
     when: ansible_os_family == "Debian"
   - name: install packages in centos
-    yum: name={{item}} state=present # enablerepo=percona-testing-x86_64
+    yum: name={{item}} state=present #enablerepo=percona-testing-x86_64
     with_items:
     - libselinux-python
     - pv
@@ -61,24 +61,25 @@
     when: ansible_os_family == "RedHat" and ansible_distribution_major_version == "6"
   - command: systemctl start mysql
     when: ansible_os_family == "RedHat" and ansible_distribution_major_version == "7"
-# - name: install tokudb
-#   command: /usr/bin/ps_tokudb_admin --enable
-# - service: name=mysqld state=restarted
-#   when: ansible_os_family == "RedHat" and ansible_distribution_major_version == "7"
-# - service: name=mysql state=restarted
-#   when: ansible_os_family == "RedHat" and ansible_distribution_major_version == "6"
-# - service: name=mysql state=restarted
-#   when: ansible_os_family == "Debian"
-# - name: install tokudb
-#   command: /usr/bin/ps_tokudb_admin --enable
-# - name: install plugins
-#   command: /vagrant/plugins_test_56.sh
+  - name: install tokudb
+    command: /usr/bin/ps_tokudb_admin --enable
+  - service: name=mysqld state=restarted
+    when: ansible_os_family == "RedHat" and ansible_distribution_major_version == "7"
+  - service: name=mysql state=restarted
+    when: ansible_os_family == "RedHat" and ansible_distribution_major_version == "6"
+  - service: name=mysql state=restarted
+    when: ansible_os_family == "Debian"
+  - name: install tokudb
+    command: /usr/bin/ps_tokudb_admin --enable
+  - name: install plugins
+    command: /vagrant/plugins_test_56.sh
+  - name: version check
+    command: /vagrant/version_check.sh
 # - name: remove the deb repo
 #   apt_repository: repo='deb [arch=amd64] http://192.168.5.9/apt {{ansible_lsb.codename}} main' state=absent update_cache=yes
 #   when: ansible_os_family == "Debian"
 # - name: add the testing deb repo
 #   apt_repository: repo='deb [arch=amd64] http://192.168.5.9/apt {{ansible_lsb.codename}} main testing' state=present update_cache=yes
-#   when: ansible_os_family == "Debian"
 #   when: ansible_os_family == "Debian"
 # - name: apt-get upgrade
 #   apt: upgrade=safe

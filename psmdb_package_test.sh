@@ -1,6 +1,6 @@
 #!/bin/bash
 
-version="3.0.12-1.8"
+version="3.2.8-2.0"
 log="/tmp/psmdb_run.log"
 #echo -n > /tmp/psmdb_run.log
 
@@ -16,6 +16,7 @@ if [ -f /etc/redhat-release ]; then
                                 echo "$(date +%Y%m%d%H%M%S): ${package} is installed" >> ${log}
                         else
                                 echo "WARNING: ${package} is not installed"
+				exit 1
                         fi
                 done
         fi
@@ -28,6 +29,7 @@ else
                                 echo "$(date +%Y%m%d%H%M%S): ${package} is installed" >> ${log}
                         else
                                 echo "WARNING: ${package} is not installed"
+				exit 1
                         fi
                 done
         fi

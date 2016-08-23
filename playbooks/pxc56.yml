@@ -6,7 +6,7 @@
 
   tasks:
   - name: add the repo
-    apt_repository: repo='deb [arch=amd64] http://192.168.5.9/apt {{ansible_lsb.codename}} main' state=present
+    apt_repository: repo='deb [arch=amd64] http://192.168.88.9/apt {{ansible_lsb.codename}} main' state=present
    # apt_repository: repo='deb http://repo.percona.com/apt {{ansible_lsb.codename}} main' state=present
   # Add an Apt signing key, will not download if present
   - apt_key: id=CD2EFD2A keyserver=keys.gnupg.net state=present
@@ -34,8 +34,8 @@
   #add sstuser
   - mysql_user: name=sstuser password=s3cretPass priv="*.*:RELOAD,LOCK TABLES,REPLICATION CLIENT" state=present
   - command: /vagrant/plugins_test_56.sh 
-  - name: install 3rd party packages
-    apt: name={{item}} 
-    with_items:
-    - cacti
-    - rsyslog-mysql
+# - name: install 3rd party packages
+#   apt: name={{item}} 
+#   with_items:
+#   - cacti
+#   - rsyslog-mysql

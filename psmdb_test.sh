@@ -49,7 +49,7 @@ function clean_datadir {
 	fi
 }
 
-for engine in mmapv1 PerconaFT rocksdb wiredTiger; do
+for engine in mmapv1 PerconaFT rocksdb wiredTiger inMemory; do
 	stop_service
 	clean_datadir
 	sed -i "/engine: *${engine}/s/#//g" /etc/mongod.conf

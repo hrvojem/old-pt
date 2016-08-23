@@ -1,9 +1,9 @@
 #!/bin/bash
 set -e
 
-version="5.5.50-38.0"
-release="38.0"
-revision="b05b24c"
+version="5.7.14-7"
+release="7"
+revision="083e298"
 
 log="/tmp/version_check.log"
 echo -n > $log
@@ -26,5 +26,5 @@ fi
  
 echo "versions are OK"
 
-#@@TOKUDB_VERSION
-#mysql -e "SHOW VARIABLES LIKE 'tokudb_backup_plugin_version';"
+mysql -e "SELECT @@TOKUDB_VERSION;"
+mysql -e "SHOW VARIABLES LIKE 'tokudb_backup_plugin_version';"

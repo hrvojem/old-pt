@@ -6,14 +6,15 @@
 
   tasks:
   - name: add the repo
-    apt_repository: repo='deb [arch=amd64] http://192.168.88.9/apt {{ansible_lsb.codename}} main testing experimental' state=present
+    apt_repository: repo='deb [arch=amd64] http://192.168.88.9/apt {{ansible_lsb.codename}} main testing' state=present
 #    apt_repository: repo='deb http://repo.percona.com/apt {{ansible_lsb.codename}} main testing' state=present
   # Add an Apt signing key, will not download if present
-  - apt_key: id=CD2EFD2A keyserver=keys.gnupg.net state=present
+  - apt_key: id=CD2EFD2A keyserver=keyserver.ubuntu.com state=present
+# - apt_key: id=CD2EFD2A keyserver=keys.gnupg.net state=present
 #  - name: copy apt-cacher-ng proxy file
 #    copy: src=/home/hrvoje/worktable/package-testing/01proxy dest=/etc/apt/apt.conf.d/
 #    when: ansible_os_family == "Debian"
-  - name: install galera, vim, pv, python-mysqldb, pxc-56
+  - name: install galera, vim, pv, python-mysqldb, pxc-57
     apt: name={{ item }} update_cache=yes
     with_items: 
     - vim

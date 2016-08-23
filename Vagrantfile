@@ -2,11 +2,11 @@
 # vi: set ft=ruby :
 
 playbook = "playbooks/common_57.yml"
-#deb_distro = "geerlingguy/ubuntu1604"
-deb_distro = "bento/debian-7.11"
-deb1_playbook = "playbooks/pxc57.yml"
-deb_common_playbook = "playbooks/pxc57_common.yml"
-deb_garbd_playbook = "playbooks/pxc57_proxysql.yml"
+deb_distro = "sgallen/wily64" 
+#deb_distro = "bento/debian-7.11"
+deb1_playbook = "playbooks/pxc56.yml"
+deb_common_playbook = "playbooks/pxc56_common.yml"
+deb_garbd_playbook = "playbooks/pxc57_garbd.yml"
 rhel_distro = "bento/centos-6.8"
 rhel1_playbook = "playbooks/percona1_pxc57.yml"
 rhel_playbook = "playbooks/percona2_pxc57.yml"
@@ -219,6 +219,27 @@ Vagrant.configure("2") do |config|
         percona3_config.vm.host_name = "percona3"
         percona3_config.vm.network :private_network, ip: "192.168.70.73"
   end
+
+  config.vm.define :percona4 do |percona4_config|
+        if rhel_distro == "bento/centos-5.11" then
+          config.vm.provision "shell", path: "centos5.sh"
+        end   
+#        config.vm.provision "ansible" do |ansible|
+#         ansible.playbook = rhel_playbook
+#         ansible.sudo = "true"
+#         ansible.host_key_checking = "false"
+#       end
+        percona4_config.vm.box = rhel_distro
+        percona4_config.vm.host_name = "percona4"
+        percona4_config.vm.network :private_network, ip: "192.168.70.74"
+  end
+
+
+  config.vm.define :freebsd do |freebsd_config|
+    freebsd_config.vm.box = "bento/freebsd-10.3"
+    freebsd_config.vm.host_name = "freebsd"
+  end
+
 
 end
 
