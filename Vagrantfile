@@ -1,15 +1,31 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-playbook = "playbooks/common_57.yml"
-deb_distro = "sgallen/wily64" 
-#deb_distro = "bento/debian-7.11"
-deb1_playbook = "playbooks/pxc56.yml"
-deb_common_playbook = "playbooks/pxc56_common.yml"
+playbook = "playbooks/common_55.yml"
+#deb_distro = "sgallen/wily64" #geerlingguy/ubuntu1604"
+deb_distro = "bento/ubuntu-14.04"
+deb1_playbook = "playbooks/pxc55.yml"
+deb_common_playbook = "playbooks/pxc55_common.yml"
 deb_garbd_playbook = "playbooks/pxc57_garbd.yml"
-rhel_distro = "bento/centos-6.8"
-rhel1_playbook = "playbooks/percona1_pxc57.yml"
-rhel_playbook = "playbooks/percona2_pxc57.yml"
+rhel_distro = "bento/centos-5.11"
+rhel1_playbook = "playbooks/percona1_pxc56.yml"
+rhel_playbook = "playbooks/percona2_pxc56.yml"
+
+$percona1_configure_static_ip = <<SCRIPT
+echo configuring eth1
+sudo su
+MAC_ADDR=$(cat /sys/class/net/eth1/address)
+/sbin/ifdown eth1
+cat > /etc/sysconfig/network-scripts/ifcfg-eth1 <<'_EOF'
+DEVICE=eth1
+BOOTPROTO=static
+ONBOOT=yes
+HWADDR=$MAC_ADDR
+IPADDR=192.168.70.72
+NETMASK=255.255.255.0
+_EOF
+/sbin/ifup eth1
+SCRIPT
 
 Vagrant.configure("2") do |config|
   # All Vagrant configuration is done here. The most pxb configuration
@@ -107,6 +123,7 @@ Vagrant.configure("2") do |config|
       ansible.host_key_checking = "false"
     end
     centos5_config.vm.host_name = "centos5"
+    centos5_config.vm.network :private_network, ip: "192.168.30.71"
   end
 
   config.vm.define :centos7 do |centos7_config|
@@ -191,20 +208,24 @@ Vagrant.configure("2") do |config|
        end
        percona1_config.vm.box = rhel_distro
        percona1_config.vm.host_name = "percona1"
-       percona1_config.vm.network :private_network, ip: "192.168.70.71"
+#      percona1_config.vm.network :private_network, ip: "192.168.70.71"
+       percona1_config.vm.network :private_network, ip: "192.168.70.71", auto_config: false
+       config.vm.provision "shell", inline: $percona1_configure_static_ip
   end
   config.vm.define :percona2 do |percona2_config|
-        if rhel_distro == "bento/centos-5.11" then
-          config.vm.provision "shell", path: "centos5.sh"
-        end   
-        config.vm.provision "ansible" do |ansible|
-          ansible.playbook = rhel_playbook
-          ansible.sudo = "true"
-          ansible.host_key_checking = "false"
-        end
-        percona2_config.vm.box = rhel_distro
-        percona2_config.vm.host_name = "percona2"
-        percona2_config.vm.network :private_network, ip: "192.168.70.72"
+       if rhel_distro == "bento/centos-5.11" then
+         config.vm.provision "shell", path: "centos5.sh"
+       end   
+       config.vm.provision "ansible" do |ansible|
+         ansible.playbook = rhel_playbook
+         ansible.sudo = "true"
+         ansible.host_key_checking = "false"
+       end
+       percona2_config.vm.box = rhel_distro
+       percona2_config.vm.host_name = "percona2"
+#      percona2_config.vm.network :private_network, ip: "192.168.70.72"
+       percona2_config.vm.network :private_network, ip: "192.168.70.72", auto_config: false
+       config.vm.provision "shell", inline: $percona1_configure_static_ip
   end
   config.vm.define :percona3 do |percona3_config|
         if rhel_distro == "bento/centos-5.11" then

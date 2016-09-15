@@ -2,7 +2,8 @@
 # This playbook sets up the first PXC node from percona repo
 
 - hosts: all
-  sudo: yes
+  become: true
+  become_method: sudo
 
   tasks:
   # Add an Apt signing key, will not download if present
@@ -12,15 +13,15 @@
    # apt_repository: repo='deb http://repo.percona.com/apt {{ansible_lsb.codename}} main' state=present
 #  - name: pin the percona repo for trusty
 #    copy: src=/home/hrvoje/worktable/percona-cluster/00percona.pref dest=/etc/apt/preferences.d/
-#    sudo: yes
   - name: install vim, pv, python-mysqldb, and PXC-5.7
     apt: name={{item}} update_cache=yes
     with_items:
     - vim
     - pv
     - percona-xtradb-cluster-full-57 
-#   - percona-xtradb-cluster-57
+    - sysbench
     - python-mysqldb
+#   - percona-xtradb-cluster-57
   # stop mysql service
   - service: name=mysql pattern=/usr/bin/mysqld_safe state=stopped 
   - name: configure PXC

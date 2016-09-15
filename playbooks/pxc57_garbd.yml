@@ -2,7 +2,8 @@
 # This playbook sets up the garbd 
 
 - hosts: all
-  sudo: yes
+  become: true
+  become_method: sudo
 
   tasks:
   - name: add the repo
@@ -13,7 +14,6 @@
   - name: install garbd
     apt: name={{ item }} update_cache=yes
     with_items: 
-#   - language-pack-hr
     - vim
     - pv
     - python-mysqldb

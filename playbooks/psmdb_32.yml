@@ -2,7 +2,8 @@
 # This playbook sets up the mongodb-org repo and installs mongodb
 
 - hosts: all
-  sudo: yes
+  become: true
+  become_method: sudo
 
   tasks:
   # Add the percona apt signing key, will not download if present

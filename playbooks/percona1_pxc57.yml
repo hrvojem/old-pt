@@ -2,7 +2,8 @@
 # This playbook sets up the first node for PXC on Centos
 
 - hosts: all
-  sudo: yes
+  become: true
+  become_method: sudo
 
   tasks:
   - name: remove mysql-libs
