@@ -4,7 +4,7 @@ set -e
 usage()
 {
     echo "Usage:"
-    echo "      $0 55|56|57"
+    echo "      $0 ps55|ps56|ps57"
 }
 
 if [ -z "$1" ]
@@ -14,17 +14,17 @@ then
 fi
 
 case $1 in
-    "55" )
+    "ps55" )
 	deb_version="5.5"
 	rpm_version="55"
 	lib_version="18"
         ;;
-    "56" )
+    "ps56" )
 	deb_version="5.6"
 	rpm_version="56"
 	lib_version="18.1"
         ;;
-    "57" )
+    "ps57" )
 	deb_version="5.7"
 	rpm_version="57"
 	lib_version="20"

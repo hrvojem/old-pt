@@ -1,8 +1,8 @@
 #!/bin/bash
 
-deb_version="5.6"
-rpm_version="56"
-version="5.5.50-rel38.0"
+deb_version="5.5"
+rpm_version="55"
+version="5.5.51-rel38.1.2"
 log="/tmp/ps_run.log"
 echo -n > /tmp/ps_run.log
 
