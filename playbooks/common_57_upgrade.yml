@@ -77,9 +77,6 @@
               mode=0640 owner=root group=root
     when: ansible_os_family == "RedHat"
 
-  - name: install plugins
-    command: /vagrant/plugins_test_57.sh
-
   - name: install tokudb
     command: /usr/bin/ps_tokudb_admin --enable
 
@@ -100,6 +97,9 @@
  
   - name: install tokubackup
     command: /usr/bin/ps_tokudb_admin --enable-backup
+
+  - name: install plugins
+    command: /vagrant/plugins_test_57.sh
 
   - name: install 3rd party packages
     apt: name={{item}}

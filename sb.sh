@@ -1,6 +1,8 @@
 #!/bin/bash
 set -e
 
+#        --mysql-password='U?fY)9s7|3gxUm' \
+
 function clean_db {
     mysql -e "DROP DATABASE IF EXISTS test;"
     mysql -e "CREATE DATABASE test;"
@@ -16,6 +18,7 @@ function sb_prepare {
          --oltp_tables_count=5 \
          --mysql-db=test \
          --db-driver=mysql \
+         --mysql-user='root' \
          prepare 2>&1 | tee /tmp/sysbench_prepare.txt
 }
 
@@ -34,6 +37,7 @@ function sb_run {
          --oltp_order_ranges=15 \
          --oltp_tables_count=5 \
          --mysql-db=test \
+         --mysql-user='root' \
          --db-driver=mysql \
          run 2>&1 | tee /tmp/sysbench_rw_run.txt
 }

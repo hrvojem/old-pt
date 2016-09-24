@@ -56,4 +56,4 @@
   - name: create the backup user
     mysql_user: name=sstuser password=s3cretPass priv="*.*:PROCESS,RELOAD,LOCK TABLES,REPLICATION CLIENT" state=present
   - name: install plugins
-    command: /vagrant/plugins_test_56.sh
+    command: /vagrant/plugins_test_pxc_56.sh

@@ -17,6 +17,7 @@
     apt: name={{item}} update_cache=yes
     with_items:
     - vim
+    - strace
     - pv
     - percona-xtradb-cluster-full-57 
     - sysbench
@@ -32,7 +33,7 @@
   - command: service mysql bootstrap-pxc
   #add sstuser
   - mysql_user: name=sstuser password=s3cretPass priv="*.*:RELOAD,PROCESS,LOCK TABLES,REPLICATION CLIENT" state=present
-  - command: /vagrant/plugins_test_57.sh 
+  - command: /vagrant/pxc_plugins_57.sh 
 # - name: install 3rd party packages
 #   apt: name={{item}} 
 #   with_items:

@@ -1,15 +1,16 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-playbook = "playbooks/common_57_upgrade.yml"
-#deb_distro = "geerlingguy/ubuntu1604"
-deb_distro = "bento/debian-7.11"
-deb1_playbook = "playbooks/pxc55.yml"
-deb_common_playbook = "playbooks/pxc56_common.yml"
-deb_garbd_playbook = "playbooks/pxc57_garbd.yml"
+playbook = "playbooks/clean.yml"
+deb_distro = "geerlingguy/ubuntu1604"
+#deb_distro = "bento/debian-8.5"
+deb1_playbook = "playbooks/pxc57.yml"
+deb_common_playbook = "playbooks/pxc57_common.yml"
+deb_garbd_playbook = "playbooks/pxc56_garbd.yml"
 rhel_distro = "bento/centos-7.2"
-rhel1_playbook = "playbooks/percona1_pxc55.yml"
-rhel_playbook = "playbooks/percona2_pxc55.yml"
+rhel1_playbook = "playbooks/percona1_pxc57.yml"
+rhel_playbook = "playbooks/percona2_pxc57.yml"
+rhel_garbd_playbook = "playbooks/percona4_pxc56.yml"
 
 $percona1_configure_static_ip = <<SCRIPT
 echo configuring eth1
@@ -98,7 +99,7 @@ Vagrant.configure("2") do |config|
       ansible.host_key_checking = "false"
     end
     xenial_config.vm.provider :virtualbox do |vb|
-      vb.customize ["modifyvm", :id, "--memory", "1024", "--ioapic", "on" ]
+      vb.customize ["modifyvm", :id, "--memory", "2048", "--ioapic", "on" ]
     end
     xenial_config.vm.box = "bento/ubuntu-16.04"
     xenial_config.vm.host_name = "xenial"
@@ -208,8 +209,8 @@ Vagrant.configure("2") do |config|
        percona1_config.vm.box = rhel_distro
        percona1_config.vm.host_name = "percona1"
        percona1_config.vm.network :private_network, ip: "192.168.70.71"
-#      percona1_config.vm.network :private_network, ip: "192.168.70.71", auto_config: false
-#      config.vm.provision "shell", inline: $percona1_configure_static_ip
+#       percona1_config.vm.network :private_network, ip: "192.168.70.71", auto_config: false
+#       config.vm.provision "shell", inline: $percona1_configure_static_ip
   end
   config.vm.define :percona2 do |percona2_config|
        if rhel_distro == "bento/centos-5.11" then
@@ -223,8 +224,8 @@ Vagrant.configure("2") do |config|
        percona2_config.vm.box = rhel_distro
        percona2_config.vm.host_name = "percona2"
        percona2_config.vm.network :private_network, ip: "192.168.70.72"
-#      percona2_config.vm.network :private_network, ip: "192.168.70.72", auto_config: false
-#      config.vm.provision "shell", inline: $percona1_configure_static_ip
+#       percona2_config.vm.network :private_network, ip: "192.168.70.72", auto_config: false
+#       config.vm.provision "shell", inline: $percona1_configure_static_ip
   end
   config.vm.define :percona3 do |percona3_config|
         if rhel_distro == "bento/centos-5.11" then
@@ -244,11 +245,11 @@ Vagrant.configure("2") do |config|
         if rhel_distro == "bento/centos-5.11" then
           config.vm.provision "shell", path: "centos5.sh"
         end   
-#        config.vm.provision "ansible" do |ansible|
-#         ansible.playbook = rhel_playbook
-#         ansible.sudo = "true"
-#         ansible.host_key_checking = "false"
-#       end
+         config.vm.provision "ansible" do |ansible|
+          ansible.playbook = rhel_garbd_playbook
+          ansible.sudo = "true"
+          ansible.host_key_checking = "false"
+        end
         percona4_config.vm.box = rhel_distro
         percona4_config.vm.host_name = "percona4"
         percona4_config.vm.network :private_network, ip: "192.168.70.74"

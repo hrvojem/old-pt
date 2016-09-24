@@ -34,7 +34,7 @@
   - command: service mysql bootstrap-pxc
   #add sstuser
   - mysql_user: name=sstuser password=s3cretPass priv="*.*:RELOAD,LOCK TABLES,REPLICATION CLIENT" state=present
-  - command: /vagrant/plugins_test_56.sh 
+  - command: /vagrant/plugins_test_pxc_56.sh 
 # - name: install 3rd party packages
 #   apt: name={{item}} 
 #   with_items:
