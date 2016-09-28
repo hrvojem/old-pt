@@ -1,13 +1,15 @@
 ---
-# This playbook sets up the percona repo
+# This playbook tests PS-5.5 installs
 
 - hosts: all
-  sudo: yes
+  become: true
+  become_method: sudo
 
   tasks:
   # Add an Apt signing key, will not download if present
   - apt_key: id=CD2EFD2A keyserver=keys.gnupg.net state=present
     when: ansible_os_family == "Debian"
+
   - name: add the deb repo
 <<<<<<< HEAD
  #   apt_repository: repo='deb [arch=amd64] http://192.168.5.9/apt {{ansible_lsb.codename}} main' state=present update_cache=yes
@@ -17,15 +19,19 @@
  #   apt_repository: repo='deb http://repo.percona.com/apt {{ansible_lsb.codename}} main testing' state=present update_cache=yes
 >>>>>>> 477764d13c78a2d2572c9865c8f6c02343e39264
     when: ansible_os_family == "Debian"
+
+  - name: add the yum percona repos 
+    yum: name=https://www.percona.com/downloads/percona-release/redhat/0.1-3/percona-release-0.1-3.noarch.rpm state=present
+    when: ansible_os_family == "RedHat" and ansible_distribution_major_version|int >= 6
+
   - name: epel 6 repo
     yum: name=https://dl.fedoraproject.org/pub/epel/epel-release-latest-6.noarch.rpm state=present
     when: ansible_os_family == "RedHat" and ansible_distribution_major_version == "6"
-  - name: add the yum percona repos 
-    yum: name=https://www.percona.com/downloads/percona-release/redhat/0.1-3/percona-release-0.1-3.noarch.rpm 
-    when: ansible_os_family == "RedHat" and ansible_distribution_major_version|int >= 6
+
   - name: epel 7 repo
     yum: name=https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm state=present 
     when: ansible_os_family == "RedHat" and ansible_distribution_major_version == "7"
+
   - name: install deb packages 
     apt: name={{item}} update_cache=yes
     with_items: 
@@ -38,6 +44,7 @@
     - percona-server-5.5-dbg
     - percona-server-source-5.5
     when: ansible_os_family == "Debian"
+
   - name: install packages in centos
     yum: name={{item}} state=present #enablerepo=percona-testing-x86_64
     with_items:
@@ -50,19 +57,24 @@
     - percona-toolkit
     - percona-xtrabackup
     when: ansible_os_family == "RedHat"
+
   - command: /etc/init.d/mysql start
     when: ansible_os_family == "RedHat" and ansible_distribution_major_version == "5"
+
   - command: service mysql start
     when: ansible_os_family == "RedHat" and ansible_distribution_major_version == "6"
+
   - command: systemctl start mysql
     when: ansible_os_family == "RedHat" and ansible_distribution_major_version == "7"
+
   - name: install plugins
     command: /vagrant/plugins_test_55.sh
+
   - name: install 3rd party packages
     apt: name={{item}}
     with_items:
     - rsyslog-mysql
     when: ansible_os_family == "Debian"
-  - name: run version_check
-    command: /vagrant/version_check.sh
 
+  - name: run version_check
+    command: /vagrant/version_check.sh ps55

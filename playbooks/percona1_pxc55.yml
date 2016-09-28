@@ -2,7 +2,8 @@
 # This playbook sets up the first node for PXC on Centos
 
 - hosts: all
-  sudo: yes
+  become: true
+  become_method: sudo
 
   tasks:
   - name: remove mysql-libs
@@ -22,10 +23,10 @@
     yum: name=http://www.percona.com/downloads/percona-release/redhat/0.1-3/percona-release-0.1-3.noarch.rpm
     when: ansible_os_family == "RedHat" and ansible_distribution_major_version|int >= 6
   - name: add the epel repo for centos7 
-    yum: name=http://anorien.csc.warwick.ac.uk/mirrors/epel/7/x86_64/e/epel-release-7-6.noarch.rpm
+    yum: name=https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm state=present
     when: ansible_os_family == "RedHat" and ansible_distribution_major_version == "7"
   - name: add the epel repo for centos6
-    yum: name=https://anorien.csc.warwick.ac.uk/mirrors/epel/6/x86_64/epel-release-6-8.noarch.rpm state=present
+    yum: name=https://dl.fedoraproject.org/pub/epel/epel-release-latest-6.noarch.rpm state=present
     when: ansible_os_family == "RedHat" and ansible_distribution_major_version == "6"
   - name: install pv
     yum: name=pv  state=present
@@ -33,13 +34,12 @@
     yum: name=Percona-Server-shared-compat.x86_64 state=present
     when: ansible_os_family == "RedHat" and ansible_distribution_major_version == "5"
   - name: install PXC
-    yum: name=Percona-XtraDB-Cluster-full-56.x86_64 state=present
+    yum: name=Percona-XtraDB-Cluster-full-55.x86_64 state=present
   - name: install MySQL-python
     yum: name=MySQL-python state=present
   - name: copy pxc config
     template: src=/home/hrvoje/worktable/package-testing/templates/my_rpm.j2 dest=/etc/my.cnf
     when: ansible_os_family == "RedHat" and ansible_distribution_major_version|int <= 6
-    #when: ansible_os_family == "RedHat" and ansible_distribution_major_version == "6"
   - name: copy pxc config
     template: src=/home/hrvoje/worktable/package-testing/templates/my_rpm.j2 dest=/etc/my.cnf
     when: ansible_os_family == "RedHat" and ansible_distribution_major_version == "5"
@@ -53,7 +53,6 @@
   - command: systemctl start mysql@bootstrap.service
     when: ansible_os_family == "RedHat" and ansible_distribution_major_version == "7"
   - name: create the backup user
-    mysql_user: name=sstuser password=s3cretPass priv="*.*:RELOAD,LOCK TABLES,REPLICATION CLIENT" state=present
+    mysql_user: name=sstuser password=s3cretPass priv="*.*:PROCESS,RELOAD,LOCK TABLES,REPLICATION CLIENT" state=present
   - name: install plugins
-    command: /vagrant/plugins_test_56.sh
-
+    command: /vagrant/plugins_test_55.sh
