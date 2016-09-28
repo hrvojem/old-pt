@@ -15,3 +15,4 @@ mysql -e "CREATE DATABASE world;"
 mysql -e "CREATE DATABASE world2;"
 pv /vagrant/world_innodb.sql | mysql -D world
 pv /vagrant/world_innodb.sql | mysql -D world2
+mysql < /vagrant/tokudb_compression.sql

@@ -1,15 +1,15 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-playbook = "playbooks/psmdb.yml"
-deb_distro = "sgallen/wily64"
-#deb_distro = "bento/ubuntu-14.04"
+playbook = "playbooks/common_57.yml"
+#deb_distro = "geerlingguy/ubuntu1604"
+deb_distro = "bento/debian-7.11"
 deb1_playbook = "playbooks/pxc57.yml"
 deb_common_playbook = "playbooks/pxc57_common.yml"
-deb_garbd_playbook = "playbooks/pxc56_garbd.yml"
-rhel_distro = "bento/centos-5.11"
-rhel1_playbook = "playbooks/percona1.yml"
-rhel_playbook = "playbooks/percona2.yml"
+deb_garbd_playbook = "playbooks/pxc57_proxysql.yml"
+rhel_distro = "bento/centos-6.8"
+rhel1_playbook = "playbooks/percona1_pxc57.yml"
+rhel_playbook = "playbooks/percona2_pxc57.yml"
 
 Vagrant.configure("2") do |config|
   # All Vagrant configuration is done here. The most pxb configuration
@@ -17,7 +17,7 @@ Vagrant.configure("2") do |config|
   # please see the online documentation at vagrantup.com.
 
   config.vm.define :wheezy do |wheezy_config|
-    wheezy_config.vm.box = "bento/debian-7.10"
+    wheezy_config.vm.box = "bento/debian-7.11"
     config.vm.provision "ansible" do |ansible|
       ansible.playbook = playbook
       ansible.sudo = "true"
@@ -27,7 +27,7 @@ Vagrant.configure("2") do |config|
   end
 
   config.vm.define :jessie do |jessie_config|
-    jessie_config.vm.box = "bento/debian-8.4"
+    jessie_config.vm.box = "bento/debian-8.5"
     config.vm.provision "ansible" do |ansible|
       ansible.playbook = playbook
       ansible.sudo = "true"
@@ -89,7 +89,7 @@ Vagrant.configure("2") do |config|
   end
 
   config.vm.define :centos6 do |centos6_config|
-    centos6_config.vm.box = "bento/centos-6.7"
+    centos6_config.vm.box = "bento/centos-6.8"
     config.vm.provision "ansible" do |ansible|
       ansible.playbook = playbook
       ansible.sudo = "true"
