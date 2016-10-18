@@ -9,6 +9,8 @@
   # Add an Apt signing key, will not download if present
   - apt_key: id=CD2EFD2A keyserver=keys.gnupg.net state=present
     when: ansible_os_family == "Debian"
+  - apt_key: id=8507EFA5 keyserver=keys.gnupg.net state=present
+    when: ansible_os_family == "Debian"
 
   - name: add the deb repo
     apt_repository: repo='deb [arch=amd64] http://192.168.88.9/apt {{ansible_lsb.codename}} main' state=present update_cache=yes
@@ -31,6 +33,7 @@
     apt: name={{item}} update_cache=yes
     with_items: 
     - vim
+    - sysbench
     - pv
     - percona-server-server-5.6
     - percona-xtrabackup
@@ -44,10 +47,11 @@
     when: ansible_os_family == "Debian"
 
   - name: install packages in centos
-    yum: name={{item}} state=present #enablerepo=percona-testing-x86_64
+    yum: name={{item}} state=present enablerepo=percona-testing-x86_64
     with_items:
     - libselinux-python
     - pv
+    - sysbench
     - Percona-Server-server-56
     - Percona-Server-test-56
     - Percona-Server-56-debuginfo
@@ -91,3 +95,6 @@
 
   - name: version check
     command: /vagrant/version_check.sh ps56
+
+  - name: running sysbench
+    command: /vagrant/sb.sh

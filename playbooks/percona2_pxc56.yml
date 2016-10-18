@@ -33,7 +33,7 @@
 #   yum: name=Percona-Server-shared-compat.x86_64 state=present
 #   when: ansible_os_family == "RedHat" and ansible_distribution_major_version == "5"
   - name: install PXC
-    yum: name={{item}} state=present enablerepo=percona-testing-x86_64
+    yum: name={{item}} state=present  enablerepo=percona-testing-x86_64
     with_items:
     - Percona-XtraDB-Cluster-56.x86_64
   - name: copy pxc config

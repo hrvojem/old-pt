@@ -10,7 +10,7 @@
   - apt_key: id=CD2EFD2A keyserver=keys.gnupg.net state=present
   - name: add the repo
     apt_repository: repo='deb [arch=amd64] http://192.168.88.9/apt {{ansible_lsb.codename}} main' state=present
-   # apt_repository: repo='deb http://repo.percona.com/apt {{ansible_lsb.codename}} main' state=present
+#    apt_repository: repo='deb http://repo.percona.com/apt {{ansible_lsb.codename}} main' state=present
 #  - name: pin the percona repo for trusty
 #    copy: src=/home/hrvoje/worktable/percona-cluster/00percona.pref dest=/etc/apt/preferences.d/
   - name: install vim, pv, python-mysqldb, and PXC-5.7
@@ -29,11 +29,12 @@
     template: src=/home/hrvoje/worktable/package-testing/templates/my.j2 
               dest=/etc/mysql/my.cnf
               mode=0640 owner=mysql group=root
-  #bootstrap the cluster
-  - command: service mysql bootstrap-pxc
-  #add sstuser
-  - mysql_user: name=sstuser password=s3cretPass priv="*.*:RELOAD,PROCESS,LOCK TABLES,REPLICATION CLIENT" state=present
-  - command: /vagrant/pxc_plugins_57.sh 
+  - name: bootstrap the cluster
+    command: service mysql bootstrap-pxc
+  - name: add sstuser
+    mysql_user: name=sstuser password=s3cretPass priv="*.*:RELOAD,PROCESS,LOCK TABLES,REPLICATION CLIENT" state=present
+  - name: install plugins
+    command: /vagrant/pxc_plugins_57.sh 
 # - name: install 3rd party packages
 #   apt: name={{item}} 
 #   with_items:

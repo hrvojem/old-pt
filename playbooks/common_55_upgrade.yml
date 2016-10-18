@@ -30,8 +30,10 @@
   - name: install deb packages 
     apt: name={{item}} update_cache=yes
     with_items: 
+    - aptitude
     - vim
     - pv
+    - sysbench
     - percona-server-server-5.5
     - percona-xtrabackup
     - percona-toolkit
@@ -44,6 +46,7 @@
     yum: name={{item}} state=present #enablerepo=percona-testing-x86_64
     with_items:
     - libselinux-python
+    - sysbench
     - pv
     - Percona-Server-server-55
     - Percona-Server-test-55
@@ -98,3 +101,5 @@
   - name: check that Percona Server 5.5 version is correct
     command: /vagrant/version_check.sh ps55
 
+  - name: run sysbench
+    command: /vagrant/sb.sh

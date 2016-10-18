@@ -1,15 +1,15 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-playbook = "playbooks/clean.yml"
-deb_distro = "geerlingguy/ubuntu1604"
-#deb_distro = "bento/debian-8.5"
-deb1_playbook = "playbooks/pxc57.yml"
-deb_common_playbook = "playbooks/pxc57_common.yml"
+playbook = "playbooks/common_57.yml"
+#deb_distro = "geerlingguy/ubuntu1604"
+deb_distro = "bento/debian-7.11" 
+deb1_playbook = "playbooks/pxc56.yml"
+deb_common_playbook = "playbooks/pxc56_common.yml"
 deb_garbd_playbook = "playbooks/pxc56_garbd.yml"
-rhel_distro = "bento/centos-7.2"
-rhel1_playbook = "playbooks/percona1_pxc57.yml"
-rhel_playbook = "playbooks/percona2_pxc57.yml"
+rhel_distro = "bento/centos-6.8"
+rhel1_playbook = "playbooks/percona1_pxc55.yml"
+rhel_playbook = "playbooks/percona2_pxc55.yml"
 rhel_garbd_playbook = "playbooks/percona4_pxc56.yml"
 
 $percona1_configure_static_ip = <<SCRIPT
