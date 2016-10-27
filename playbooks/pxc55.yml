@@ -11,6 +11,7 @@
 #    apt_repository: repo='deb http://repo.percona.com/apt {{ansible_lsb.codename}} main' state=present
   # Add an Apt signing key, will not download if present
   - apt_key: id=CD2EFD2A keyserver=keys.gnupg.net state=present
+  - apt_key: id=8507EFA5 keyserver=keys.gnupg.net state=present
   - name: install vim, pv, python-mysqldb, and PXC-5.5
     apt: name={{item}} update_cache=yes
     with_items:
