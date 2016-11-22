@@ -1,7 +1,7 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-playbook = "playbooks/psmdb_32.yml"
+playbook = "playbooks/common_55_upgrade.yml"
 #deb_distro = "geerlingguy/ubuntu1604"
 deb_distro = "bento/debian-7.11" 
 deb1_playbook = "playbooks/pxc55.yml"
@@ -44,7 +44,7 @@ Vagrant.configure("2") do |config|
   end
 
   config.vm.define :jessie do |jessie_config|
-    jessie_config.vm.box = "bento/debian-8.5"
+    jessie_config.vm.box = "bento/debian-8.6"
     config.vm.provision "ansible" do |ansible|
       ansible.playbook = playbook
       ansible.sudo = "true"
