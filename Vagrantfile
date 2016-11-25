@@ -1,7 +1,7 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-playbook = "playbooks/common_55_upgrade.yml"
+playbook = "playbooks/common_57.yml"
 #deb_distro = "geerlingguy/ubuntu1604"
 deb_distro = "bento/debian-7.11" 
 deb1_playbook = "playbooks/pxc55.yml"
@@ -79,15 +79,15 @@ Vagrant.configure("2") do |config|
     end
   end
 
-  config.vm.define :wily do |wily_config|
+  config.vm.define :yakkety do |yakkety_config|
     config.vm.provision "ansible" do |ansible|
       ansible.playbook = playbook
       ansible.sudo = "true"
       ansible.host_key_checking = "false"
     end
-    wily_config.vm.box = "bento/ubuntu-15.10"
-    wily_config.vm.host_name = "wily"
-    wily_config.vm.provider :virtualbox do |vb|
+    yakkety_config.vm.box = "ubuntu-16.10"
+    yakkety_config.vm.host_name = "yakkety"
+    yakkety_config.vm.provider :virtualbox do |vb|
       vb.customize ["modifyvm", :id, "--memory", "1024", "--ioapic", "on" ]
     end
   end

@@ -14,7 +14,7 @@
     when: ansible_os_family == "Debian"
 
   - name: add the deb repo
-    apt_repository: repo='deb [arch=amd64] http://192.168.88.9/apt {{ansible_lsb.codename}} main testing' state=present update_cache=yes
+    apt_repository: repo='deb [arch=amd64] http://192.168.88.9/apt {{ansible_lsb.codename}} main' state=present update_cache=yes
  #   apt_repository: repo='deb http://repo.percona.com/apt {{ansible_lsb.codename}} main testing' state=present update_cache=yes
     when: ansible_os_family == "Debian"
 
@@ -44,7 +44,7 @@
     when: ansible_os_family == "Debian"
 
   - name: install packages in centos
-    yum: name={{item}} state=present enablerepo=percona-testing-x86_64
+    yum: name={{item}} state=present #enablerepo=percona-testing-x86_64
     with_items:
     - libselinux-python
     - pv
@@ -76,3 +76,10 @@
 
   - name: run version_check
     command: /vagrant/version_check.sh ps55
+
+  - name: run package test
+    command: /vagrant/package_check.sh ps55
+
+  - name: check that Percona Toolkit version is correct
+    command: /package-testing/version_check.sh pt
+    when: ansible_distribution_release != "yakkety"
