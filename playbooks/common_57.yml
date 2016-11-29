@@ -17,21 +17,24 @@
     apt_repository: repo='deb [arch=amd64] http://192.168.88.9/apt {{ansible_lsb.codename}} main testing' state=present update_cache=yes
 #    apt_repository: repo='deb http://repo.percona.com/apt {{ansible_lsb.codename}} main testing' state=present update_cache=yes
     when: ansible_os_family == "Debian"
+
   - name: add the yum percona repos 
-    yum: name=http://www.percona.com/downloads/percona-release/redhat/0.1-3/percona-release-0.1-3.noarch.rpm
+    yum: name=http://www.percona.com/downloads/percona-release/redhat/0.1-4/percona-release-0.1-4.noarch.rpm
     when: ansible_os_family == "RedHat" 
+
   - name: epel 6 repo
     yum: name=https://dl.fedoraproject.org/pub/epel/epel-release-latest-6.noarch.rpm state=present
     when: ansible_os_family == "RedHat" and ansible_distribution_major_version == "6"
+
   - name: epel 7 repo
     yum: name=https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm state=present
     when: ansible_os_family == "RedHat" and ansible_distribution_major_version == "7"
+
   - name: install deb packages 
     apt: name={{item}} update_cache=yes
     with_items: 
     - vim
     - pv
-    - percona-xtrabackup-24
     - percona-toolkit
     - percona-server-server-5.7
     - percona-server-test-5.7
@@ -40,9 +43,11 @@
     - percona-server-tokudb-5.7
     - percona-xtrabackup-test-24
     - percona-xtrabackup-dbg-24
+    - percona-xtrabackup-24
     when: ansible_os_family == "Debian"
+
   - name: install packages in centos
-    yum: name={{item}} state=present enablerepo=percona-testing-x86_64 
+    yum: name={{item}} state=present #enablerepo=percona-testing-x86_64 
     with_items:
     - libselinux-python
     - pv
@@ -54,32 +59,50 @@
     - percona-toolkit
     - percona-xtrabackup-24
     when: ansible_os_family == "RedHat"
+
   - name: start the MySQL service
     command: service mysql start
     when: ansible_os_family == "RedHat"
+
   - name: set root password
     command: /vagrant/setpass_57.sh
     when: ansible_os_family == "RedHat"
+
   - name: copy .my.cnf
     template: src=/home/hrvoje/worktable/package-testing/templates/my_57.j2
               dest=/root/.my.cnf
               mode=0640 owner=root group=root
     when: ansible_os_family == "RedHat"
+
   - name: install tokudb
     command: /usr/bin/ps_tokudb_admin --enable
+
   - name: install tokubackup
     command: /usr/bin/ps_tokudb_admin --enable-backup
+
   - service: name=mysql state=restarted
     when: ansible_os_family == "RedHat" and ansible_distribution_major_version == "6"
+
   - service: name=mysqld state=restarted
     when: ansible_os_family == "RedHat" and ansible_distribution_major_version == "7"
+
   - service: name=mysql state=restarted
     when: ansible_os_family == "Debian"
+
   - name: install tokudb
     command: /usr/bin/ps_tokudb_admin --enable
+
   - name: install plugins
     command: /vagrant/plugins_test_57.sh
+
   - name: install tokubackup
     command: /usr/bin/ps_tokudb_admin --enable-backup
+
   - name: version check
     command: /vagrant/version_check.sh ps57
+
+  - name: Percona Server 5.7 package version check
+    command: /vagrant/package_check.sh ps57
+
+  - name: PXB-2.4 package version check
+    command: /vagrant/package_check.sh pxb24

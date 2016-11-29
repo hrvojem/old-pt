@@ -137,5 +137,8 @@
   - name: check that Percona Server 5.6 version is correct
     command: /vagrant/version_check.sh ps56
 
+  - name: check that Percona Server 5.6 package version is correct
+    command: /vagrant/package_check.sh ps56
+
   - name: running sysbench
     command: /vagrant/sb.sh
