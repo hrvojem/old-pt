@@ -11,6 +11,7 @@
    # apt_repository: repo='deb http://repo.percona.com/apt {{ansible_lsb.codename}} main' state=present
   # Add an Apt signing key, will not download if present
   - apt_key: id=CD2EFD2A keyserver=keys.gnupg.net state=present
+  - apt_key: id=8507EFA5 keyserver=keys.gnupg.net state=present
 #  - name: pin the percona repo for trusty
 #    copy: src=/home/hrvoje/worktable/percona-cluster/00percona.pref dest=/etc/apt/preferences.d/
 #  - name: copy apt-cacher-ng proxy file

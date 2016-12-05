@@ -8,6 +8,7 @@
   tasks:
   # Add an Apt signing key, will not download if present
   - apt_key: id=CD2EFD2A keyserver=keys.gnupg.net state=present
+  - apt_key: id=8507EFA5 keyserver=keys.gnupg.net state=present
   - name: add the repo
     apt_repository: repo='deb [arch=amd64] http://192.168.88.9/apt {{ansible_lsb.codename}} main' state=present
 #    apt_repository: repo='deb http://repo.percona.com/apt {{ansible_lsb.codename}} main' state=present

@@ -1,11 +1,11 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-playbook = "playbooks/common_57.yml"
+playbook = "playbooks/psmdb.yml"
 #deb_distro = "geerlingguy/ubuntu1604"
-deb_distro = "bento/debian-7.11" 
-deb1_playbook = "playbooks/pxc55.yml"
-deb_common_playbook = "playbooks/pxc56_common.yml"
+deb_distro = "bento/debian-8.6" 
+deb1_playbook = "playbooks/pxc57.yml"
+deb_common_playbook = "playbooks/pxc57_common.yml"
 deb_garbd_playbook = "playbooks/pxc56_garbd.yml"
 rhel_distro = "bento/centos-7.2"
 rhel1_playbook = "playbooks/percona1_pxc57.yml"
@@ -85,7 +85,7 @@ Vagrant.configure("2") do |config|
       ansible.sudo = "true"
       ansible.host_key_checking = "false"
     end
-    yakkety_config.vm.box = "ubuntu-16.10"
+    yakkety_config.vm.box = "bento/ubuntu-16.10"
     yakkety_config.vm.host_name = "yakkety"
     yakkety_config.vm.provider :virtualbox do |vb|
       vb.customize ["modifyvm", :id, "--memory", "1024", "--ioapic", "on" ]
@@ -257,7 +257,7 @@ Vagrant.configure("2") do |config|
 
 
   config.vm.define :freebsd do |freebsd_config|
-    freebsd_config.vm.box = "bento/freebsd-10.3"
+    freebsd_config.vm.box = "bento/freebsd-11.0"
     freebsd_config.vm.host_name = "freebsd"
   end
 
