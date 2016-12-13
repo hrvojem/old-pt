@@ -41,6 +41,9 @@
     - percona-server-test-5.5
     - percona-server-5.5-dbg
     - percona-server-source-5.5
+    - percona-nagios-plugins
+    - percona-cacti-templates
+    - percona-zabbix-templates
     when: ansible_os_family == "Debian"
 
   - name: install packages in centos
@@ -54,6 +57,10 @@
     - Percona-Server-devel-55
     - percona-toolkit
     - percona-xtrabackup
+    - percona-zabbix-templates
+    - percona-nagios-plugins
+    - percona-cacti-templates
+
     when: ansible_os_family == "RedHat"
 
   - command: /etc/init.d/mysql start
@@ -81,5 +88,4 @@
     command: /vagrant/package_check.sh ps55
 
   - name: check that Percona Toolkit version is correct
-    command: /package-testing/version_check.sh pt
-    when: ansible_distribution_release != "yakkety"
+    command: /vagrant/version_check.sh pt

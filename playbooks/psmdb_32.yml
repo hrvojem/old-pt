@@ -31,7 +31,7 @@
     yum: name=https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm state=present
     when: ansible_os_family == "RedHat" and ansible_distribution_major_version == "7"
   - name: add the yum percona repos
-    yum: name=http://www.percona.com/downloads/percona-release/redhat/0.1-3/percona-release-0.1-3.noarch.rpm
+    yum: name=http://www.percona.com/downloads/percona-release/redhat/0.1-4/percona-release-0.1-4.noarch.rpm
     when: ansible_os_family == "RedHat" and ansible_distribution_major_version|int >= 6 
   - name: install packages in centos
     yum: name={{item}} state=present #enablerepo=percona-testing-x86_64
@@ -49,9 +49,10 @@
     when: ansible_os_family == "RedHat" and ansible_distribution_major_version == "6"
   - command: systemctl start mongod
     when: ansible_os_family == "RedHat" and ansible_distribution_major_version == "7"
+
   - name: run psmdb_test
     command: /vagrant/psmdb_test.sh
 
   - name: run package_test
-    command: /vagrant/psmdb_package_test.sh
+    command: /vagrant/package_check.sh psmdb32
 
