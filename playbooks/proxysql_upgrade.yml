@@ -1,0 +1,77 @@
+---
+# This playbook tests PS-5.5 installs
+
+- hosts: all
+  become: true
+  become_method: sudo
+
+  tasks:
+  # Add an Apt signing key, will not download if present
+  - apt_key: id=CD2EFD2A keyserver=keys.gnupg.net state=present
+    when: ansible_os_family == "Debian"
+
+  - apt_key: id=8507EFA5 keyserver=keys.gnupg.net state=present
+    when: ansible_os_family == "Debian"
+
+  - name: add the deb repo
+    apt_repository: repo='deb [arch=amd64] http://192.168.88.9/apt {{ansible_lsb.codename}} main testing' state=present update_cache=yes
+ #   apt_repository: repo='deb http://repo.percona.com/apt {{ansible_lsb.codename}} main testing' state=present update_cache=yes
+    when: ansible_os_family == "Debian"
+
+  - name: add the yum percona repos 
+    yum: name=https://www.percona.com/downloads/percona-release/redhat/0.1-4/percona-release-0.1-4.noarch.rpm state=present
+    when: ansible_os_family == "RedHat" and ansible_distribution_major_version|int >= 6
+
+  - name: epel 6 repo
+    yum: name=https://dl.fedoraproject.org/pub/epel/epel-release-latest-6.noarch.rpm state=present
+    when: ansible_os_family == "RedHat" and ansible_distribution_major_version == "6"
+
+  - name: epel 7 repo
+    yum: name=https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm state=present 
+    when: ansible_os_family == "RedHat" and ansible_distribution_major_version == "7"
+
+  - name: install deb packages 
+    apt: name={{item}} #update_cache=yes
+    with_items: 
+    - vim
+    - proxysql
+    - aptitude
+    when: ansible_os_family == "Debian"
+
+  - name: install packages in centos
+    yum: name={{item}} state=present #enablerepo=percona-testing-x86_64
+    with_items:
+    - libselinux-python
+    - proxysql
+    when: ansible_os_family == "RedHat"
+
+  - name: start proxysql service
+    service: name=proxysql state=started
+
+  - name: remove the Percona apt main repository
+    apt_repository: repo='deb [arch=amd64] http://192.168.88.9/apt {{ ansible_lsb.codename }} main' state=absent update_cache=yes
+    when: ansible_os_family == "Debian"
+
+  - name: enable deb testing repos
+    apt_repository: repo='deb [arch=amd64] http://192.168.88.9/apt {{ansible_lsb.codename}} main testing' state=present update_cache=yes
+    when: ansible_os_family == "Debian"
+
+  - name: run upgrade on Debian/Ubuntu
+    apt: upgrade=yes
+    when: ansible_os_family == "Debian"
+
+  - name: upgrade Percona Server to new rpm packages
+    yum: name={{item}} state=latest enablerepo=percona-testing-x86_64
+    with_items:
+    - proxysql
+    when: ansible_os_family == "RedHat"
+
+  - name: run version_check
+    command: /vagrant/version_check.sh proxysql
+
+  - name: stop proxysql service
+    service: name=proxysql state=stopped
+
+  - name: start proxysql service
+    service: name=proxysql state=started
+

@@ -32,3 +32,5 @@
               mode=0640 owner=mysql group=root
   # start mysql service
   - command: service mysql start
+  - name: version check
+    command: /vagrant/version_check.sh pxc56

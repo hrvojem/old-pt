@@ -6,6 +6,15 @@
   become_method: sudo
 
   tasks:
+
+  # find vm ip so that it can be used in templates
+  - debug: var=ansible_all_ipv4_addresses
+  - set_fact:
+      man_ip: "{{ item }}"
+    with_items: "{{ ansible_all_ipv4_addresses }}"
+    when: "item.startswith('192.168')"
+  - debug: var=man_ip
+
   # Add an Apt signing key, will not download if present
   - apt_key: id=CD2EFD2A keyserver=keys.gnupg.net state=present
   - apt_key: id=8507EFA5 keyserver=keys.gnupg.net state=present
@@ -36,6 +45,8 @@
     mysql_user: name=sstuser password=s3cretPass priv="*.*:RELOAD,PROCESS,LOCK TABLES,REPLICATION CLIENT" state=present
   - name: install plugins
     command: /vagrant/pxc_plugins_57.sh 
+  - name: run sysbench
+    command: /vagrant/sb.sh
 # - name: install 3rd party packages
 #   apt: name={{item}} 
 #   with_items:

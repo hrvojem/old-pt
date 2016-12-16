@@ -6,8 +6,19 @@
   become_method: sudo
 
   tasks:
+
+    # find vm ip so that it can be used in templates
+  - debug: var=ansible_all_ipv4_addresses
+  - set_fact:
+      man_ip: "{{ item }}"
+    with_items: "{{ ansible_all_ipv4_addresses }}"
+    when: "item.startswith('192.168')"
+  - debug: var=man_ip
+
+    # add old apt repo key
   - apt_key: id=CD2EFD2A keyserver=keys.gnupg.net state=present
 
+    # add new apt repo key
   - apt_key: id=8507EFA5 keyserver=keys.gnupg.net state=present
 
   - name: add the repo
