@@ -1,7 +1,7 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-playbook = "playbooks/proxysql_upgrade.yml"
+playbook = "playbooks/psmdb_34.yml"
 deb_distro = "bento/ubuntu-16.10"
 deb1_playbook = "playbooks/pxc57.yml"
 deb_common_playbook = "playbooks/pxc57_common.yml"
