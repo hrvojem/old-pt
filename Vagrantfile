@@ -1,13 +1,13 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-playbook = "playbooks/psmdb_34.yml"
-deb_distro = "bento/ubuntu-16.10"
-deb1_playbook = "playbooks/pxc57.yml"
+playbook = "playbooks/clean.yml"
+deb_distro = "bento/debian-7.11"
+deb1_playbook = "playbooks/pxc55.yml"
 deb_common_playbook = "playbooks/pxc57_common.yml"
 deb_garbd_playbook = "playbooks/pxc57_garbd.yml"
-rhel_distro = "bento/centos-7.2"
-rhel1_playbook = "playbooks/percona1_pxc57.yml"
+rhel_distro = "bento/centos-6.8"
+rhel1_playbook = "playbooks/percona1_pxc55.yml"
 rhel_playbook = "playbooks/percona2_pxc57.yml"
 rhel_garbd_playbook = "playbooks/percona4_pxc57.yml"
 
@@ -110,7 +110,7 @@ Vagrant.configure("2") do |config|
   end
 
   config.vm.define :centos7 do |centos7_config|
-    centos7_config.vm.box = "bento/centos-7.2"
+    centos7_config.vm.box = "bento/centos-7.3"
     config.vm.provision "ansible" do |ansible|
       ansible.playbook = playbook
       ansible.sudo = "true"
