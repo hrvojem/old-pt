@@ -10,6 +10,9 @@
   - apt_key: id=CD2EFD2A keyserver=keys.gnupg.net state=present
     when: ansible_os_family == "Debian"
 
+  - apt_key: id=8507EFA5 keyserver=keys.gnupg.net state=present
+    when: ansible_os_family == "Debian"
+
   - name: add the deb repo
     apt_repository: repo='deb [arch=amd64] http://192.168.88.9/apt {{ansible_lsb.codename}} main' state=present update_cache=yes
  #   apt_repository: repo='deb http://repo.percona.com/apt {{ansible_lsb.codename}} main testing' state=present update_cache=yes
@@ -32,8 +35,10 @@
     with_items: 
     - vim
     - pv
+    - aptitude
     - percona-server-server-5.6
     - percona-xtrabackup
+    - sysbench
     - percona-toolkit
     - percona-server-test-5.6
     - percona-server-5.6-dbg
@@ -46,6 +51,7 @@
     with_items:
     - libselinux-python
     - pv
+    - sysbench
     - Percona-Server-server-56
     - Percona-Server-test-56
     - Percona-Server-56-debuginfo
@@ -130,3 +136,9 @@
 
   - name: check that Percona Server 5.6 version is correct
     command: /vagrant/version_check.sh ps56
+
+  - name: check that Percona Server 5.6 package version is correct
+    command: /vagrant/package_check.sh ps56
+
+  - name: running sysbench
+    command: /vagrant/sb.sh

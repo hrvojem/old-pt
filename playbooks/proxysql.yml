@@ -14,7 +14,8 @@
     when: ansible_os_family == "Debian"
 
   - name: add the deb repo
-    apt_repository: repo='deb http://repo.percona.com/apt {{ansible_lsb.codename}} main' state=present update_cache=yes
+    apt_repository: repo='deb [arch=amd64] http://192.168.88.9/apt {{ansible_lsb.codename}} main' state=present update_cache=yes
+ #   apt_repository: repo='deb http://repo.percona.com/apt {{ansible_lsb.codename}} main testing' state=present update_cache=yes
     when: ansible_os_family == "Debian"
 
   - name: add the yum percona repos 
@@ -33,58 +34,21 @@
     apt: name={{item}} #update_cache=yes
     with_items: 
     - vim
-    - pv
-    - percona-server-server-5.5
-    - percona-xtrabackup
-    - percona-toolkit
-    - percona-server-test-5.5
-    - percona-server-5.5-dbg
-    - percona-server-source-5.5
-    - percona-nagios-plugins
-    - percona-cacti-templates
-    - percona-zabbix-templates
+    - proxysql
     when: ansible_os_family == "Debian"
 
   - name: install packages in centos
     yum: name={{item}} state=present #enablerepo=percona-testing-x86_64
     with_items:
     - libselinux-python
-    - pv
-    - Percona-Server-server-55
-    - Percona-Server-test-55
-    - Percona-Server-55-debuginfo
-    - Percona-Server-devel-55
-    - percona-toolkit
-    - percona-xtrabackup
-    - percona-zabbix-templates
-    - percona-nagios-plugins
-    - percona-cacti-templates
-
+    - proxysql
     when: ansible_os_family == "RedHat"
 
-  - command: /etc/init.d/mysql start
-    when: ansible_os_family == "RedHat" and ansible_distribution_major_version == "5"
-
-  - command: service mysql start
-    when: ansible_os_family == "RedHat" and ansible_distribution_major_version == "6"
-
-  - command: systemctl start mysql
-    when: ansible_os_family == "RedHat" and ansible_distribution_major_version == "7"
-
-  - name: install plugins
-    command: /vagrant/plugins_test_55.sh
-
-  - name: install 3rd party packages
-    apt: name={{item}}
-    with_items:
-    - rsyslog-mysql
-    when: ansible_os_family == "Debian"
+  - name: start proxysql service
+    service: name=proxysql state=started
 
   - name: run version_check
-    command: /vagrant/version_check.sh ps55
+    command: /vagrant/version_check.sh proxysql
 
-  - name: run package test
-    command: /vagrant/package_check.sh ps55
-
-  - name: check that Percona Toolkit version is correct
-    command: /vagrant/version_check.sh pt
+  - name: stop proxysql service
+    service: name=proxysql state=stopped

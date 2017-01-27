@@ -14,15 +14,15 @@
     when: ansible_os_family == "Debian"
 
   - name: add the deb repo
-    apt_repository: repo='deb [arch=amd64] http://192.168.88.9/apt {{ansible_lsb.codename}} main' state=present update_cache=yes
+    apt_repository: repo='deb [arch=amd64] http://192.168.88.9/apt {{ansible_lsb.codename}} main testing' state=present update_cache=yes
     when: ansible_os_family == "Debian"
   - name: install deb packages 
     apt: name={{item}} update_cache=yes
     with_items: 
     - vim
     - pv
-    - percona-server-mongodb-32
-    - percona-server-mongodb-32-dbg
+    - percona-server-mongodb-34
+    - percona-server-mongodb-34-dbg
     when: ansible_os_family == "Debian"
   - name: epel 6 repo
     yum: name=https://dl.fedoraproject.org/pub/epel/epel-release-latest-6.noarch.rpm state=present
@@ -34,13 +34,13 @@
     yum: name=http://www.percona.com/downloads/percona-release/redhat/0.1-4/percona-release-0.1-4.noarch.rpm
     when: ansible_os_family == "RedHat" and ansible_distribution_major_version|int >= 6 
   - name: install packages in centos
-    yum: name={{item}} state=present #enablerepo=percona-testing-x86_64
+    yum: name={{item}} state=present enablerepo=percona-testing-x86_64
     with_items:
     - redhat-lsb
     - libselinux-python
     - pv
-    - Percona-Server-MongoDB-32
-    - Percona-Server-MongoDB-32-debuginfo
+    - Percona-Server-MongoDB-34
+    - Percona-Server-MongoDB-34-debuginfo
     when: ansible_os_family == "RedHat"
   - name: start mongodb
     command: /etc/init.d/mongod start
@@ -51,8 +51,8 @@
     when: ansible_os_family == "RedHat" and ansible_distribution_major_version == "7"
 
   - name: run psmdb_test
-    command: /vagrant/psmdb_test.sh
+    command: /vagrant/psmdb_test_34.sh
 
   - name: run package_test
-    command: /vagrant/package_check.sh psmdb32
+    command: /vagrant/package_check.sh psmdb34
 

@@ -2,31 +2,14 @@
 # vi: set ft=ruby :
 
 playbook = "playbooks/clean.yml"
-deb_distro = "geerlingguy/ubuntu1604"
-#deb_distro = "bento/debian-8.5"
-deb1_playbook = "playbooks/pxc57.yml"
+deb_distro = "bento/debian-7.11"
+deb1_playbook = "playbooks/pxc55.yml"
 deb_common_playbook = "playbooks/pxc57_common.yml"
-deb_garbd_playbook = "playbooks/pxc56_garbd.yml"
-rhel_distro = "bento/centos-7.2"
-rhel1_playbook = "playbooks/percona1_pxc57.yml"
+deb_garbd_playbook = "playbooks/pxc57_garbd.yml"
+rhel_distro = "bento/centos-6.8"
+rhel1_playbook = "playbooks/percona1_pxc55.yml"
 rhel_playbook = "playbooks/percona2_pxc57.yml"
-rhel_garbd_playbook = "playbooks/percona4_pxc56.yml"
-
-$percona1_configure_static_ip = <<SCRIPT
-echo configuring eth1
-sudo su
-MAC_ADDR=$(cat /sys/class/net/eth1/address)
-/sbin/ifdown eth1
-cat > /etc/sysconfig/network-scripts/ifcfg-eth1 <<'_EOF'
-DEVICE=eth1
-BOOTPROTO=static
-ONBOOT=yes
-HWADDR=$MAC_ADDR
-IPADDR=192.168.70.72
-NETMASK=255.255.255.0
-_EOF
-/sbin/ifup eth1
-SCRIPT
+rhel_garbd_playbook = "playbooks/percona4_pxc57.yml"
 
 Vagrant.configure("2") do |config|
   # All Vagrant configuration is done here. The most pxb configuration
@@ -44,7 +27,7 @@ Vagrant.configure("2") do |config|
   end
 
   config.vm.define :jessie do |jessie_config|
-    jessie_config.vm.box = "bento/debian-8.5"
+    jessie_config.vm.box = "bento/debian-8.6"
     config.vm.provision "ansible" do |ansible|
       ansible.playbook = playbook
       ansible.sudo = "true"
@@ -79,15 +62,15 @@ Vagrant.configure("2") do |config|
     end
   end
 
-  config.vm.define :wily do |wily_config|
+  config.vm.define :yakkety do |yakkety_config|
     config.vm.provision "ansible" do |ansible|
       ansible.playbook = playbook
       ansible.sudo = "true"
       ansible.host_key_checking = "false"
     end
-    wily_config.vm.box = "bento/ubuntu-15.10"
-    wily_config.vm.host_name = "wily"
-    wily_config.vm.provider :virtualbox do |vb|
+    yakkety_config.vm.box = "bento/ubuntu-16.10"
+    yakkety_config.vm.host_name = "yakkety"
+    yakkety_config.vm.provider :virtualbox do |vb|
       vb.customize ["modifyvm", :id, "--memory", "1024", "--ioapic", "on" ]
     end
   end
@@ -127,7 +110,7 @@ Vagrant.configure("2") do |config|
   end
 
   config.vm.define :centos7 do |centos7_config|
-    centos7_config.vm.box = "bento/centos-7.2"
+    centos7_config.vm.box = "bento/centos-7.3"
     config.vm.provision "ansible" do |ansible|
       ansible.playbook = playbook
       ansible.sudo = "true"
@@ -209,8 +192,6 @@ Vagrant.configure("2") do |config|
        percona1_config.vm.box = rhel_distro
        percona1_config.vm.host_name = "percona1"
        percona1_config.vm.network :private_network, ip: "192.168.70.71"
-#       percona1_config.vm.network :private_network, ip: "192.168.70.71", auto_config: false
-#       config.vm.provision "shell", inline: $percona1_configure_static_ip
   end
   config.vm.define :percona2 do |percona2_config|
        if rhel_distro == "bento/centos-5.11" then
@@ -224,8 +205,6 @@ Vagrant.configure("2") do |config|
        percona2_config.vm.box = rhel_distro
        percona2_config.vm.host_name = "percona2"
        percona2_config.vm.network :private_network, ip: "192.168.70.72"
-#       percona2_config.vm.network :private_network, ip: "192.168.70.72", auto_config: false
-#       config.vm.provision "shell", inline: $percona1_configure_static_ip
   end
   config.vm.define :percona3 do |percona3_config|
         if rhel_distro == "bento/centos-5.11" then
@@ -255,13 +234,9 @@ Vagrant.configure("2") do |config|
         percona4_config.vm.network :private_network, ip: "192.168.70.74"
   end
 
-
   config.vm.define :freebsd do |freebsd_config|
-    freebsd_config.vm.box = "bento/freebsd-10.3"
+    freebsd_config.vm.box = "bento/freebsd-11.0"
     freebsd_config.vm.host_name = "freebsd"
   end
 
-
 end
-
-
