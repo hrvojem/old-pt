@@ -44,5 +44,5 @@ else
 	dpkg -l | grep percona
 fi
 
-
+ps auxwww | grep mysql | grep -v grep
 

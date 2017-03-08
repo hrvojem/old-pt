@@ -9,4 +9,4 @@ mysql -e "INSTALL PLUGIN handlersocket SONAME 'handlersocket.so';"
 mysql -e "INSTALL PLUGIN scalability_metrics SONAME 'scalability_metrics.so';"
 mysql -e "SHOW PLUGINS;"
 mysql -e "CREATE DATABASE world;"
-pv /vagrant/world_innodb.sql | mysql -D world
+cat /vagrant/world_innodb.sql | mysql -D world

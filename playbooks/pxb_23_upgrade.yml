@@ -34,15 +34,11 @@
     - vim
     - sysbench
     - pv
+    - percona-toolkit
     - percona-server-server-5.6
     - percona-xtrabackup
     - percona-xtrabackup-test
     - percona-xtrabackup-dbg
-    - percona-toolkit
-    - percona-server-test-5.6
-    - percona-server-5.6-dbg
-    - percona-server-source-5.6
-    - percona-server-tokudb-5.6
     when: ansible_os_family == "Debian"
 
   - name: install packages in centos
@@ -51,11 +47,7 @@
     - libselinux-python
     - sysbench
     - Percona-Server-server-56
-    - Percona-Server-test-56
-    - Percona-Server-56-debuginfo
-    - Percona-Server-devel-56
-    - Percona-Server-tokudb-56
-    # percona-toolkit
+    - percona-toolkit
     - percona-xtrabackup
     - percona-xtrabackup-test
     - percona-xtrabackup-debuginfo
@@ -70,35 +62,43 @@
   - command: systemctl start mysql
     when: ansible_os_family == "RedHat" and ansible_distribution_major_version == "7"
 
-  - name: install tokudb
-    command: /usr/bin/ps_tokudb_admin --enable
+  - name: install plugins
+    command: /vagrant/plugins_test_55.sh
 
-  - service: name=mysqld state=restarted
-    when: ansible_os_family == "RedHat" and ansible_distribution_major_version == "7"
+  - name: running sysbench
+    command: /vagrant/sb.sh
 
-  - service: name=mysql state=restarted
-    when: ansible_os_family == "RedHat" and ansible_distribution_major_version == "6"
+  - name: run backup
+    command: /usr/bin/xtrabackup --backup --user=root --target-dir=/tmp/backups/
 
-  - service: name=mysql state=restarted
-    when: ansible_os_family == "RedHat" and ansible_distribution_major_version == "5"
-
-  - service: name=mysql state=restarted
+  - name: remove the Percona apt main repository
+    apt_repository: repo='deb http://repo.percona.com/apt {{ ansible_lsb.codename }} main' state=absent update_cache=yes
     when: ansible_os_family == "Debian"
 
-  - name: install tokudb
-    command: /usr/bin/ps_tokudb_admin --enable
+  - name: enable deb testing repos
+    apt_repository: repo='deb http://repo.percona.com/apt {{ ansible_lsb.codename }} main testing' state=absent update_cache=yes
+    when: ansible_os_family == "Debian"
 
-  - name: install plugins
-    command: /vagrant/plugins_test_56.sh
+  - name: run upgrade on Debian/Ubuntu
+    apt: upgrade=yes
+    when: ansible_os_family == "Debian"
 
-  - name: version check
-    command: /vagrant/version_check.sh ps56
-
-  - name: Percona Server 5.6 package version check
-    command: /vagrant/package_check.sh ps56
+  - name: upgrade Percona Server to new rpm packages
+    yum: name={{item}} state=latest enablerepo=percona-testing-x86_64
+    with_items:
+    - percona-xtrabackup
+    - percona-xtrabackup-test
+    - percona-xtrabackup-debuginfo
+    when: ansible_os_family == "RedHat"
 
   - name: PXB-2.3 package version check
     command: /vagrant/package_check.sh pxb23
 
-  - name: running sysbench
-    command: /vagrant/sb.sh
+  - name: prepare older version backup
+    command: /usr/bin/xtrabackup --prepare --target-dir=/tmp/backups/
+
+  - name: run backup with new PXB version
+    command: /usr/bin/xtrabackup --backup --user=root --target-dir=/tmp/backups_upgrade/
+
+  - name: prepare new version backup
+    command: /usr/bin/xtrabackup --prepare --target-dir=/tmp/backups_upgrade/

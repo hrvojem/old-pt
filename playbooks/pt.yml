@@ -36,12 +36,9 @@
     - percona-server-server-5.5
     - percona-xtrabackup
     - percona-toolkit
-    - percona-server-test-5.5
-    - percona-server-5.5-dbg
-    - percona-server-source-5.5
-    - percona-nagios-plugins
-    - percona-cacti-templates
-    - percona-zabbix-templates
+    - pmm-client
+#   - percona-server-mongodb-34
+#   - mongodb-server
     when: ansible_os_family == "Debian"
 
   - name: install packages in centos
@@ -49,15 +46,11 @@
     with_items:
     - libselinux-python
     - Percona-Server-server-55
-    - Percona-Server-test-55
-    - Percona-Server-55-debuginfo
-    - Percona-Server-devel-55
     - percona-toolkit
+    - pmm-client
     - percona-xtrabackup
-    - percona-zabbix-templates
-    - percona-nagios-plugins
-    - percona-cacti-templates
-
+#   - Percona-Server-MongoDB-32
+#   - mongodb-server
     when: ansible_os_family == "RedHat"
 
   - command: /etc/init.d/mysql start

@@ -1,15 +1,15 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-playbook = "playbooks/clean.yml"
+playbook = "playbooks/psmdb_32.yml"
 deb_distro = "bento/debian-7.11"
-deb1_playbook = "playbooks/pxc55.yml"
+deb1_playbook = "playbooks/pxc57.yml"
 deb_common_playbook = "playbooks/pxc57_common.yml"
 deb_garbd_playbook = "playbooks/pxc57_garbd.yml"
 rhel_distro = "bento/centos-6.8"
-rhel1_playbook = "playbooks/percona1_pxc55.yml"
+rhel1_playbook = "playbooks/percona1_pxc57.yml"
 rhel_playbook = "playbooks/percona2_pxc57.yml"
-rhel_garbd_playbook = "playbooks/percona4_pxc57.yml"
+rhel_garbd_playbook = "playbooks/percona4_pxc56.yml"
 
 Vagrant.configure("2") do |config|
   # All Vagrant configuration is done here. The most pxb configuration
@@ -18,6 +18,7 @@ Vagrant.configure("2") do |config|
 
   config.vm.define :wheezy do |wheezy_config|
     wheezy_config.vm.box = "bento/debian-7.11"
+#   wheezy_config.vm.box = "bento/debian-7.11-i386"
     config.vm.provision "ansible" do |ansible|
       ansible.playbook = playbook
       ansible.sudo = "true"
@@ -27,7 +28,8 @@ Vagrant.configure("2") do |config|
   end
 
   config.vm.define :jessie do |jessie_config|
-    jessie_config.vm.box = "bento/debian-8.6"
+    jessie_config.vm.box = "bento/debian-8.7"
+#   jessie_config.vm.box = "bento/debian-8.7-i386"
     config.vm.provision "ansible" do |ansible|
       ansible.playbook = playbook
       ansible.sudo = "true"
@@ -51,6 +53,7 @@ Vagrant.configure("2") do |config|
 
   config.vm.define :trusty do |trusty_config|
     trusty_config.vm.box = "bento/ubuntu-14.04"
+#   trusty_config.vm.box = "bento/ubuntu-14.04-i386"
     config.vm.provision "ansible" do |ansible|
       ansible.playbook = playbook
       ansible.sudo = "true"
@@ -76,6 +79,8 @@ Vagrant.configure("2") do |config|
   end
 
   config.vm.define :xenial do |xenial_config|
+    xenial_config.vm.box = "bento/ubuntu-16.04"
+#   xenial_config.vm.box = "bento/ubuntu-16.04-i386"
     config.vm.provision "ansible" do |ansible|
       ansible.playbook = playbook
       ansible.sudo = "true"
@@ -84,12 +89,12 @@ Vagrant.configure("2") do |config|
     xenial_config.vm.provider :virtualbox do |vb|
       vb.customize ["modifyvm", :id, "--memory", "2048", "--ioapic", "on" ]
     end
-    xenial_config.vm.box = "bento/ubuntu-16.04"
     xenial_config.vm.host_name = "xenial"
   end
 
   config.vm.define :centos6 do |centos6_config|
     centos6_config.vm.box = "bento/centos-6.8"
+#   centos6_config.vm.box = "bento/centos-6.8-i386"
     config.vm.provision "ansible" do |ansible|
       ansible.playbook = playbook
       ansible.sudo = "true"
@@ -117,11 +122,6 @@ Vagrant.configure("2") do |config|
       ansible.host_key_checking = "false"
     end
     centos7_config.vm.host_name = "centos7"
-  end
-
-  config.vm.define :rhcsa do |rhcsa_config|
-    rhcsa_config.vm.box = "bento/centos-7.2"
-    rhcsa_config.vm.host_name = "centos7"
   end
 
   config.vm.define :pxc1 do |pxc1_config|

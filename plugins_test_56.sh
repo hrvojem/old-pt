@@ -11,9 +11,10 @@ mysql -e "INSTALL PLUGIN QUERY_RESPONSE_TIME SONAME 'query_response_time.so';"
 mysql -e "INSTALL PLUGIN QUERY_RESPONSE_TIME_READ SONAME 'query_response_time.so';"
 mysql -e "INSTALL PLUGIN QUERY_RESPONSE_TIME_WRITE SONAME 'query_response_time.so';"
 mysql -e "INSTALL PLUGIN scalability_metrics SONAME 'scalability_metrics.so';"
+mysql -e "INSTALL PLUGIN connection_control SONAME 'connection_control.so';"
 mysql -e "SHOW PLUGINS;"
 mysql -e "CREATE DATABASE world;"
 mysql -e "CREATE DATABASE world2;"
-pv /vagrant/world_innodb.sql | mysql -D world
-pv /vagrant/world_innodb.sql | mysql -D world2
-#mysql < /vagrant/tokudb_compression.sql
+cat /vagrant/world_innodb.sql | mysql -D world
+cat /vagrant/world_innodb.sql | mysql -D world2
+mysql < /vagrant/tokudb_compression.sql

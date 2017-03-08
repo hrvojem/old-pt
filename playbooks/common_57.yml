@@ -59,10 +59,14 @@
     - percona-xtrabackup-24
     when: ansible_os_family == "RedHat"
 
-  - name: start the MySQL service
-    command: service mysql start
+  - service: name=mysql state=started
     when: ansible_os_family == "RedHat"
 
+# - name: copy group replication settings
+#   template: src=/home/hrvoje/worktable/package-testing/templates/group_replication.j2
+#             dest=/etc/mysql/percona-server.conf.d/gr.cnf
+#   when: ansible_os_family == "Debian"
+ 
   - name: set root password
     command: /vagrant/setpass_57.sh
     when: ansible_os_family == "RedHat"
@@ -80,10 +84,7 @@
     command: /usr/bin/ps_tokudb_admin --enable-backup
 
   - service: name=mysql state=restarted
-    when: ansible_os_family == "RedHat" and ansible_distribution_major_version == "6"
-
-  - service: name=mysqld state=restarted
-    when: ansible_os_family == "RedHat" and ansible_distribution_major_version == "7"
+    when: ansible_os_family == "RedHat"
 
   - service: name=mysql state=restarted
     when: ansible_os_family == "Debian"
@@ -102,6 +103,9 @@
 
   - name: Percona Server 5.7 package version check
     command: /vagrant/package_check.sh ps57
+
+  - name: install GR plugin
+    command: /vagrant/gr.sh
 
   - name: PXB-2.4 package version check
     command: /vagrant/package_check.sh pxb24

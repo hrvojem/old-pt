@@ -13,7 +13,7 @@
     when: ansible_os_family == "Debian"
 
   - name: add the deb repo
-    apt_repository: repo='deb http://repo.percona.com/apt {{ansible_lsb.codename}} main' state=present update_cache=yes
+    apt_repository: repo='deb http://repo.percona.com/apt {{ansible_lsb.codename}} main testing' state=present update_cache=yes
     when: ansible_os_family == "Debian"
 
   - name: add the yum percona repos 
@@ -39,23 +39,15 @@
     - percona-xtrabackup-test
     - percona-xtrabackup-dbg
     - percona-toolkit
-    - percona-server-test-5.6
-    - percona-server-5.6-dbg
-    - percona-server-source-5.6
-    - percona-server-tokudb-5.6
     when: ansible_os_family == "Debian"
 
   - name: install packages in centos
-    yum: name={{item}} state=present #enablerepo=percona-testing-x86_64
+    yum: name={{item}} state=present enablerepo=percona-testing-x86_64
     with_items:
     - libselinux-python
     - sysbench
     - Percona-Server-server-56
-    - Percona-Server-test-56
-    - Percona-Server-56-debuginfo
-    - Percona-Server-devel-56
-    - Percona-Server-tokudb-56
-    # percona-toolkit
+    - percona-toolkit
     - percona-xtrabackup
     - percona-xtrabackup-test
     - percona-xtrabackup-debuginfo
@@ -70,35 +62,17 @@
   - command: systemctl start mysql
     when: ansible_os_family == "RedHat" and ansible_distribution_major_version == "7"
 
-  - name: install tokudb
-    command: /usr/bin/ps_tokudb_admin --enable
-
-  - service: name=mysqld state=restarted
-    when: ansible_os_family == "RedHat" and ansible_distribution_major_version == "7"
-
-  - service: name=mysql state=restarted
-    when: ansible_os_family == "RedHat" and ansible_distribution_major_version == "6"
-
-  - service: name=mysql state=restarted
-    when: ansible_os_family == "RedHat" and ansible_distribution_major_version == "5"
-
-  - service: name=mysql state=restarted
-    when: ansible_os_family == "Debian"
-
-  - name: install tokudb
-    command: /usr/bin/ps_tokudb_admin --enable
-
   - name: install plugins
-    command: /vagrant/plugins_test_56.sh
-
-  - name: version check
-    command: /vagrant/version_check.sh ps56
-
-  - name: Percona Server 5.6 package version check
-    command: /vagrant/package_check.sh ps56
+    command: /vagrant/plugins_test_55.sh
 
   - name: PXB-2.3 package version check
     command: /vagrant/package_check.sh pxb23
 
   - name: running sysbench
     command: /vagrant/sb.sh
+
+  - name: run backup
+    command: /usr/bin/xtrabackup --backup --user=root --target-dir=/tmp/backups/
+
+  - name: prepare backup
+    command: /usr/bin/xtrabackup --prepare --target-dir=/tmp/backups/
