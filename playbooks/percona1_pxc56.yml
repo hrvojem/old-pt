@@ -6,6 +6,12 @@
   become_method: sudo
 
   tasks:
+  - debug: var=ansible_all_ipv4_addresses
+  - set_fact:
+      man_ip: "{{ item }}"
+    with_items: "{{ ansible_all_ipv4_addresses }}"
+    when: "item.startswith('192.168')"
+  - debug: var=man_ip
   - name: remove mysql-libs
     yum: name=mysql-libs state=absent
   - name: install stuff

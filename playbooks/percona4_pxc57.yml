@@ -31,4 +31,4 @@
   - name: install PXC
     yum: name={{item}} state=present enablerepo=percona-testing-x86_64
     with_items:
-    - 
+    - Percona-XtraDB-Cluster-garbd-57

@@ -39,7 +39,7 @@
   - name: install PXC
     yum: name={{item}} state=present #enablerepo=percona-testing-x86_64
     with_items:
-    - Percona-XtraDB-Cluster-full-57.x86_64 
+    - Percona-XtraDB-Cluster-57.x86_64 
     - pv 
     - MySQL-python 
     - sysbench

@@ -6,6 +6,12 @@
   become_method: sudo
 
   tasks:
+  - debug: var=ansible_all_ipv4_addresses
+  - set_fact:
+      man_ip: "{{ item }}"
+    with_items: "{{ ansible_all_ipv4_addresses }}"
+    when: "item.startswith('192.168')"
+  - debug: var=man_ip
   # Add an Apt signing key, will not download if present
   - apt_key: id=CD2EFD2A keyserver=keyserver.ubuntu.com state=present
 
@@ -13,8 +19,7 @@
   - apt_key: id=8507EFA5 keyserver=keys.gnupg.net state=present
 
   - name: add the repo
-    apt_repository: repo='deb [arch=amd64] http://192.168.88.9/apt {{ansible_lsb.codename}} main testing' state=present
-#    apt_repository: repo='deb http://repo.percona.com/apt {{ansible_lsb.codename}} main testing' state=present
+    apt_repository: repo='deb http://repo.percona.com/apt {{ansible_lsb.codename}} main testing' state=present
 # - apt_key: id=CD2EFD2A keyserver=keys.gnupg.net state=present
   - name: install galera, vim, pv, python-mysqldb, pxc-56
     apt: name={{ item }} update_cache=yes
