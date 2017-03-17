@@ -2,6 +2,7 @@
 # This playbook sets up the mongodb-org repo and installs mongodb
 
 - hosts: all
+  name: Prepare a clean machine with percona (and EPEL) repo(s) installed
   become: true
   become_method: sudo
 
@@ -11,9 +12,9 @@
     when: ansible_os_family == "Debian"
   - apt_key: id=8507EFA5 keyserver=keys.gnupg.net state=present
     when: ansible_os_family == "Debian"
-# - name: add the deb repo
-#   apt_repository: repo='deb http://repo.percona.com/apt {{ansible_lsb.codename}} main' state=present update_cache=yes
-#   when: ansible_os_family == "Debian"
+  - name: add the deb repo
+    apt_repository: repo='deb http://repo.percona.com/apt {{ansible_lsb.codename}} main testing' state=present update_cache=yes
+    when: ansible_os_family == "Debian"
   - name: install deb packages 
     apt: name={{item}} update_cache=yes
     with_items: 
@@ -23,9 +24,9 @@
   - name: epel 6 repo
     yum: name=https://dl.fedoraproject.org/pub/epel/epel-release-latest-6.noarch.rpm state=present
     when: ansible_os_family == "RedHat" and ansible_distribution_major_version == "6"
-  - name: epel 7 repo
-    yum: name=https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm state=present
-    when: ansible_os_family == "RedHat" and ansible_distribution_major_version == "7"
+# - name: epel 7 repo
+#   yum: name=https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm state=present
+#   when: ansible_os_family == "RedHat" and ansible_distribution_major_version == "7"
   - name: add the yum percona repos
     yum: name=http://www.percona.com/downloads/percona-release/redhat/0.1-4/percona-release-0.1-4.noarch.rpm
     when: ansible_os_family == "RedHat" and ansible_distribution_major_version|int >= 6

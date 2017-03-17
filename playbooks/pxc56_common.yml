@@ -6,21 +6,23 @@
   become_method: sudo
 
   tasks:
-  - debug: var=ansible_all_ipv4_addresses
+ 
+# - debug: var=ansible_all_ipv4_addresses
   - set_fact:
       man_ip: "{{ item }}"
     with_items: "{{ ansible_all_ipv4_addresses }}"
     when: "item.startswith('192.168')"
-  - debug: var=man_ip
-  # Add an Apt signing key, will not download if present
-  - apt_key: id=CD2EFD2A keyserver=keyserver.ubuntu.com state=present
+# - debug: var=man_ip
+ 
+  - name: Add an Apt signing key, will not download if present
+    apt_key: id=CD2EFD2A keyserver=keyserver.ubuntu.com state=present
 
-  # Add new apt signing key
-  - apt_key: id=8507EFA5 keyserver=keys.gnupg.net state=present
+  - name: Add new apt signing key
+    apt_key: id=8507EFA5 keyserver=keys.gnupg.net state=present
 
   - name: add the repo
     apt_repository: repo='deb http://repo.percona.com/apt {{ansible_lsb.codename}} main testing' state=present
-# - apt_key: id=CD2EFD2A keyserver=keys.gnupg.net state=present
+
   - name: install galera, vim, pv, python-mysqldb, pxc-56
     apt: name={{ item }} update_cache=yes
     with_items: 
@@ -29,13 +31,17 @@
     - pv
     - python-mysqldb
     - percona-xtradb-cluster-56
-  # stop mysql service
-  - service: name=mysql pattern=/usr/bin/mysqld_safe state=stopped 
+
+  - name: stop mysql service
+    service: name=mysql pattern=/usr/bin/mysqld_safe state=stopped 
+
   - name: configure PXC
     template: src=/home/hrvoje/worktable/package-testing/templates/my.j2 
               dest=/etc/mysql/my.cnf
               mode=0640 owner=mysql group=root
-  # start mysql service
-  - command: service mysql start
+
+  - name: start mysql service
+    command: service mysql start
+
   - name: version check
     command: /vagrant/version_check.sh pxc56

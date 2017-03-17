@@ -2,24 +2,29 @@
 # This playbook sets up the first PXC node from percona repo
 
 - hosts: all
+  name: install and set up the first PXC node from the main percona repo
   become: true
   become_method: sudo
 
   tasks:
 
   # find vm ip so that it can be used in templates
-  - debug: var=ansible_all_ipv4_addresses
+# - debug: var=ansible_all_ipv4_addresses
   - set_fact:
       man_ip: "{{ item }}"
     with_items: "{{ ansible_all_ipv4_addresses }}"
     when: "item.startswith('192.168')"
-  - debug: var=man_ip
+# - debug: var=man_ip
 
-  # Add an Apt signing key, will not download if present
-  - apt_key: id=CD2EFD2A keyserver=keys.gnupg.net state=present
-  - apt_key: id=8507EFA5 keyserver=keys.gnupg.net state=present
+  - name: Add the old apt signing key, will not download if present
+    apt_key: id=CD2EFD2A keyserver=keys.gnupg.net state=present
+
+  - name: Add the new apt signing key, will not download if present
+    apt_key: id=8507EFA5 keyserver=keys.gnupg.net state=present
+
   - name: add the repo
     apt_repository: repo='deb http://repo.percona.com/apt {{ansible_lsb.codename}} main' state=present
+
   - name: install vim, pv, python-mysqldb, and PXC-5.7
     apt: name={{item}} update_cache=yes
     with_items:
@@ -30,20 +35,27 @@
     - sysbench
     - python-mysqldb
 #   - percona-xtradb-cluster-57
-  # stop mysql service
-  - service: name=mysql pattern=/usr/bin/mysqld_safe state=stopped 
+ 
+  - name: stop mysql service
+    service: name=mysql pattern=/usr/bin/mysqld_safe state=stopped 
+
   - name: configure PXC
     template: src=/home/hrvoje/worktable/package-testing/templates/my.j2 
               dest=/etc/mysql/my.cnf
               mode=0640 owner=mysql group=root
+
   - name: bootstrap the cluster
     command: service mysql bootstrap-pxc
+
   - name: add sstuser
     mysql_user: name=sstuser password=s3cretPass priv="*.*:RELOAD,PROCESS,LOCK TABLES,REPLICATION CLIENT" state=present
+
   - name: install plugins
     command: /vagrant/pxc_plugins_57.sh 
-  - name: run sysbench
-    command: /vagrant/sb.sh
+
+# - name: run sysbench
+#   command: /vagrant/sb.sh
+
 # - name: install 3rd party packages
 #   apt: name={{item}} 
 #   with_items:

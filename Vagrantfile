@@ -1,12 +1,12 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-playbook = "playbooks/clean.yml"
-deb_distro = "bento/debian-8.7"
-deb1_playbook = "playbooks/pxc56.yml"
+playbook = "playbooks/common_56.yml"
+deb_distro = "bento/ubuntu-16.10"
+deb1_playbook = "playbooks/pxc57.yml"
 deb_common_playbook = "playbooks/pxc57_common.yml"
 deb_garbd_playbook = "playbooks/pxc57_garbd.yml"
-rhel_distro = "bento/centos-7.3"
+rhel_distro = "bento/centos-6.8"
 rhel1_playbook = "playbooks/percona1_pxc57.yml"
 rhel_playbook = "playbooks/percona2_pxc57.yml"
 rhel_garbd_playbook = "playbooks/percona4_pxc57.yml"
@@ -133,7 +133,7 @@ Vagrant.configure("2") do |config|
     pxc1_config.vm.box = deb_distro
     pxc1_config.vm.host_name = "pxc1"
     pxc1_config.vm.provider :virtualbox do |vb|
-      vb.customize ["modifyvm", :id, "--memory", "2048", "--ioapic", "on" ]
+      vb.customize ["modifyvm", :id, "--memory", "3072", "--ioapic", "on" ]
     end
     pxc1_config.vm.network :private_network, ip: "192.168.70.61"
   end
