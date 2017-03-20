@@ -14,7 +14,7 @@
     when: ansible_os_family == "Debian"
 
   - name: add the deb repo
-    apt_repository: repo='deb http://repo.percona.com/apt {{ansible_lsb.codename}} main' state=present update_cache=yes
+    apt_repository: repo='deb http://repo.percona.com/apt {{ansible_lsb.codename}} main testing' state=present update_cache=yes
     when: ansible_os_family == "Debian"
 
   - name: add the yum percona repos 
@@ -45,7 +45,7 @@
     when: ansible_os_family == "Debian"
 
   - name: install packages in centos
-    yum: name={{item}} state=present #enablerepo=percona-testing-x86_64
+    yum: name={{item}} state=present enablerepo=percona-testing-x86_64
     with_items:
     - libselinux-python
     - Percona-Server-server-55
@@ -56,7 +56,7 @@
     - percona-xtrabackup
     - percona-zabbix-templates
     - percona-nagios-plugins
-    - percona-cacti-templates
+#   - percona-cacti-templates
 
     when: ansible_os_family == "RedHat"
 
