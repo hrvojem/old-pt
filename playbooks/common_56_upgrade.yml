@@ -109,11 +109,11 @@
     when: ansible_os_family == "Debian"
 
   - name: remove the Percona apt main repository
-    apt_repository: repo='deb [arch=amd64] http://192.168.88.9/apt {{ ansible_lsb.codename }} main' state=absent update_cache=yes
+    apt_repository: repo='deb http://repo.percona.com/apt {{ ansible_lsb.codename }} main' state=absent update_cache=yes
     when: ansible_os_family == "Debian"
 
   - name: enable deb testing repos
-    apt_repository: repo='deb [arch=amd64] http://192.168.88.9/apt {{ansible_lsb.codename}} main testing' state=present update_cache=yes
+    apt_repository: repo='deb [arch=amd64] http://repo.percona.com/apt {{ansible_lsb.codename}} main testing' state=present update_cache=yes
     when: ansible_os_family == "Debian" 
 
   - name: run upgrade on Debian/Ubuntu

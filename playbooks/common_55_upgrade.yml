@@ -14,8 +14,7 @@
     when: ansible_os_family == "Debian"
 
   - name: add the deb repo
-    apt_repository: repo='deb [arch=amd64] http://192.168.88.9/apt {{ansible_lsb.codename}} main' state=present update_cache=yes
- #   apt_repository: repo='deb http://repo.percona.com/apt {{ansible_lsb.codename}} main testing' state=present update_cache=yes
+    apt_repository: repo='deb http://repo.percona.com/apt {{ansible_lsb.codename}} main' state=present update_cache=yes
     when: ansible_os_family == "Debian"
 
   - name: add the yum percona repos 
@@ -46,19 +45,14 @@
     when: ansible_os_family == "Debian"
 
   - name: install packages in centos
-    yum: name={{item}} state=present #enablerepo=percona-testing-x86_64
+    yum: name={{item}} state=present 
     with_items:
-    - libselinux-python
-    - sysbench
-    - pv
     - Percona-Server-server-55
     - Percona-Server-test-55
     - Percona-Server-55-debuginfo
     - Percona-Server-devel-55
     - Percona-Server-shared-55
     - Percona-Server-client-55
-    - percona-toolkit
-    - percona-xtrabackup
     when: ansible_os_family == "RedHat"
 
   - name: start mysql service with init scrip
@@ -73,24 +67,21 @@
     command: systemctl start mysql
     when: ansible_os_family == "RedHat" and ansible_distribution_major_version == "7"
 
-  - name: install 3rd party packages
-    apt: name={{item}}
-    with_items:
-    - rsyslog-mysql
-    when: ansible_os_family == "Debian"
+  - name: install plugins
+    command: /vagrant/plugins_test_55.sh
 
   - name: remove the Percona apt main repository
-    apt_repository: repo='deb [arch=amd64] http://192.168.88.9/apt {{ ansible_lsb.codename }} main' state=absent update_cache=yes
+    apt_repository: repo='deb http://repo.percona.com/apt {{ ansible_lsb.codename }} main' state=absent update_cache=yes
     when: ansible_os_family == "Debian"
 
   - name: enable deb testing repos
-    apt_repository: repo='deb [arch=amd64] http://192.168.88.9/apt {{ansible_lsb.codename}} main testing' state=present update_cache=yes
-    when: ansible_os_family == "Debian" 
+    apt_repository: repo='deb http://repo.percona.com/apt {{ansible_lsb.codename}} main testing' state=present update_cache=yes
+    when: ansible_os_family == "Debian"
 
   - name: run upgrade on Debian/Ubuntu
     apt: upgrade=yes
-    when: ansible_os_family == "Debian" 
-    
+    when: ansible_os_family == "Debian"
+
   - name: upgrade Percona Server to new rpm packages
     yum: name={{item}} state=latest enablerepo=percona-testing-x86_64
     with_items:
@@ -102,13 +93,13 @@
     - Percona-Server-client-55
     when: ansible_os_family == "RedHat"
 
-  - name: install plugins
-    command: /vagrant/plugins_test_55.sh
-
+  - name: run mysql_upgrade for CentOS
+    command: mysql_upgrade
+    when: ansible_os_family == "RedHat"
   - name: check that Percona Server 5.5 version is correct
     command: /vagrant/version_check.sh ps55
 
-  - name: check that coorect Percona Server 5.5 packages are installed
+  - name: check that correct Percona Server 5.5 packages are installed
     command: /vagrant/package_check.sh ps55
 
   - name: run sysbench
