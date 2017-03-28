@@ -46,7 +46,7 @@
     when: ansible_os_family == "Debian"
 
   - name: install packages in centos
-    yum: name={{item}} state=present #enablerepo=percona-testing-x86_64 
+    yum: name={{item}} state=present  #enablerepo=percona-testing-x86_64 
     with_items:
     - libselinux-python
     - pv
@@ -57,6 +57,8 @@
     - Percona-Server-tokudb-57
     - percona-toolkit
     - percona-xtrabackup-24
+    - percona-xtrabackup-test-24
+    - percona-xtrabackup-24-debuginfo
     when: ansible_os_family == "RedHat"
 
   - service: name=mysql state=started
