@@ -64,10 +64,10 @@
   - service: name=mysql state=started
     when: ansible_os_family == "RedHat"
 
-# - name: copy group replication settings
-#   template: src=/home/hrvoje/worktable/package-testing/templates/group_replication.j2
-#             dest=/etc/mysql/percona-server.conf.d/gr.cnf
-#   when: ansible_os_family == "Debian"
+  - name: copy group replication settings
+    template: src=/home/hrvoje/worktable/package-testing/templates/group_replication.j2
+              dest=/etc/mysql/percona-server.conf.d/gr.cnf
+    when: ansible_os_family == "Debian"
  
   - name: set root password
     command: /vagrant/setpass_57.sh
