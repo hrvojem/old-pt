@@ -42,6 +42,7 @@
     - percona-nagios-plugins
     - percona-cacti-templates
     - percona-zabbix-templates
+    - sysbench
     when: ansible_os_family == "Debian"
 
   - name: install packages in centos

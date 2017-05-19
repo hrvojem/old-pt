@@ -39,7 +39,7 @@
 #   - Percona-Server-MongoDB
     when: ansible_os_family == "RedHat"
   - name: add the mongo rpm repo
-    copy: src=/home/hrvoje/worktable/package-testing/mongodb-org-3.0.repo dest=/etc/yum.repos.d/
+    copy: src=../mongodb-org-3.0.repo dest=/etc/yum.repos.d/
     when: ansible_os_family == "RedHat"
   - name: install mongodb-org 
     yum: name=mongodb-org state=present

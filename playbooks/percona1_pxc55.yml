@@ -38,13 +38,13 @@
   - name: install MySQL-python
     yum: name=MySQL-python state=present
   - name: copy pxc config
-    template: src=/home/hrvoje/worktable/package-testing/templates/my_rpm.j2 dest=/etc/my.cnf
+    template: src=../templates/my_rpm.j2 dest=/etc/my.cnf
     when: ansible_os_family == "RedHat" and ansible_distribution_major_version|int <= 6
   - name: copy pxc config
-    template: src=/home/hrvoje/worktable/package-testing/templates/my_rpm.j2 dest=/etc/my.cnf
+    template: src=../templates/my_rpm.j2 dest=/etc/my.cnf
     when: ansible_os_family == "RedHat" and ansible_distribution_major_version == "5"
   - name: copy pxc config
-    template: src=/home/hrvoje/worktable/package-testing/templates/my_rpm_7.j2 dest=/etc/my.cnf
+    template: src=../templates/my_rpm_7.j2 dest=/etc/my.cnf
     when: ansible_os_family == "RedHat" and ansible_distribution_major_version == "7"
   - command: /etc/init.d/mysql bootstrap-pxc
     when: ansible_os_family == "RedHat" and ansible_distribution_major_version == "5"

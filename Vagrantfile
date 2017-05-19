@@ -1,15 +1,15 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-playbook = "playbooks/common_57.yml"
+playbook = "playbooks/common_55.yml"
 deb_distro = "bento/ubuntu-16.10"
-deb1_playbook = "playbooks/pxc57.yml"
+deb1_playbook = "playbooks/pxc56.yml"
 deb_common_playbook = "playbooks/pxc57_common.yml"
-deb_garbd_playbook = "playbooks/pxc57_garbd.yml"
-rhel_distro = "bento/centos-6.8"
-rhel1_playbook = "playbooks/percona1_pxc57.yml"
+deb_garbd_playbook = "playbooks/pxc56_garbd.yml"
+rhel_distro = "bento/centos-5.11"
+rhel1_playbook = "playbooks/percona1_pxc56.yml"
 rhel_playbook = "playbooks/percona2_pxc57.yml"
-rhel_garbd_playbook = "playbooks/percona4_pxc57.yml"
+rhel_garbd_playbook = "playbooks/percona4_pxc56.yml"
 
 Vagrant.configure("2") do |config|
   # All Vagrant configuration is done here. The most pxb configuration
@@ -93,8 +93,22 @@ Vagrant.configure("2") do |config|
     xenial_config.vm.host_name = "xenial"
   end
 
+  config.vm.define :zesty do |zesty_config|
+    zesty_config.vm.box = "ubuntu/zesty64"
+    config.vm.provision "shell", path: "zesty.sh"
+    config.vm.provision "ansible" do |ansible|
+      ansible.playbook = playbook
+      ansible.sudo = "true"
+      ansible.host_key_checking = "false"
+    end
+    zesty_config.vm.provider :virtualbox do |vb|
+      vb.customize ["modifyvm", :id, "--memory", "2048", "--ioapic", "on" ]
+    end
+    zesty_config.vm.host_name = "zesty"
+  end
+
   config.vm.define :centos6 do |centos6_config|
-    centos6_config.vm.box = "bento/centos-6.8"
+    centos6_config.vm.box = "bento/centos-6.9"
 #   centos6_config.vm.box = "bento/centos-6.8-i386"
     config.vm.provision "ansible" do |ansible|
       ansible.playbook = playbook
@@ -134,7 +148,7 @@ Vagrant.configure("2") do |config|
     pxc1_config.vm.box = deb_distro
     pxc1_config.vm.host_name = "pxc1"
     pxc1_config.vm.provider :virtualbox do |vb|
-      vb.customize ["modifyvm", :id, "--memory", "3072", "--ioapic", "on" ]
+      vb.customize ["modifyvm", :id, "--memory", "2048", "--ioapic", "on" ]
     end
     pxc1_config.vm.network :private_network, ip: "192.168.70.61"
   end

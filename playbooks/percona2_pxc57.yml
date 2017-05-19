@@ -33,17 +33,17 @@
     with_items:
     - Percona-XtraDB-Cluster-57.x86_64
   - name: copy pxc config
-    template: src=/home/hrvoje/worktable/package-testing/templates/my_rpm.j2 dest=/etc/my.cnf
+    template: src=../templates/my_rpm.j2 dest=/etc/my.cnf
     when: ansible_os_family == "RedHat" and ansible_distribution_major_version == "6"
   - name: copy pxc config
-    template: src=/home/hrvoje/worktable/package-testing/templates/my_rpm_7.j2 dest=/etc/my.cnf
+    template: src=../templates/my_rpm_7.j2 dest=/etc/my.cnf
     when: ansible_os_family == "RedHat" and ansible_distribution_major_version == "7"
   - command: service mysql start
     when: ansible_os_family == "RedHat" and ansible_distribution_major_version == "6"
   - command: systemctl start mysql
     when: ansible_os_family == "RedHat" and ansible_distribution_major_version == "7"
   - name: copy .my.cnf
-    template: src=/home/hrvoje/worktable/package-testing/templates/my_57.j2
+    template: src=../templates/my_57.j2
               dest=/root/.my.cnf
               mode=0640 owner=root group=root
     when: ansible_os_family == "RedHat"

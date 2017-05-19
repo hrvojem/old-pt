@@ -22,7 +22,7 @@
     - python-mysqldb
     - percona-xtradb-cluster-garbd-3
   - name: configure garbd
-    template: src=/home/hrvoje/worktable/package-testing/templates/garbd.j2 
+    template: src=../templates/garbd.j2 
               dest=/etc/default/garbd
               mode=0640 owner=root group=root
   # start mysql service

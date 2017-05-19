@@ -34,8 +34,8 @@
     - vim
     - sysbench
     - pv
-#   - percona-xtradb-cluster-full-56
-    - percona-xtradb-cluster-56
+    - percona-xtradb-cluster-full-56
+#   - percona-xtradb-cluster-56
     - python-mysqldb
 
   - name: stop mysql service
@@ -43,7 +43,7 @@
 
   - name: configure PXC
     template: 
-      src: /home/hrvoje/worktable/package-testing/templates/my.j2 
+      src: ../templates/my.j2 
       dest: /etc/mysql/my.cnf
       mode: 0640 
       owner: mysql

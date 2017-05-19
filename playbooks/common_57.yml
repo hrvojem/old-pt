@@ -65,7 +65,7 @@
     when: ansible_os_family == "RedHat"
 
   - name: copy group replication settings
-    template: src=/home/hrvoje/worktable/package-testing/templates/group_replication.j2
+    template: src=../templates/group_replication.j2
               dest=/etc/mysql/percona-server.conf.d/gr.cnf
     when: ansible_os_family == "Debian"
  
@@ -74,7 +74,7 @@
     when: ansible_os_family == "RedHat"
 
   - name: copy .my.cnf
-    template: src=/home/hrvoje/worktable/package-testing/templates/my_57.j2
+    template: src=../templates/my_57.j2
               dest=/root/.my.cnf
               mode=0640 owner=root group=root
     when: ansible_os_family == "RedHat"
