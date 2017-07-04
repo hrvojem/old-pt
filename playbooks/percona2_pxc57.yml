@@ -47,3 +47,5 @@
               dest=/root/.my.cnf
               mode=0640 owner=root group=root
     when: ansible_os_family == "RedHat"
+  - name: run version check
+    command: /vagrant/version_check.sh pxc57

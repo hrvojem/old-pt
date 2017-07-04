@@ -1,15 +1,15 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-playbook = "playbooks/common_55.yml"
-deb_distro = "bento/ubuntu-16.10"
-deb1_playbook = "playbooks/pxc56.yml"
+playbook = "playbooks/clean.yml"
+deb_distro = "bento/ubuntu-16.04"
+deb1_playbook = "playbooks/pxc57.yml"
 deb_common_playbook = "playbooks/pxc57_common.yml"
-deb_garbd_playbook = "playbooks/pxc56_garbd.yml"
-rhel_distro = "bento/centos-5.11"
-rhel1_playbook = "playbooks/percona1_pxc56.yml"
+deb_garbd_playbook = "playbooks/pxc57_garbd.yml"
+rhel_distro = "bento/centos-7.3"
+rhel1_playbook = "playbooks/percona1_pxc57.yml"
 rhel_playbook = "playbooks/percona2_pxc57.yml"
-rhel_garbd_playbook = "playbooks/percona4_pxc56.yml"
+rhel_garbd_playbook = "playbooks/percona4_pxc57.yml"
 
 Vagrant.configure("2") do |config|
   # All Vagrant configuration is done here. The most pxb configuration
@@ -28,8 +28,8 @@ Vagrant.configure("2") do |config|
   end
 
   config.vm.define :jessie do |jessie_config|
-    jessie_config.vm.box = "bento/debian-8.7"
-#   jessie_config.vm.box = "bento/debian-8.7-i386"
+    jessie_config.vm.box = "bento/debian-8.8"
+#   jessie_config.vm.box = "bento/debian-8.8-i386"
     config.vm.provision "ansible" do |ansible|
       ansible.playbook = playbook
       ansible.sudo = "true"
@@ -40,6 +40,20 @@ Vagrant.configure("2") do |config|
       vb.customize ["modifyvm", :id, "--memory", "1024", "--ioapic", "on" ]
     end
   end
+
+  config.vm.define :stretch do |stretch_config|
+    stretch_config.vm.box = "debian/stretch64"
+    config.vm.provision "ansible" do |ansible|
+      ansible.playbook = playbook
+      ansible.sudo = "true"
+      ansible.host_key_checking = "false"
+    end
+    stretch_config.vm.host_name = "stretch"
+    stretch_config.vm.provider :virtualbox do |vb|
+      vb.customize ["modifyvm", :id, "--memory", "1024", "--ioapic", "on" ]
+    end
+  end
+
 
   config.vm.define :precise do |precise_config|
     precise_config.vm.box = "bento/ubuntu-12.04"
@@ -94,7 +108,7 @@ Vagrant.configure("2") do |config|
   end
 
   config.vm.define :zesty do |zesty_config|
-    zesty_config.vm.box = "ubuntu/zesty64"
+    zesty_config.vm.box = "bento/ubuntu-17.04"
     config.vm.provision "shell", path: "zesty.sh"
     config.vm.provision "ansible" do |ansible|
       ansible.playbook = playbook
@@ -140,6 +154,9 @@ Vagrant.configure("2") do |config|
   end
 
   config.vm.define :pxc1 do |pxc1_config|
+    if deb_distro == "ubuntu/zesty64" then
+       config.vm.provision "shell", path: "zesty.sh"
+    end   
     config.vm.provision "ansible" do |ansible|
       ansible.playbook = deb1_playbook
       ansible.sudo = "true"
@@ -154,6 +171,9 @@ Vagrant.configure("2") do |config|
   end
 
   config.vm.define :pxc2 do |pxc2_config|
+    if deb_distro == "ubuntu/zesty64" then
+       config.vm.provision "shell", path: "zesty.sh"
+    end   
     config.vm.provision "ansible" do |ansible|
       ansible.playbook = deb_common_playbook
       ansible.sudo = "true"
@@ -168,6 +188,9 @@ Vagrant.configure("2") do |config|
   end
 
   config.vm.define :pxc3 do |pxc3_config|
+    if deb_distro == "ubuntu/zesty64" then
+       config.vm.provision "shell", path: "zesty.sh"
+    end   
     config.vm.provision "ansible" do |ansible|
       ansible.playbook = deb_common_playbook
       ansible.sudo = "true"
@@ -182,6 +205,9 @@ Vagrant.configure("2") do |config|
   end
 
   config.vm.define :pxc4 do |pxc4_config|
+    if deb_distro == "ubuntu/zesty64" then
+       config.vm.provision "shell", path: "zesty.sh"
+    end   
     config.vm.provision "ansible" do |ansible|
       ansible.playbook = deb_garbd_playbook
       ansible.sudo = "true"

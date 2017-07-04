@@ -23,7 +23,7 @@
     apt_key: id=8507EFA5 keyserver=keys.gnupg.net state=present
 
   - name: add the repo
-    apt_repository: repo='deb http://repo.percona.com/apt {{ansible_lsb.codename}} main testing' state=present
+    apt_repository: repo='deb http://repo.percona.com/apt {{ansible_lsb.codename}} main' state=present
 
   - name: install vim, pv, python-mysqldb, and PXC-5.7
     apt: name={{item}} update_cache=yes

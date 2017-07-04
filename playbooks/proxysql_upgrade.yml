@@ -68,6 +68,9 @@
   - name: run version_check
     command: /vagrant/version_check.sh proxysql
 
+  - name: check if service is running after upgrade
+    command: /vagrant/proxysql_check.sh
+
   - name: stop proxysql service
     service: name=proxysql state=stopped
 
