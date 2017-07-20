@@ -87,3 +87,16 @@
 
   - name: check that Percona Toolkit version is correct
     command: /vagrant/version_check.sh pt
+
+  - name: reboot VM
+    command: shutdown -r now "Reboot triggered by Ansible"
+
+  - name: Wait for server to restart
+    wait_for:
+#         host={{ ansible_hostname }}
+#         port=22
+      delay: 300
+
+  - name: run command
+    command: uname -a
+  

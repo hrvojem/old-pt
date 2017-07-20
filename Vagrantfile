@@ -42,7 +42,7 @@ Vagrant.configure("2") do |config|
   end
 
   config.vm.define :stretch do |stretch_config|
-    stretch_config.vm.box = "debian/stretch64"
+    stretch_config.vm.box = "bento/debian-9.0"
     config.vm.provision "ansible" do |ansible|
       ansible.playbook = playbook
       ansible.sudo = "true"

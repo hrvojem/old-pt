@@ -14,7 +14,7 @@
     when: ansible_os_family == "Debian"
 
   - name: add the deb repo
-    apt_repository: repo='deb http://repo.percona.com/apt {{ansible_lsb.codename}} main' state=present update_cache=yes
+    apt_repository: repo='deb http://repo.percona.com/apt {{ansible_lsb.codename}} experimental' state=present update_cache=yes
     when: ansible_os_family == "Debian"
 
   - name: add the yum percona repos 
@@ -40,9 +40,9 @@
     - percona-server-5.7-dbg
     - percona-server-source-5.7
     - percona-server-tokudb-5.7
-    - percona-xtrabackup-test-24
-    - percona-xtrabackup-dbg-24
-    - percona-xtrabackup-24
+    # percona-xtrabackup-test-24
+    # percona-xtrabackup-dbg-24
+    # percona-xtrabackup-24
     when: ansible_os_family == "Debian"
 
   - name: install packages in centos
