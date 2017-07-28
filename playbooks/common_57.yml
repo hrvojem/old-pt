@@ -6,15 +6,13 @@
   become_method: sudo
 
   tasks:
-  # Add an Apt signing key, will not download if present
-  - apt_key: id=CD2EFD2A keyserver=keys.gnupg.net state=present
-    when: ansible_os_family == "Debian"
-
-  - apt_key: id=8507EFA5 keyserver=keys.gnupg.net state=present
+  - name: Install percona repository package
+    apt:
+      deb: https://repo.percona.com/apt/percona-release_0.1-4.{{ansible_lsb.codename}}_all.deb
     when: ansible_os_family == "Debian"
 
   - name: add the deb repo
-    apt_repository: repo='deb http://repo.percona.com/apt {{ansible_lsb.codename}} experimental' state=present update_cache=yes
+    apt_repository: repo='deb http://repo.percona.com/apt {{ansible_lsb.codename}} main' state=present update_cache=yes
     when: ansible_os_family == "Debian"
 
   - name: add the yum percona repos 
@@ -40,9 +38,9 @@
     - percona-server-5.7-dbg
     - percona-server-source-5.7
     - percona-server-tokudb-5.7
-    # percona-xtrabackup-test-24
-    # percona-xtrabackup-dbg-24
-    # percona-xtrabackup-24
+    - percona-xtrabackup-test-24
+    - percona-xtrabackup-dbg-24
+    - percona-xtrabackup-24
     when: ansible_os_family == "Debian"
 
   - name: install packages in centos
@@ -100,14 +98,14 @@
   - name: install tokubackup
     command: /usr/bin/ps_tokudb_admin --enable-backup
 
+  - name: install GR plugin
+    command: /vagrant/gr.sh
+
   - name: version check
     command: /vagrant/version_check.sh ps57
 
   - name: Percona Server 5.7 package version check
     command: /vagrant/package_check.sh ps57
-
-  - name: install GR plugin
-    command: /vagrant/gr.sh
 
   - name: PXB-2.4 package version check
     command: /vagrant/package_check.sh pxb24

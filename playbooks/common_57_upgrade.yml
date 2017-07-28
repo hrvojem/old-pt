@@ -53,7 +53,7 @@
     - Percona-Server-test-57
     - Percona-Server-tokudb-57
     - Percona-Server-57-debuginfo
-    - Percona-Server-shared-compat-57
+#   - Percona-Server-shared-compat-57
     - Percona-Server-devel-57
     - percona-toolkit
     - percona-xtrabackup-24
