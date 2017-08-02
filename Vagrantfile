@@ -54,17 +54,6 @@ Vagrant.configure("2") do |config|
     end
   end
 
-
-  config.vm.define :precise do |precise_config|
-    precise_config.vm.box = "bento/ubuntu-12.04"
-    config.vm.provision "ansible" do |ansible|
-      ansible.playbook = playbook
-      ansible.sudo = "true"
-      ansible.host_key_checking = "false"
-    end
-    precise_config.vm.host_name = "precise"
-  end
-
   config.vm.define :trusty do |trusty_config|
     trusty_config.vm.box = "bento/ubuntu-14.04"
 #   trusty_config.vm.box = "bento/ubuntu-14.04-i386"
@@ -75,20 +64,6 @@ Vagrant.configure("2") do |config|
     end
     trusty_config.vm.host_name = "trusty"
     trusty_config.vm.provider :virtualbox do |vb|
-      vb.customize ["modifyvm", :id, "--memory", "1024", "--ioapic", "on" ]
-    end
-  end
-
-  config.vm.define :yakkety do |yakkety_config|
-    config.vm.provision "ansible" do |ansible|
-      ansible.playbook = playbook
-      ansible.sudo = "true"
-      ansible.host_key_checking = "false"
-    end
-    yakkety_config.vm.box = "bento/ubuntu-16.10"
-#   yakkety_config.vm.box = "bento/ubuntu-16.10-i386"
-    yakkety_config.vm.host_name = "yakkety"
-    yakkety_config.vm.provider :virtualbox do |vb|
       vb.customize ["modifyvm", :id, "--memory", "1024", "--ioapic", "on" ]
     end
   end
@@ -105,6 +80,20 @@ Vagrant.configure("2") do |config|
       vb.customize ["modifyvm", :id, "--memory", "2048", "--ioapic", "on" ]
     end
     xenial_config.vm.host_name = "xenial"
+  end
+
+  config.vm.define :yakkety do |yakkety_config|
+    config.vm.provision "ansible" do |ansible|
+      ansible.playbook = playbook
+      ansible.sudo = "true"
+      ansible.host_key_checking = "false"
+    end
+    yakkety_config.vm.box = "bento/ubuntu-16.10"
+#   yakkety_config.vm.box = "bento/ubuntu-16.10-i386"
+    yakkety_config.vm.host_name = "yakkety"
+    yakkety_config.vm.provider :virtualbox do |vb|
+      vb.customize ["modifyvm", :id, "--memory", "1024", "--ioapic", "on" ]
+    end
   end
 
   config.vm.define :zesty do |zesty_config|
@@ -130,17 +119,6 @@ Vagrant.configure("2") do |config|
       ansible.host_key_checking = "false"
     end
     centos6_config.vm.host_name = "centos6"
-  end
-
-  config.vm.define :centos5 do |centos5_config|
-    centos5_config.vm.box = "bento/centos-5.11"
-    config.vm.provision "shell", path: "centos5.sh"
-    config.vm.provision "ansible" do |ansible|
-      ansible.playbook = playbook
-      ansible.sudo = "true"
-      ansible.host_key_checking = "false"
-    end
-    centos5_config.vm.host_name = "centos5"
   end
 
   config.vm.define :centos7 do |centos7_config|
@@ -222,57 +200,45 @@ Vagrant.configure("2") do |config|
   end
 
   config.vm.define :percona1 do |percona1_config|
-       if rhel_distro == "bento/centos-5.11" then
-         config.vm.provision "shell", path: "centos5.sh"
-       end   
-       config.vm.provision "ansible" do |ansible|
-         ansible.playbook = rhel1_playbook
-         ansible.sudo = "true"
-         ansible.host_key_checking = "false"
-       end
-       percona1_config.vm.box = rhel_distro
-       percona1_config.vm.host_name = "percona1"
-       percona1_config.vm.network :private_network, ip: "192.168.70.71"
+    config.vm.provision "ansible" do |ansible|
+      ansible.playbook = rhel1_playbook
+      ansible.sudo = "true"
+      ansible.host_key_checking = "false"
+    end
+    percona1_config.vm.box = rhel_distro
+    percona1_config.vm.host_name = "percona1"
+    percona1_config.vm.network :private_network, ip: "192.168.70.71"
   end
   config.vm.define :percona2 do |percona2_config|
-       if rhel_distro == "bento/centos-5.11" then
-         config.vm.provision "shell", path: "centos5.sh"
-       end   
-       config.vm.provision "ansible" do |ansible|
-         ansible.playbook = rhel_playbook
-         ansible.sudo = "true"
-         ansible.host_key_checking = "false"
-       end
-       percona2_config.vm.box = rhel_distro
-       percona2_config.vm.host_name = "percona2"
-       percona2_config.vm.network :private_network, ip: "192.168.70.72"
+    config.vm.provision "ansible" do |ansible|
+      ansible.playbook = rhel_playbook
+      ansible.sudo = "true"
+      ansible.host_key_checking = "false"
+    end
+    percona2_config.vm.box = rhel_distro
+    percona2_config.vm.host_name = "percona2"
+   percona2_config.vm.network :private_network, ip: "192.168.70.72"
   end
   config.vm.define :percona3 do |percona3_config|
-        if rhel_distro == "bento/centos-5.11" then
-          config.vm.provision "shell", path: "centos5.sh"
-        end   
-         config.vm.provision "ansible" do |ansible|
-          ansible.playbook = rhel_playbook
-          ansible.sudo = "true"
-          ansible.host_key_checking = "false"
-        end
-        percona3_config.vm.box = rhel_distro
-        percona3_config.vm.host_name = "percona3"
-        percona3_config.vm.network :private_network, ip: "192.168.70.73"
+    config.vm.provision "ansible" do |ansible|
+      ansible.playbook = rhel_playbook
+      ansible.sudo = "true"
+      ansible.host_key_checking = "false"
+    end
+    percona3_config.vm.box = rhel_distro
+    percona3_config.vm.host_name = "percona3"
+    percona3_config.vm.network :private_network, ip: "192.168.70.73"
   end
 
   config.vm.define :percona4 do |percona4_config|
-        if rhel_distro == "bento/centos-5.11" then
-          config.vm.provision "shell", path: "centos5.sh"
-        end   
-         config.vm.provision "ansible" do |ansible|
-          ansible.playbook = rhel_garbd_playbook
-          ansible.sudo = "true"
-          ansible.host_key_checking = "false"
-        end
-        percona4_config.vm.box = rhel_distro
-        percona4_config.vm.host_name = "percona4"
-        percona4_config.vm.network :private_network, ip: "192.168.70.74"
+    config.vm.provision "ansible" do |ansible|
+      ansible.playbook = rhel_garbd_playbook
+      ansible.sudo = "true"
+      ansible.host_key_checking = "false"
+    end
+    percona4_config.vm.box = rhel_distro
+    percona4_config.vm.host_name = "percona4"
+    percona4_config.vm.network :private_network, ip: "192.168.70.74"
   end
 
   config.vm.define :freebsd do |freebsd_config|
