@@ -35,3 +35,4 @@ db.inventory.insert(
 )
 
 db.inventory.find()
+db.serverStatus().storageEngine

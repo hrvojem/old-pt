@@ -58,16 +58,14 @@
     - percona-zabbix-templates
     - percona-nagios-plugins
 #   - percona-cacti-templates
-
     when: ansible_os_family == "RedHat"
 
-  - command: /etc/init.d/mysql start
-    when: ansible_os_family == "RedHat" and ansible_distribution_major_version == "5"
-
-  - command: service mysql start
+  - name: use service to start mysql
+    command: service mysql start
     when: ansible_os_family == "RedHat" and ansible_distribution_major_version == "6"
 
-  - command: systemctl start mysql
+  - name: use systemctl to start mysql
+    command: systemctl start mysql
     when: ansible_os_family == "RedHat" and ansible_distribution_major_version == "7"
 
   - name: install plugins

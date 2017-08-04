@@ -55,34 +55,33 @@
     - Percona-Server-56-debuginfo
     - Percona-Server-devel-56
     - Percona-Server-tokudb-56
-    # percona-toolkit
+    - percona-toolkit
     - percona-xtrabackup
     - percona-xtrabackup-test
     - percona-xtrabackup-debuginfo
     when: ansible_os_family == "RedHat"
 
-  - command: /etc/init.d/mysql start
-    when: ansible_os_family == "RedHat" and ansible_distribution_major_version == "5"
-
-  - command: service mysql start
+  - name: use service to start mysql
+    command: service mysql start
     when: ansible_os_family == "RedHat" and ansible_distribution_major_version == "6"
 
-  - command: systemctl start mysql
+  - name: use systmectl to start mysql
+    command: systemctl start mysql
     when: ansible_os_family == "RedHat" and ansible_distribution_major_version == "7"
 
   - name: install tokudb
     command: /usr/bin/ps_tokudb_admin --enable
 
-  - service: name=mysqld state=restarted
+  - name: restart mysql service RHEL 7
+    service: name=mysqld state=restarted
     when: ansible_os_family == "RedHat" and ansible_distribution_major_version == "7"
 
-  - service: name=mysql state=restarted
+  - name: restart mysql service RHEL 6
+    service: name=mysql state=restarted
     when: ansible_os_family == "RedHat" and ansible_distribution_major_version == "6"
 
-  - service: name=mysql state=restarted
-    when: ansible_os_family == "RedHat" and ansible_distribution_major_version == "5"
-
-  - service: name=mysql state=restarted
+  - name: restart mysql service on Devian/Ubuntu
+    service: name=mysql state=restarted
     when: ansible_os_family == "Debian"
 
   - name: install tokudb
@@ -93,6 +92,9 @@
 
   - name: version check
     command: /vagrant/version_check.sh ps56
+
+  - name: sysbench version check
+    command: /vagrant/version_check.sh sysbench
 
   - name: Percona Server 5.6 package version check
     command: /vagrant/package_check.sh ps56

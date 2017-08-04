@@ -12,7 +12,7 @@
     when: ansible_os_family == "Debian"
 
   - name: add the deb repo
-    apt_repository: repo='deb http://repo.percona.com/apt {{ansible_lsb.codename}} experimental' state=present update_cache=yes
+    apt_repository: repo='deb http://repo.percona.com/apt {{ansible_lsb.codename}} main testing' state=present update_cache=yes
     when: ansible_os_family == "Debian"
 
   - name: add the yum percona repos 
@@ -38,13 +38,14 @@
     - percona-server-5.7-dbg
     - percona-server-source-5.7
     - percona-server-tokudb-5.7
+    - percona-server-rocksdb-5.7
     - percona-xtrabackup-test-24
     - percona-xtrabackup-dbg-24
     - percona-xtrabackup-24
     when: ansible_os_family == "Debian"
 
   - name: install packages in centos
-    yum: name={{item}} state=present  #enablerepo=percona-testing-x86_64 
+    yum: name={{item}} state=present  enablerepo=percona-testing-x86_64 
     with_items:
     - libselinux-python
     - pv
@@ -53,6 +54,7 @@
     - Percona-Server-57-debuginfo
     - Percona-Server-devel-57
     - Percona-Server-tokudb-57
+    - Percona-Server-rocksdb-57
     - percona-toolkit
     - percona-xtrabackup-24
     - percona-xtrabackup-test-24
@@ -60,7 +62,7 @@
     when: ansible_os_family == "RedHat"
 
   - service: name=mysql state=started
-    when: ansible_os_family == "RedHat"
+#   when: ansible_os_family == "RedHat"
 
   - name: copy group replication settings
     template: src=../templates/group_replication.j2
@@ -91,6 +93,9 @@
 
   - name: install tokudb
     command: /usr/bin/ps_tokudb_admin --enable
+
+  - name: install rocksdb
+    command: /usr/bin/ps-admin --enable-rocksdb
 
   - name: install plugins
     command: /vagrant/plugins_test_57.sh
