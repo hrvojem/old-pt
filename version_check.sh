@@ -148,5 +148,4 @@ elif [ ${product} = "sysbench" ]; then
   fi
 
 fi
-
 echo "${product} versions are OK"
