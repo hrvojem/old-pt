@@ -1,7 +1,7 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-playbook = "playbooks/common_57.yml"
+playbook = "playbooks/clean.yml"
 deb_distro = "bento/ubuntu-16.04"
 deb1_playbook = "playbooks/pxc57.yml"
 deb_common_playbook = "playbooks/pxc57_common.yml"
@@ -71,6 +71,7 @@ Vagrant.configure("2") do |config|
   config.vm.define :xenial do |xenial_config|
     xenial_config.vm.box = "bento/ubuntu-16.04"
 #   xenial_config.vm.box = "bento/ubuntu-16.04-i386"
+    config.vm.provision "shell", path: "zesty.sh"
     config.vm.provision "ansible" do |ansible|
       ansible.playbook = playbook
       ansible.sudo = "true"

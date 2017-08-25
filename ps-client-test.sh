@@ -1,5 +1,5 @@
 #!/bin/bash
 
-apt-get install -y percona-server-client-5.7
+apt-get install -y percona-server-client-5.6
 
 mysql --help

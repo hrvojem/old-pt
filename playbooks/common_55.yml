@@ -6,11 +6,10 @@
   become_method: sudo
 
   tasks:
-  # Add an Apt signing key, will not download if present
-  - apt_key: id=CD2EFD2A keyserver=keys.gnupg.net state=present
-    when: ansible_os_family == "Debian"
 
-  - apt_key: id=8507EFA5 keyserver=keys.gnupg.net state=present
+  - name: Install percona repository package
+    apt:
+      deb: https://repo.percona.com/apt/percona-release_0.1-4.{{ansible_lsb.codename}}_all.deb
     when: ansible_os_family == "Debian"
 
   - name: add the deb repo
@@ -30,7 +29,7 @@
     when: ansible_os_family == "RedHat" and ansible_distribution_major_version == "7"
 
   - name: install deb packages 
-    apt: name={{item}} #update_cache=yes
+    apt: name={{item}} update_cache=yes
     with_items: 
     - vim
     - percona-server-server-5.5
@@ -39,10 +38,10 @@
     - percona-server-test-5.5
     - percona-server-5.5-dbg
     - percona-server-source-5.5
-    - percona-nagios-plugins
-    - percona-cacti-templates
-    - percona-zabbix-templates
-    - sysbench
+#   - percona-nagios-plugins
+#   - percona-cacti-templates
+#   - percona-zabbix-templates
+#   - sysbench
     when: ansible_os_family == "Debian"
 
   - name: install packages in centos
@@ -85,16 +84,3 @@
 
   - name: check that Percona Toolkit version is correct
     command: /vagrant/version_check.sh pt
-
-  - name: reboot VM
-    command: shutdown -r now "Reboot triggered by Ansible"
-
-  - name: Wait for server to restart
-    wait_for:
-#         host={{ ansible_hostname }}
-#         port=22
-      delay: 300
-
-  - name: run command
-    command: uname -a
-  
