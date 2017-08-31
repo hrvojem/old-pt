@@ -6,11 +6,10 @@
   become_method: sudo
 
   tasks:
-  # Add an Apt signing key, will not download if present
-  - apt_key: id=CD2EFD2A keyserver=keys.gnupg.net state=present
-    when: ansible_os_family == "Debian"
 
-  - apt_key: id=8507EFA5 keyserver=keys.gnupg.net state=present
+  - name: Install percona repository package
+    apt:
+      deb: https://repo.percona.com/apt/percona-release_0.1-4.{{ansible_lsb.codename}}_all.deb
     when: ansible_os_family == "Debian"
 
   - name: add the deb repo
@@ -127,7 +126,7 @@
     - Percona-Server-57-debuginfo
     - Percona-Server-devel-57
     - Percona-Server-tokudb-57
-    - Percona-Server-shared-compat-57
+#   - Percona-Server-shared-compat-57
     when: ansible_os_family == "RedHat"
 
   - name: run mysql_upgrade

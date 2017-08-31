@@ -32,6 +32,12 @@
     with_items: 
     - vim
     - pv
+    - unzip
+    when: ansible_os_family == "Debian"
+
+  - name: install deb packages 
+    apt: name={{item}} update_cache=yes
+    with_items: 
     - percona-toolkit
     - percona-server-server-5.7
     - percona-server-test-5.7
@@ -49,6 +55,7 @@
     with_items:
     - libselinux-python
     - pv
+    - unzip
     - Percona-Server-server-57
     - Percona-Server-test-57
     - Percona-Server-57-debuginfo
@@ -60,6 +67,16 @@
     - percona-xtrabackup-test-24
     - percona-xtrabackup-24-debuginfo
     when: ansible_os_family == "RedHat"
+
+  - name: install latest bats from github
+    command: "{{ item }}"
+    with_items:
+    - rm -f master.zip
+    - wget --no-check-certificate -O master.zip https://github.com/sstephenson/bats/archive/master.zip
+    - unzip master.zip
+    - rm -f master.zip
+    - bats-master/install.sh /usr/local
+    - rm -rf bats-master
 
   - service: name=mysql state=started
 #   when: ansible_os_family == "RedHat"

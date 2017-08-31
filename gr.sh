@@ -14,6 +14,7 @@ fi
 echo "restart service"
 service mysql restart
 echo "install plugins"
+sleep 10
 mysql -e "INSTALL PLUGIN group_replication SONAME 'group_replication.so';"
 mysql -e "INSTALL PLUGIN connection_control SONAME 'connection_control.so';"
 echo "check that plugins are available"
