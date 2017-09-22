@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -e
+#set -e
 
 if [ "$#" -ne 1 ]; then
   echo "This script requires product parameter: ps55, ps56 or ps57 !"
@@ -121,13 +121,15 @@ elif [ ${product} = "pmm" ]; then
   fi
 
 elif [ ${product} = "pxb23" -o ${product} = "pxb24" ]; then
+  echo "version check var is: ${version_check}"
   version_check=$(xtrabackup --version 2>&1|grep -c ${version})
-    if [ ${version_check} -eq 0 ]; then
-      echo "${product} version is not good!"
-      exit 1
-    else
-      echo "${product} version is correct and ${version}" >> ${log}
-    fi
+  echo "version check var is: ${version_check}"
+  if [ ${version_check} -eq 0 ]; then
+    echo "${product} version is not good!"
+    exit 1
+  else
+    echo "${product} version is correct and ${version}" >> ${log}
+  fi
 
 elif [ ${product} = "proxysql" ]; then
   version_check=$(proxysql --version 2>&1|grep -c ${version})

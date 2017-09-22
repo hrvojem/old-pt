@@ -29,6 +29,16 @@ case $1 in
 	rpm_version="57"
 	lib_version="20"
         ;;
+    "pxc56" )
+	deb_version="5.6"
+	rpm_version="56"
+	lib_version="18.1"
+        ;;
+    "pxc57" )
+	deb_version="5.7"
+	rpm_version="57"
+	lib_version="20"
+        ;;
 esac
 
 

@@ -7,6 +7,12 @@
   become_method: sudo
 
   tasks:
+
+  - name: Install percona repository package
+    apt:
+      deb: https://repo.percona.com/apt/percona-release_0.1-4.{{ansible_lsb.codename}}_all.deb
+    when: ansible_os_family == "Debian"
+
   - debug: var=ansible_all_ipv4_addresses
   - set_fact:
       man_ip: "{{ item }}"
@@ -14,30 +20,41 @@
     when: "item.startswith('192.168')"
   - debug: var=man_ip
 
-  - apt_key: id=CD2EFD2A keyserver=keys.gnupg.net state=present
-
-  - apt_key: id=8507EFA5 keyserver=keys.gnupg.net state=present
   - name: add the repo
     apt_repository: repo='deb http://repo.percona.com/apt {{ansible_lsb.codename}} main testing' state=present
-  # Add an Apt signing key, will not download if present
-#  - apt_key: id=CD2EFD2A keyserver=keyserver.ubuntu.com state=present
+
   - name: install galera, vim, pv, python-mysqldb, pxc-57
     apt: name={{ item }} update_cache=yes
     with_items: 
     - vim
     - pv
+    - unzip
     - sysbench
     - python-mysqldb
     - percona-xtradb-cluster-57
-  # stop mysql service
-  - service: name=mysql pattern=/usr/bin/mysqld_safe state=stopped 
+  - name: stop mysql service
+    service: name=mysql pattern=/usr/bin/mysqld_safe state=stopped 
+
   - name: configure PXC
     template: src=../templates/my.j2 
               dest=/etc/mysql/my.cnf
               mode=0640 owner=mysql group=root
-  # start mysql service
-  - command: service mysql start
+
+  - name: start mysql service
+    command: service mysql start
+
   - name: check PXC-5.7 version
     command: /vagrant/version_check.sh pxc57
+
+  - name: install latest bats from github
+    command: "{{ item }}"
+    with_items:
+    - rm -f master.zip
+    - wget --no-check-certificate -O master.zip https://github.com/sstephenson/bats/archive/master.zip
+    - unzip master.zip
+    - rm -f master.zip
+    - bats-master/install.sh /usr/local
+    - rm -rf bats-master
   
-  
+# - name: run init scripts test
+#   command: /usr/local/bin/bats /vagrant/bats/mysql-init-scripts.bats

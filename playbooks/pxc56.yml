@@ -9,7 +9,6 @@
   tasks:
 
     # find vm ip so that it can be used in templates
-# - debug: var=ansible_all_ipv4_addresses
 
   - set_fact:
       man_ip: "{{ item }}"
@@ -17,15 +16,14 @@
     when: "item.startswith('192.168')"
 # - debug: var=man_ip
 
-  - name: add old apt repo key
-    apt_key: id=CD2EFD2A keyserver=keys.gnupg.net state=present
-
-  - name: add new apt repo key
-    apt_key: id=8507EFA5 keyserver=keys.gnupg.net state=present
+  - name: Install percona repository package
+    apt:
+      deb: https://repo.percona.com/apt/percona-release_0.1-4.{{ansible_lsb.codename}}_all.deb
+    when: ansible_os_family == "Debian"
 
   - name: add the percona repo
     apt_repository:
-      repo: 'deb http://repo.percona.com/apt {{ansible_lsb.codename}} main'
+      repo: 'deb http://repo.percona.com/apt {{ansible_lsb.codename}} main testing'
       state: present
 
   - name: install vim, pv, python-mysqldb, and PXC-5.6

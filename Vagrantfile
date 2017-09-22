@@ -1,12 +1,12 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-playbook = "playbooks/common_57_upgrade.yml"
-deb_distro = "bento/ubuntu-16.04"
+playbook = "playbooks/client_test.yml"
+deb_distro = "bento/debian-9"
 deb1_playbook = "playbooks/pxc57.yml"
 deb_common_playbook = "playbooks/pxc57_common.yml"
 deb_garbd_playbook = "playbooks/pxc57_garbd.yml"
-rhel_distro = "bento/centos-7.3"
+rhel_distro = "bento/centos-7.4"
 rhel1_playbook = "playbooks/percona1_pxc57.yml"
 rhel_playbook = "playbooks/percona2_pxc57.yml"
 rhel_garbd_playbook = "playbooks/percona4_pxc57.yml"
@@ -28,7 +28,7 @@ Vagrant.configure("2") do |config|
   end
 
   config.vm.define :jessie do |jessie_config|
-    jessie_config.vm.box = "bento/debian-8.8"
+    jessie_config.vm.box = "bento/debian-8.9"
 #   jessie_config.vm.box = "bento/debian-8.8-i386"
     config.vm.provision "ansible" do |ansible|
       ansible.playbook = playbook
@@ -42,7 +42,7 @@ Vagrant.configure("2") do |config|
   end
 
   config.vm.define :stretch do |stretch_config|
-    stretch_config.vm.box = "bento/debian-9.0"
+    stretch_config.vm.box = "bento/debian-9.1"
     config.vm.provision "ansible" do |ansible|
       ansible.playbook = playbook
       ansible.sudo = "true"
@@ -123,7 +123,7 @@ Vagrant.configure("2") do |config|
   end
 
   config.vm.define :centos7 do |centos7_config|
-    centos7_config.vm.box = "bento/centos-7.3"
+    centos7_config.vm.box = "bento/centos-7.4"
     config.vm.provision "ansible" do |ansible|
       ansible.playbook = playbook
       ansible.sudo = "true"

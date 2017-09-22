@@ -16,20 +16,18 @@
     when: "item.startswith('192.168')"
 # - debug: var=man_ip
 
-  - name: Add the old apt signing key, will not download if present
-    apt_key: id=CD2EFD2A keyserver=keys.gnupg.net state=present
-
-  - name: Add the new apt signing key, will not download if present
-    apt_key: id=8507EFA5 keyserver=keys.gnupg.net state=present
+  - name: Install percona repository package
+    apt:
+      deb: https://repo.percona.com/apt/percona-release_0.1-4.{{ansible_lsb.codename}}_all.deb
+    when: ansible_os_family == "Debian"
 
   - name: add the repo
-    apt_repository: repo='deb http://repo.percona.com/apt {{ansible_lsb.codename}} main' state=present
+    apt_repository: repo='deb http://repo.percona.com/apt {{ansible_lsb.codename}} main testing' state=present
 
   - name: install vim, pv, python-mysqldb, and PXC-5.7
     apt: name={{item}} update_cache=yes
     with_items:
     - vim
-    - strace
     - pv
     - percona-xtradb-cluster-full-57 
     - sysbench

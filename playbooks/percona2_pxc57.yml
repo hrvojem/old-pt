@@ -13,39 +13,65 @@
     yum: name={{item}} state=present
     with_items:
     - libselinux-python
+    - unzip
+
   - selinux: state=disabled
+
   - name: add firewall rules
     command: /sbin/iptables -I INPUT -s {{item}} -p tcp -j ACCEPT
     with_items:
     - 192.168.70.73
     - 192.168.70.72
     - 192.168.70.71
+
   - name: add the percona repo
     yum: name=http://www.percona.com/downloads/percona-release/redhat/0.1-4/percona-release-0.1-4.noarch.rpm
+
   - name: add the epel repo for centos7 
     yum: name=https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm state=present
     when: ansible_os_family == "RedHat" and ansible_distribution_major_version == "7"
+
   - name: add the epel repo for centos6
     yum: name=https://dl.fedoraproject.org/pub/epel/epel-release-latest-6.noarch.rpm state=present
     when: ansible_os_family == "RedHat" and ansible_distribution_major_version == "6"
+
   - name: install PXC
     yum: name={{item}} state=present enablerepo=percona-testing-x86_64
     with_items:
     - Percona-XtraDB-Cluster-57.x86_64
+
   - name: copy pxc config
     template: src=../templates/my_rpm.j2 dest=/etc/my.cnf
     when: ansible_os_family == "RedHat" and ansible_distribution_major_version == "6"
+
   - name: copy pxc config
     template: src=../templates/my_rpm_7.j2 dest=/etc/my.cnf
     when: ansible_os_family == "RedHat" and ansible_distribution_major_version == "7"
+
   - command: service mysql start
     when: ansible_os_family == "RedHat" and ansible_distribution_major_version == "6"
+
   - command: systemctl start mysql
     when: ansible_os_family == "RedHat" and ansible_distribution_major_version == "7"
+
   - name: copy .my.cnf
     template: src=../templates/my_57.j2
               dest=/root/.my.cnf
               mode=0640 owner=root group=root
     when: ansible_os_family == "RedHat"
+
   - name: run version check
     command: /vagrant/version_check.sh pxc57
+
+  - name: install latest bats from github
+    command: "{{ item }}"
+    with_items:
+    - rm -f master.zip
+    - wget --no-check-certificate -O master.zip https://github.com/sstephenson/bats/archive/master.zip
+    - unzip master.zip
+    - rm -f master.zip
+    - bats-master/install.sh /usr/local
+    - rm -rf bats-master
+
+# - name: run init scripts test
+#   command: /usr/local/bin/bats /vagrant/bats/mysql-init-scripts.bats
