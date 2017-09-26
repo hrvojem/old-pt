@@ -1,21 +1,19 @@
 ---
 # This playbook sets up the mongodb-org repo and installs mongodb
 
+  tasks:
+
 - hosts: all
   become: true
   become_method: sudo
 
   tasks:
-  # Add the percona apt signing key, will not download if present
-  - apt_key: id=CD2EFD2A keyserver=keys.gnupg.net state=present
-    when: ansible_os_family == "Debian"
+  - name: include tasks for test env setup
+    include: ../tasks/test_prep.yml
 
-  - apt_key: id=8507EFA5 keyserver=keys.gnupg.net state=present
-    when: ansible_os_family == "Debian"
+  - name: include tasks for enabling test repo
+    include: ../tasks/enable_testing_repo.yml
 
-  - name: add the deb repo
-    apt_repository: repo='deb http://repo.percona.com/apt {{ansible_lsb.codename}} main' state=present update_cache=yes
-    when: ansible_os_family == "Debian"
   - name: install deb packages 
     apt: name={{item}} update_cache=yes
     with_items: 
@@ -23,15 +21,19 @@
     - percona-server-mongodb-32
     - percona-server-mongodb-32-dbg
     when: ansible_os_family == "Debian"
+
   - name: epel 6 repo
     yum: name=https://dl.fedoraproject.org/pub/epel/epel-release-latest-6.noarch.rpm state=present
     when: ansible_os_family == "RedHat" and ansible_distribution_major_version == "6"
+
   - name: epel 7 repo
     yum: name=https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm state=present
     when: ansible_os_family == "RedHat" and ansible_distribution_major_version == "7"
+
   - name: add the yum percona repos
     yum: name=http://www.percona.com/downloads/percona-release/redhat/0.1-4/percona-release-0.1-4.noarch.rpm
     when: ansible_os_family == "RedHat" and ansible_distribution_major_version|int >= 6 
+
   - name: install packages in centos
     yum: name={{item}} state=present  #enablerepo=percona-testing-x86_64
     with_items:
@@ -40,17 +42,19 @@
     - Percona-Server-MongoDB-32
     - Percona-Server-MongoDB-32-debuginfo
     when: ansible_os_family == "RedHat"
-  - name: start mongodb
-    command: /etc/init.d/mongod start
-    when: ansible_os_family == "RedHat" and ansible_distribution_major_version == "5"
+
   - command: service mongod start
     when: ansible_os_family == "RedHat" and ansible_distribution_major_version == "6"
+
   - command: systemctl start mongod
     when: ansible_os_family == "RedHat" and ansible_distribution_major_version == "7"
 
-  - name: run psmdb_test
-    command: /vagrant/psmdb_test.sh
-
   - name: run package_test
-    command: /vagrant/package_check.sh psmdb32
+    command: /package-testing/package_check.sh psmdb32
+
+  - name: run version_check
+    command: /package-testing/version_check.sh psmdb32
+
+  - name: run psmdb_test
+    command: /package-testing/psmdb_test.sh
 
