@@ -41,7 +41,7 @@
 #   - percona-nagios-plugins
 #   - percona-cacti-templates
 #   - percona-zabbix-templates
-#   - sysbench
+    - sysbench
     when: ansible_os_family == "Debian"
 
   - name: install packages in centos
@@ -56,6 +56,7 @@
     - percona-xtrabackup
     - percona-zabbix-templates
     - percona-nagios-plugins
+    - sysbench
 #   - percona-cacti-templates
     when: ansible_os_family == "RedHat"
 
@@ -84,3 +85,7 @@
 
   - name: check that Percona Toolkit version is correct
     command: /vagrant/version_check.sh pt
+
+  - name: check that sysbench version is correct
+    command: /vagrant/version_check.sh sysbench
+

@@ -3,36 +3,43 @@
 
 playbook = "playbooks/clean.yml"
 deb_distro = "bento/debian-7"
-deb1_playbook = "playbooks/pxc57.yml"
-deb_common_playbook = "playbooks/pxc57_common.yml"
-deb_garbd_playbook = "playbooks/pxc57_garbd.yml"
-rhel_distro = "bento/centos-6.9"
+deb1_playbook = "playbooks/pxc56.yml"
+deb_common_playbook = "playbooks/pxc56_common.yml"
+deb_garbd_playbook = "playbooks/pxc56_garbd.yml"
+rhel_distro = "bento/centos-7.4"
 rhel1_playbook = "playbooks/percona1_pxc57.yml"
-rhel_playbook = "playbooks/percona2_pxc57.yml"
-rhel_garbd_playbook = "playbooks/percona4_pxc57.yml"
+rhel_playbook = "playbooks/percona2_pxc56.yml"
+rhel_garbd_playbook = "playbooks/percona4_pxc56.yml"
 
 Vagrant.configure("2") do |config|
   # All Vagrant configuration is done here. The most pxb configuration
   # options are documented and commented below. For a complete reference,
   # please see the online documentation at vagrantup.com.
 
-  config.vm.define :wheezy do |wheezy_config|
-    wheezy_config.vm.box = "bento/debian-7.11"
-#   wheezy_config.vm.box = "bento/debian-7.11-i386"
+  config.vm.define :sles12 do |sles12_config|
+    sles12_config.vm.box = "wvera/sles12sp2"
     config.vm.provision "ansible" do |ansible|
       ansible.playbook = playbook
-      ansible.sudo = "true"
+      ansible.host_key_checking = "false"
+    end
+    sles12_config.vm.host_name = "sles12"
+  end
+
+  config.vm.define :wheezy do |wheezy_config|
+    wheezy_config.vm.box = "bento/debian-7"
+#   wheezy_config.vm.box = "bento/debian-7-i386"
+    config.vm.provision "ansible" do |ansible|
+      ansible.playbook = playbook
       ansible.host_key_checking = "false"
     end
     wheezy_config.vm.host_name = "wheezy"
   end
 
   config.vm.define :jessie do |jessie_config|
-    jessie_config.vm.box = "bento/debian-8.9"
-#   jessie_config.vm.box = "bento/debian-8.8-i386"
+    jessie_config.vm.box = "bento/debian-8"
+#   jessie_config.vm.box = "bento/debian-8-i386"
     config.vm.provision "ansible" do |ansible|
       ansible.playbook = playbook
-      ansible.sudo = "true"
       ansible.host_key_checking = "false"
     end
     jessie_config.vm.host_name = "jessie"
@@ -42,10 +49,9 @@ Vagrant.configure("2") do |config|
   end
 
   config.vm.define :stretch do |stretch_config|
-    stretch_config.vm.box = "bento/debian-9.1"
+    stretch_config.vm.box = "bento/debian-9"
     config.vm.provision "ansible" do |ansible|
       ansible.playbook = playbook
-      ansible.sudo = "true"
       ansible.host_key_checking = "false"
     end
     stretch_config.vm.host_name = "stretch"
@@ -59,7 +65,6 @@ Vagrant.configure("2") do |config|
 #   trusty_config.vm.box = "bento/ubuntu-14.04-i386"
     config.vm.provision "ansible" do |ansible|
       ansible.playbook = playbook
-      ansible.sudo = "true"
       ansible.host_key_checking = "false"
     end
     trusty_config.vm.host_name = "trusty"
@@ -74,7 +79,6 @@ Vagrant.configure("2") do |config|
     config.vm.provision "shell", path: "zesty.sh"
     config.vm.provision "ansible" do |ansible|
       ansible.playbook = playbook
-      ansible.sudo = "true"
       ansible.host_key_checking = "false"
     end
     xenial_config.vm.provider :virtualbox do |vb|
@@ -86,7 +90,6 @@ Vagrant.configure("2") do |config|
   config.vm.define :yakkety do |yakkety_config|
     config.vm.provision "ansible" do |ansible|
       ansible.playbook = playbook
-      ansible.sudo = "true"
       ansible.host_key_checking = "false"
     end
     yakkety_config.vm.box = "bento/ubuntu-16.10"
@@ -102,7 +105,6 @@ Vagrant.configure("2") do |config|
     config.vm.provision "shell", path: "zesty.sh"
     config.vm.provision "ansible" do |ansible|
       ansible.playbook = playbook
-      ansible.sudo = "true"
       ansible.host_key_checking = "false"
     end
     zesty_config.vm.provider :virtualbox do |vb|
@@ -111,12 +113,25 @@ Vagrant.configure("2") do |config|
     zesty_config.vm.host_name = "zesty"
   end
 
+  config.vm.define :artful do |artful_config|
+    artful_config.vm.box = "bento/ubuntu-17.10"
+    config.vm.provision "shell", path: "zesty.sh"
+    config.vm.provision "ansible" do |ansible|
+      ansible.playbook = playbook
+      ansible.host_key_checking = "false"
+    end
+    artful_config.vm.provider :virtualbox do |vb|
+      vb.customize ["modifyvm", :id, "--memory", "2048", "--ioapic", "on" ]
+    end
+    artful_config.vm.host_name = "artful"
+  end
+
+
   config.vm.define :centos6 do |centos6_config|
     centos6_config.vm.box = "bento/centos-6.9"
 #   centos6_config.vm.box = "bento/centos-6.8-i386"
     config.vm.provision "ansible" do |ansible|
       ansible.playbook = playbook
-      ansible.sudo = "true"
       ansible.host_key_checking = "false"
     end
     centos6_config.vm.host_name = "centos6"
@@ -126,7 +141,6 @@ Vagrant.configure("2") do |config|
     centos7_config.vm.box = "bento/centos-7.4"
     config.vm.provision "ansible" do |ansible|
       ansible.playbook = playbook
-      ansible.sudo = "true"
       ansible.host_key_checking = "false"
     end
     centos7_config.vm.host_name = "centos7"
@@ -138,7 +152,6 @@ Vagrant.configure("2") do |config|
     end   
     config.vm.provision "ansible" do |ansible|
       ansible.playbook = deb1_playbook
-      ansible.sudo = "true"
       ansible.host_key_checking = "false"
     end
     pxc1_config.vm.box = deb_distro
@@ -155,7 +168,6 @@ Vagrant.configure("2") do |config|
     end   
     config.vm.provision "ansible" do |ansible|
       ansible.playbook = deb_common_playbook
-      ansible.sudo = "true"
       ansible.host_key_checking = "false"
     end
     pxc2_config.vm.box = deb_distro
@@ -172,7 +184,6 @@ Vagrant.configure("2") do |config|
     end   
     config.vm.provision "ansible" do |ansible|
       ansible.playbook = deb_common_playbook
-      ansible.sudo = "true"
       ansible.host_key_checking = "false"
     end
     pxc3_config.vm.box = deb_distro
@@ -189,7 +200,6 @@ Vagrant.configure("2") do |config|
     end   
     config.vm.provision "ansible" do |ansible|
       ansible.playbook = deb_garbd_playbook
-      ansible.sudo = "true"
       ansible.host_key_checking = "false"
     end
     pxc4_config.vm.box = deb_distro
@@ -203,7 +213,6 @@ Vagrant.configure("2") do |config|
   config.vm.define :percona1 do |percona1_config|
     config.vm.provision "ansible" do |ansible|
       ansible.playbook = rhel1_playbook
-      ansible.sudo = "true"
       ansible.host_key_checking = "false"
     end
     percona1_config.vm.box = rhel_distro
@@ -213,7 +222,6 @@ Vagrant.configure("2") do |config|
   config.vm.define :percona2 do |percona2_config|
     config.vm.provision "ansible" do |ansible|
       ansible.playbook = rhel_playbook
-      ansible.sudo = "true"
       ansible.host_key_checking = "false"
     end
     percona2_config.vm.box = rhel_distro
@@ -223,7 +231,6 @@ Vagrant.configure("2") do |config|
   config.vm.define :percona3 do |percona3_config|
     config.vm.provision "ansible" do |ansible|
       ansible.playbook = rhel_playbook
-      ansible.sudo = "true"
       ansible.host_key_checking = "false"
     end
     percona3_config.vm.box = rhel_distro
@@ -234,7 +241,6 @@ Vagrant.configure("2") do |config|
   config.vm.define :percona4 do |percona4_config|
     config.vm.provision "ansible" do |ansible|
       ansible.playbook = rhel_garbd_playbook
-      ansible.sudo = "true"
       ansible.host_key_checking = "false"
     end
     percona4_config.vm.box = rhel_distro

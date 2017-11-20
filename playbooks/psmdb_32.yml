@@ -1,8 +1,6 @@
 ---
 # This playbook sets up the mongodb-org repo and installs mongodb
 
-  tasks:
-
 - hosts: all
   become: true
   become_method: sudo
@@ -11,8 +9,8 @@
   - name: include tasks for test env setup
     include: ../tasks/test_prep.yml
 
-  - name: include tasks for enabling test repo
-    include: ../tasks/enable_testing_repo.yml
+# - name: include tasks for enabling test repo
+#   include: ../tasks/enable_testing_repo.yml
 
   - name: install deb packages 
     apt: name={{item}} update_cache=yes
@@ -52,9 +50,6 @@
   - name: run package_test
     command: /package-testing/package_check.sh psmdb32
 
-  - name: run version_check
-    command: /package-testing/version_check.sh psmdb32
-
   - name: run psmdb_test
-    command: /package-testing/psmdb_test.sh
+    command: /package-testing/psmdb_test.sh 3.2
 

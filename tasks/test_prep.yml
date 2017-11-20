@@ -1,4 +1,9 @@
 
+  - name: Install percona repository package
+    apt:
+      deb: https://repo.percona.com/apt/percona-release_0.1-4.{{ansible_lsb.codename}}_all.deb
+    when: ansible_os_family == "Debian"
+
   - name: setup epel 6 repo
     yum: name=https://dl.fedoraproject.org/pub/epel/epel-release-latest-6.noarch.rpm state=present
     when: ansible_os_family == "RedHat" and ansible_distribution_major_version == "6"

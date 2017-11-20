@@ -1,0 +1,33 @@
+--- 
+# This playbook sets up the upstream MySQL repo
+# installs server packages, enables percona repo
+# installs PT/PXB and confirms that it works correctly
+
+- hosts: all
+  become: true
+  become_method: sudo
+
+  tasks:
+  - name: include tasks for test env setup
+    include_tasks: ../tasks/test_prep.yml
+
+  - name: include tasks for enabling test repo
+    include_tasks: ../tasks/enable_testing_repo.yml
+
+  - name: Install percona repository package
+    apt:
+      deb: https://dev.mysql.com/get/mysql-apt-config_0.8.8-1_all.deb
+    when: ansible_os_family == "Debian"
+
+# - name: add mysql community key
+#   apt_key: id=A4A9406876FCBD3C456770C88C718D3B5072E1F5 keyserver=keys.gnupg.net state=present
+#   when: ansible_os_family == "Debian"
+
+# - name: add mysql community repo
+#   apt_repository: repo='deb http://repo.mysql.com/apt/debian/ {{ansible_lsb.codename}} mysql-5.7' state=present update_cache=yes
+#   when: ansible_os_family == "Debian"
+
+  - name: install mysql 5.7
+    apt: name="{{ item }}" update_cache=yes
+    with_items:
+    - mysql-server
