@@ -41,6 +41,7 @@
     - percona-server-5.7-dbg
     - percona-server-source-5.7
     - percona-server-tokudb-5.7
+    - percona-server-rocksdb-5.7
     when: ansible_os_family == "Debian"
 
   - name: install packages in centos
@@ -51,6 +52,7 @@
     - Percona-Server-server-57
     - Percona-Server-test-57
     - Percona-Server-tokudb-57
+    - Percona-Server-rocksdb-57
     - Percona-Server-57-debuginfo
 #   - Percona-Server-shared-compat-57
     - Percona-Server-devel-57
@@ -81,6 +83,9 @@
 
   - name: install tokubackup
     command: /usr/bin/ps_tokudb_admin --enable-backup
+
+  - name: install rocksdb
+    command: /usr/bin/ps-admin --enable-rocksdb
 
   - service: name=mysql state=restarted
     when: ansible_os_family == "RedHat" and ansible_distribution_major_version == "6"
@@ -126,6 +131,7 @@
     - Percona-Server-57-debuginfo
     - Percona-Server-devel-57
     - Percona-Server-tokudb-57
+    - Percona-Server-rocksdb-57
 #   - Percona-Server-shared-compat-57
     when: ansible_os_family == "RedHat"
 

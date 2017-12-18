@@ -7,22 +7,12 @@
   become_method: sudo
 
   tasks:
-  # add the dirmngr package for stretch to 
-  - name: install deb packages 
-    apt: name={{item}} update_cache=yes
-    with_items: 
-    - dirmngr
-    when: ansible_os_family == "Debian" and ansible_distribution_release == "stretch"
-  # Add the percona apt signing key, will not download if present
-  - apt_key:
-      id=CD2EFD2A
-      keyserver=keys.gnupg.net
-#     state=present
+  - name: Install percona repository package
+    apt:
+      deb: https://repo.percona.com/apt/percona-release_0.1-4.{{ansible_lsb.codename}}_all.deb
     when: ansible_os_family == "Debian"
-  - apt_key: id=8507EFA5 keyserver=keys.gnupg.net state=present
-    when: ansible_os_family == "Debian"
-  - name: add the deb repo
 
+  - name: add the deb repo
     apt_repository: repo='deb http://repo.percona.com/apt {{ansible_lsb.codename}} main testing' state=present update_cache=yes
     when: ansible_os_family == "Debian"
 
@@ -51,4 +41,4 @@
     - pv
     when: ansible_os_family == "RedHat"
   - name: install PS/PXC client and run the check
-    command: /vagrant/client_check.sh pxc57
+    command: /vagrant/client_check.sh ps57

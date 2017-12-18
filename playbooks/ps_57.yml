@@ -1,0 +1,214 @@
+---
+# This playbook does following:
+#   enables Percona testing repository
+#   installs latest version of PS 5.7, PT and PXB 2.4
+#   does some tests
+
+- hosts: all
+  become: true
+  become_method: sudo
+
+  tasks:
+  - name: include tasks for test env setup
+    include_tasks: ../tasks/test_prep.yml
+
+  - name: include tasks for enabling test repo
+    include_tasks: ../tasks/enable_testing_repo.yml
+
+  - name: download and extract world database
+    command: "{{ item }}"
+    with_items:
+    - wget --no-check-certificate -P /package-testing https://raw.githubusercontent.com/Percona-QA/percona-qa/master/sample_db/world.sql
+
+  - name: install Percona Toolkit new deb packages
+    apt: name={{item}} update_cache=yes state=latest
+    with_items:
+    - percona-toolkit
+    when: ansible_os_family == "Debian"
+
+  - name: install sysbench new deb packages
+    apt: name={{item}} update_cache=yes state=latest
+    with_items:
+    - sysbench
+    when: ansible_os_family == "Debian"
+
+  - name: install Percona Server new deb packages
+    apt: name={{item}} update_cache=no state=latest
+    with_items:
+    - percona-server-server-5.7
+    - percona-server-test-5.7
+    - percona-server-5.7-dbg
+    - percona-server-source-5.7
+    - percona-server-tokudb-5.7
+    - percona-server-rocksdb-5.7
+    when: ansible_os_family == "Debian"
+
+  - name: install Percona XtraBackup new deb packages
+    apt: name={{item}} update_cache=no state=latest
+    with_items:
+    - percona-xtrabackup-24
+    - percona-xtrabackup-test-24
+    - percona-xtrabackup-dbg-24
+    when: ansible_os_family == "Debian"
+
+  - name: install Percona Toolkit new rpm packages
+    yum: name={{item}} state=latest
+    with_items:
+    - percona-toolkit
+    when: ansible_os_family == "RedHat"
+
+  - name: install sysbench new rpm packages
+    yum: name={{item}} state=latest
+    with_items:
+    - sysbench
+    when: ansible_os_family == "RedHat"
+
+  - name: install Percona Server new rpm packages
+    yum: name={{item}} state=latest
+    with_items:
+    - Percona-Server-server-57
+    - Percona-Server-test-57
+    - Percona-Server-57-debuginfo
+    - Percona-Server-devel-57
+    - Percona-Server-tokudb-57
+    - Percona-Server-rocksdb-57
+    - Percona-Server-shared-57
+    - Percona-Server-client-57
+    when: ansible_os_family == "RedHat"
+
+  - name: install Percona Toolkit new rpm packages
+    yum: name={{item}} state=latest
+    with_items:
+    - percona-toolkit
+    when: ansible_os_family == "RedHat"
+
+  - name: install Percona XtraBackup new rpm packages
+    yum: name={{item}} state=latest
+    with_items:
+    - percona-xtrabackup-24
+    - percona-xtrabackup-test-24
+    - percona-xtrabackup-24-debuginfo
+    when: ansible_os_family == "RedHat"
+
+  - name: start mysql service with service command
+    command: service mysql start
+    when: ansible_os_family == "RedHat" and ansible_distribution_major_version == "6"
+
+## remove this after BLD-785 is fixed
+  - name: start mysql service with service command
+    command: service mysql start
+    when: ansible_os_family == "Debian" 
+## remove this after BLD-785 is fixed
+
+  - name: start mysql service with systemctl command
+    command: systemctl start mysql
+    when: ansible_os_family == "RedHat" and ansible_distribution_major_version == "7"
+
+  - name: set root password on centos
+    command: /package-testing/setpass_57.sh
+    when: ansible_os_family == "RedHat"
+
+  - name: copy .my.cnf with credentials on centos
+    template: src=../templates/my_57.j2
+              dest=/root/.my.cnf
+              mode=0640 owner=root group=root
+    when: ansible_os_family == "RedHat"
+
+  - name: disable selinux on centos7 for TokuDB to work
+    command: setenforce 0
+    when: ansible_os_family == "RedHat" and ansible_distribution_major_version == "7"
+
+  - name: install tokudb and restart server
+    command: /usr/bin/ps_tokudb_admin --enable --enable-backup
+
+  - name: copy group replication settings
+    template: src=../templates/group_replication.j2
+              dest=/etc/mysql/percona-server.conf.d/gr.cnf
+    when: ansible_os_family == "Debian"
+
+  - name: restart mysql service
+    service: name=mysql state=restarted
+
+  - name: re-run ps_tokudb_admin to finish tokudb install
+    command: /usr/bin/ps_tokudb_admin --enable --enable-backup
+
+  - name: install plugins, import world database, test tokudb
+    command: /package-testing/plugins_test_57.sh ps
+
+  - name: re-run ps_admin to install rocksdb
+    command: /usr/bin/ps-admin --enable-rocksdb
+
+  - name: check that Percona Server version is correct
+    command: /package-testing/version_check.sh ps57
+
+  - name: check that Percona Server package versions are correct
+    command: /package-testing/package_check.sh ps57
+
+  - name: check that Percona Toolkit version is correct
+    command: /package-testing/version_check.sh pt
+
+  - name: check that sysbench version is correct
+    command: /package-testing/version_check.sh sysbench
+
+  - name: check that Percona XtraBackup version is correct
+    command: /package-testing/version_check.sh pxb24
+
+  - name: check that Percona XtraBackup package versions are correct
+    command: /package-testing/package_check.sh pxb24
+
+# - name: run some MyRocks tests
+#   command: /package-testing/scripts/ps_myrocks_test.sh
+
+  - name: install GR plugin
+    command: /package-testing/gr.sh
+
+  - name: run mysql compression tests script
+    command: /package-testing/scripts/mysql-comp-test/mysql_comp_test.sh ps57
+
+  - name: run bats unit tests for ps_tokudb_admin scripts
+    command: /usr/local/bin/bats /package-testing/bats/ps_tokudb_admin_unit.bats
+
+  - name: run bats integration tests for ps_tokudb_admin script
+    command: /usr/local/bin/bats /package-testing/bats/ps_tokudb_admin_integration.bats
+
+  - name: run bats unit tests for ps-admin script
+    command: /usr/local/bin/bats /package-testing/bats/ps-admin_unit.bats
+
+  - name: run bats integration tests for ps-admin script
+    command: /usr/local/bin/bats /package-testing/bats/ps-admin_integration.bats
+
+  - name: install 3rd party packages with apt
+    apt: name={{item}}
+    with_items:
+    - rsyslog-mysql
+    when: ansible_os_family == "Debian"
+
+  - name: install 3rd party packages with yum
+    yum: name={{item}}
+    with_items:
+    - rsyslog-mysql
+    when: ansible_os_family == "RedHat"
+
+  - name: run bats tests for mysql init scripts
+    command: /usr/local/bin/bats /package-testing/bats/mysql-init-scripts.bats
+
+  - name: start mysql service
+    service: name=mysql state=started
+
+  - name: check that mysqladmin shutdown works correctly
+    command: /package-testing/madmin_check.sh
+
+  - name: remove Percona Server deb packages
+    apt: name={{item}} update_cache=no state=absent
+    with_items:
+    - percona-server-server-5.7
+    when: ansible_os_family == "Debian"
+
+  - name: remove Percona Server rpm packages
+    yum: name={{item}} state=absent
+    with_items:
+    - Percona-Server-server-57
+    when: ansible_os_family == "RedHat"
+
+  - name: check if process is stopped after package removal
+    command: /package-testing/check_running.sh mysql stopped

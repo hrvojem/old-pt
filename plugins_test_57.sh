@@ -11,6 +11,7 @@ mysql -e "INSTALL PLUGIN QUERY_RESPONSE_TIME_READ SONAME 'query_response_time.so
 mysql -e "INSTALL PLUGIN QUERY_RESPONSE_TIME_WRITE SONAME 'query_response_time.so';"
 mysql -e "INSTALL PLUGIN scalability_metrics SONAME 'scalability_metrics.so';"
 mysql -e "INSTALL PLUGIN mysqlx SONAME 'mysqlx.so';"
+#mysql -e "INSTALL PLUGIN keyring_vault SONAME 'keyring_vault.so';"
 mysql -e "SHOW PLUGINS;"
 mysql -e "CREATE DATABASE world;"
 mysql -e "CREATE DATABASE world2;"

@@ -52,4 +52,3 @@
 
   - name: run psmdb_test
     command: /package-testing/psmdb_test.sh 3.2
-
