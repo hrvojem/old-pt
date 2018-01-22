@@ -3,6 +3,14 @@
 user=mysql
 datadir=/var/lib/mysql
 
+log_slave_updates
+gtid_mode=ON
+enforce_gtid_consistency
+slave_parallel_workers=2
+wsrep_slave_threads=8
+log_bin=mysql-bin
+server_id=103
+
 # Path to Galera library
 wsrep_provider=/usr/lib/libgalera_smm.so
 

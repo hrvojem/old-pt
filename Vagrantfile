@@ -1,13 +1,13 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-playbook = "playbooks/common_57.yml"
-deb_distro = "bento/debian-7"
+playbook = "playbooks/clean.yml"
+deb_distro = "artful-pxc"
 deb1_playbook = "playbooks/pxc56.yml"
 deb_common_playbook = "playbooks/pxc56_common.yml"
 deb_garbd_playbook = "playbooks/pxc56_garbd.yml"
-rhel_distro = "bento/centos-7.4"
-rhel1_playbook = "playbooks/percona1_pxc57.yml"
+rhel_distro = "bento/centos-6.9"
+rhel1_playbook = "playbooks/percona1_pxc56.yml"
 rhel_playbook = "playbooks/percona2_pxc56.yml"
 rhel_garbd_playbook = "playbooks/percona4_pxc56.yml"
 
@@ -102,6 +102,7 @@ Vagrant.configure("2") do |config|
 
   config.vm.define :artful do |artful_config|
     artful_config.vm.box = "bento/ubuntu-17.10"
+#   artful_config.ssh.insert_key = false
     config.vm.provision "shell", path: "zesty.sh"
     config.vm.provision "ansible" do |ansible|
       ansible.playbook = playbook
@@ -134,7 +135,7 @@ Vagrant.configure("2") do |config|
   end
 
   config.vm.define :pxc1 do |pxc1_config|
-    if deb_distro == "ubuntu/zesty64" then
+    if deb_distro == "bento/ubuntu-17.04" then
        config.vm.provision "shell", path: "zesty.sh"
     end   
     config.vm.provision "ansible" do |ansible|
@@ -150,7 +151,7 @@ Vagrant.configure("2") do |config|
   end
 
   config.vm.define :pxc2 do |pxc2_config|
-    if deb_distro == "ubuntu/zesty64" then
+    if deb_distro == "bento/ubuntu-17.04" then
        config.vm.provision "shell", path: "zesty.sh"
     end   
     config.vm.provision "ansible" do |ansible|
@@ -166,7 +167,7 @@ Vagrant.configure("2") do |config|
   end
 
   config.vm.define :pxc3 do |pxc3_config|
-    if deb_distro == "ubuntu/zesty64" then
+    if deb_distro == "bento/ubuntu-17.04" then
        config.vm.provision "shell", path: "zesty.sh"
     end   
     config.vm.provision "ansible" do |ansible|
@@ -182,7 +183,7 @@ Vagrant.configure("2") do |config|
   end
 
   config.vm.define :pxc4 do |pxc4_config|
-    if deb_distro == "ubuntu/zesty64" then
+    if deb_distro == "bento/ubuntu-17.04" then
        config.vm.provision "shell", path: "zesty.sh"
     end   
     config.vm.provision "ansible" do |ansible|

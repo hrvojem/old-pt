@@ -19,7 +19,7 @@
       deb: https://repo.percona.com/apt/percona-release_0.1-4.{{ansible_lsb.codename}}_all.deb
     when: ansible_os_family == "Debian" 
 
-  - name: add the repo
+  - name: add the testing repo
     apt_repository: repo='deb http://repo.percona.com/apt {{ansible_lsb.codename}} main testing' state=present
 
   - name: install galera, vim, pv, python-mysqldb, pxc-56
