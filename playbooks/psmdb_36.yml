@@ -2,14 +2,12 @@
 # This playbook sets up the mongodb-org repo and installs mongodb
 
 - hosts: all
-  name: Prepare a clean machine with percona (and EPEL) repo(s) installed
   become: true
   become_method: sudo
-  vars:
-    client: "{{ lookup('env', 'client_to_test') }}"
 
   tasks:
-  - name: Install percona repository package
+  # Add the percona apt signing key, will not download if present
+  - name: add the deb repo
     apt:
       deb: https://repo.percona.com/apt/percona-release_0.1-4.{{ansible_lsb.codename}}_all.deb
     when: ansible_os_family == "Debian"
@@ -17,30 +15,40 @@
   - name: add the deb repo
     apt_repository: repo='deb http://repo.percona.com/apt {{ansible_lsb.codename}} main testing' state=present update_cache=yes
     when: ansible_os_family == "Debian"
-
   - name: install deb packages 
     apt: name={{item}} update_cache=yes
     with_items: 
     - vim
+    - pv
+    - percona-server-mongodb-36
+    - percona-server-mongodb-36-dbg
     when: ansible_os_family == "Debian"
-
   - name: epel 6 repo
     yum: name=https://dl.fedoraproject.org/pub/epel/epel-release-latest-6.noarch.rpm state=present
     when: ansible_os_family == "RedHat" and ansible_distribution_major_version == "6"
-
   - name: epel 7 repo
     yum: name=https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm state=present
     when: ansible_os_family == "RedHat" and ansible_distribution_major_version == "7"
-
   - name: add the yum percona repos
     yum: name=http://www.percona.com/downloads/percona-release/redhat/0.1-4/percona-release-0.1-4.noarch.rpm
-    when: ansible_os_family == "RedHat" and ansible_distribution_major_version|int >= 6
-
+    when: ansible_os_family == "RedHat" and ansible_distribution_major_version|int >= 6 
   - name: install packages in centos
-    yum: name={{item}} state=present
+    yum: name={{item}} state=present enablerepo=percona-testing-x86_64
     with_items:
+    - redhat-lsb
     - libselinux-python
     - pv
+    - Percona-Server-MongoDB-36
+    - Percona-Server-MongoDB-36-debuginfo
     when: ansible_os_family == "RedHat"
-  - name: install PS/PXC client and run the check
-    command: /vagrant/client_check.sh {{ client }}
+  - command: service mongod start
+    when: ansible_os_family == "RedHat" and ansible_distribution_major_version == "6"
+  - command: systemctl start mongod
+    when: ansible_os_family == "RedHat" and ansible_distribution_major_version == "7"
+
+  - name: run package_test
+    command: /vagrant/package_check.sh psmdb36
+
+  - name: run psmdb_test
+    command: /vagrant/psmdb_test.sh
+

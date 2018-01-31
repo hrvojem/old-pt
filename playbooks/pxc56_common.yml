@@ -44,3 +44,6 @@
 
   - name: version check
     command: /vagrant/version_check.sh pxc56
+
+  - name: mysqladmin shutdown test
+    command: /vagrant/madmin_check.sh

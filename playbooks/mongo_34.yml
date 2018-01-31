@@ -11,7 +11,7 @@
     when: ansible_os_family == "Debian"
 
   - name: add the mongo ubuntu repo
-    apt_repository: repo='deb http://repo.mongodb.org/apt/ubuntu {{ansible_lsb.codename}}/mongodb-org/3.4 main' state=present update_cache=yes
+    apt_repository: repo='deb https://repo.mongodb.org/apt/ubuntu {{ansible_lsb.codename}}/mongodb-org/3.4 multiverse' state=present update_cache=yes
     when: ansible_distribution == "Ubuntu"
 
   - name: add the mongo debian repo
@@ -28,4 +28,9 @@
     - vim
     - pv
     - mongodb-org
+    when: ansible_os_family == "Debian"
+
+  - name: Install percona repository package for Debian/Ubuntu
+    apt:
+      deb: https://repo.percona.com/apt/percona-release_0.1-4.{{ansible_lsb.codename}}_all.deb
     when: ansible_os_family == "Debian"

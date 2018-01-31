@@ -1,15 +1,15 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-playbook = "playbooks/clean.yml"
+playbook = "playbooks/common_56.yml"
 deb_distro = "artful-pxc"
-deb1_playbook = "playbooks/pxc56.yml"
-deb_common_playbook = "playbooks/pxc56_common.yml"
-deb_garbd_playbook = "playbooks/pxc56_garbd.yml"
+deb1_playbook = "playbooks/pxc57.yml"
+deb_common_playbook = "playbooks/pxc57_common.yml"
+deb_garbd_playbook = "playbooks/pxc57_garbd.yml"
 rhel_distro = "bento/centos-6.9"
-rhel1_playbook = "playbooks/percona1_pxc56.yml"
-rhel_playbook = "playbooks/percona2_pxc56.yml"
-rhel_garbd_playbook = "playbooks/percona4_pxc56.yml"
+rhel1_playbook = "playbooks/percona1_pxc57.yml"
+rhel_playbook = "playbooks/percona2_pxc57.yml"
+rhel_garbd_playbook = "playbooks/percona4_pxc57.yml"
 
 Vagrant.configure("2") do |config|
   # All Vagrant configuration is done here. The most pxb configuration
@@ -76,7 +76,7 @@ Vagrant.configure("2") do |config|
   config.vm.define :xenial do |xenial_config|
     xenial_config.vm.box = "bento/ubuntu-16.04"
 #   xenial_config.vm.box = "bento/ubuntu-16.04-i386"
-    config.vm.provision "shell", path: "zesty.sh"
+#   config.vm.provision "shell", path: "zesty.sh"
     config.vm.provision "ansible" do |ansible|
       ansible.playbook = playbook
       ansible.host_key_checking = "false"
@@ -102,8 +102,6 @@ Vagrant.configure("2") do |config|
 
   config.vm.define :artful do |artful_config|
     artful_config.vm.box = "bento/ubuntu-17.10"
-#   artful_config.ssh.insert_key = false
-    config.vm.provision "shell", path: "zesty.sh"
     config.vm.provision "ansible" do |ansible|
       ansible.playbook = playbook
       ansible.host_key_checking = "false"

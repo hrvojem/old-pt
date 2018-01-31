@@ -20,8 +20,8 @@
     when: "item.startswith('192.168')"
   - debug: var=man_ip
 
-  - name: add the repo
-    apt_repository: repo='deb http://repo.percona.com/apt {{ansible_lsb.codename}} main testing' state=present
+# - name: add the repo
+#   apt_repository: repo='deb http://repo.percona.com/apt {{ansible_lsb.codename}} main testing' state=present
 
   - name: install galera, vim, pv, python-mysqldb, pxc-57
     apt: name={{ item }} update_cache=yes
