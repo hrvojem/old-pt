@@ -36,11 +36,7 @@
     when: ansible_os_family == "RedHat" and ansible_distribution_major_version == "6"
   - name: install pv
     yum: name=pv  state=present
-  - name: install Percona-Server-shared-compat for CentOS 5
-    yum: name=Percona-Server-shared-compat.x86_64 state=present
-    when: ansible_os_family == "RedHat" and ansible_distribution_major_version == "5"
-  - name: install PXC
-    yum: name=Percona-XtraDB-Cluster-full-56.x86_64 state=present 
+    yum: name=Percona-XtraDB-Cluster-full-56.x86_64 state=present #enablerepo=percona-testing-x86_64 
   - name: install MySQL-python and sysbench
     yum: name={{item}} state=present
     with_items: 
@@ -52,8 +48,6 @@
   - name: copy pxc config
     template: src=../templates/my_rpm_7.j2 dest=/etc/my.cnf
     when: ansible_os_family == "RedHat" and ansible_distribution_major_version == "7"
-  - command: /etc/init.d/mysql bootstrap-pxc
-    when: ansible_os_family == "RedHat" and ansible_distribution_major_version == "5"
   - command: service mysql bootstrap-pxc
     when: ansible_os_family == "RedHat" and ansible_distribution_major_version == "6"
   - command: systemctl start mysql@bootstrap.service
@@ -64,4 +58,3 @@
     command: /vagrant/plugins_test_pxc_56.sh
   - name: run sysbench
     command: /vagrant/sb.sh
- 

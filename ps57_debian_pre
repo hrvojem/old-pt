@@ -1,0 +1,2 @@
+# packages needed on Ubuntu Xenial before older versions can be manually installed
+apt-get install mysql-common debsums libaio1 libcurl3 libmecab2

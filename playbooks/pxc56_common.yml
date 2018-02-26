@@ -45,5 +45,6 @@
   - name: version check
     command: /vagrant/version_check.sh pxc56
 
-  - name: mysqladmin shutdown test
-    command: /vagrant/madmin_check.sh
+# commented out until https://jira.percona.com/browse/BLD-935 is fixed
+# - name: mysqladmin shutdown test
+#   command: /vagrant/madmin_check.sh

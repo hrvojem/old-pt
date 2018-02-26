@@ -2,11 +2,11 @@
 # vi: set ft=ruby :
 
 playbook = "playbooks/common_56.yml"
-deb_distro = "artful-pxc"
+deb_distro = "bento/debian-9"
 deb1_playbook = "playbooks/pxc57.yml"
 deb_common_playbook = "playbooks/pxc57_common.yml"
 deb_garbd_playbook = "playbooks/pxc57_garbd.yml"
-rhel_distro = "bento/centos-6.9"
+rhel_distro = "bento/centos-7.4"
 rhel1_playbook = "playbooks/percona1_pxc57.yml"
 rhel_playbook = "playbooks/percona2_pxc57.yml"
 rhel_garbd_playbook = "playbooks/percona4_pxc57.yml"
@@ -87,19 +87,6 @@ Vagrant.configure("2") do |config|
     xenial_config.vm.host_name = "xenial"
   end
 
-  config.vm.define :zesty do |zesty_config|
-    zesty_config.vm.box = "bento/ubuntu-17.04"
-    config.vm.provision "shell", path: "zesty.sh"
-    config.vm.provision "ansible" do |ansible|
-      ansible.playbook = playbook
-      ansible.host_key_checking = "false"
-    end
-    zesty_config.vm.provider :virtualbox do |vb|
-      vb.customize ["modifyvm", :id, "--memory", "2048", "--ioapic", "on" ]
-    end
-    zesty_config.vm.host_name = "zesty"
-  end
-
   config.vm.define :artful do |artful_config|
     artful_config.vm.box = "bento/ubuntu-17.10"
     config.vm.provision "ansible" do |ansible|
@@ -131,6 +118,16 @@ Vagrant.configure("2") do |config|
     end
     centos7_config.vm.host_name = "centos7"
   end
+
+  config.vm.define :centos7psx do |centos7ps_config|
+    centos7ps_config.vm.box = "bento/centos-7.4"
+    config.vm.provision "ansible" do |ansible|
+      ansible.playbook = playbook
+      ansible.host_key_checking = "false"
+    end
+    centos7ps_config.vm.host_name = "centos7ps"
+  end
+
 
   config.vm.define :pxc1 do |pxc1_config|
     if deb_distro == "bento/ubuntu-17.04" then
