@@ -1,0 +1,1 @@
+ps auxww | grep mysql

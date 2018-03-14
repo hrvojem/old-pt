@@ -28,12 +28,6 @@
     yum: name=https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm state=present
     when: ansible_os_family == "RedHat" and ansible_distribution_major_version == "7"
 
-  # Enable SELinux on CentOS
-  - selinux:
-      policy: targeted
-      state: enforcing
-    when: ansible_os_family == "RedHat"
-
   - name: install deb packages 
     apt: name={{item}} update_cache=yes
     with_items: 
@@ -65,6 +59,12 @@
     - percona-xtrabackup
     - percona-xtrabackup-test
     - percona-xtrabackup-debuginfo
+    when: ansible_os_family == "RedHat"
+
+  # Enable SELinux on CentOS
+  - selinux:
+      policy: targeted
+      state: permissive
     when: ansible_os_family == "RedHat"
 
   - name: use service to start mysql

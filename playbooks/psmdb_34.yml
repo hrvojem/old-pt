@@ -50,5 +50,5 @@
     command: /vagrant/package_check.sh psmdb34
 
   - name: run psmdb_test
-    command: /vagrant/psmdb_test.sh
+    command: /vagrant/psmdb_test.sh 3.4
 
