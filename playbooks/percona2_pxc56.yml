@@ -13,7 +13,7 @@
     with_items:
     - libselinux-python
     #- vim
-  - selinux: state=disabled
+# - selinux: state=disabled
   - name: add firewall rules
     command: /sbin/iptables -I INPUT -s {{item}} -p tcp -j ACCEPT
     with_items:

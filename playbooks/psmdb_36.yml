@@ -9,12 +9,12 @@
   # Add the percona apt signing key, will not download if present
   - name: add the deb repo
     apt:
-      deb: https://repo.percona.com/apt/percona-release_0.1-4.{{ansible_lsb.codename}}_all.deb
+      deb: https://repo.percona.com/apt/percona-release_0.1-5.{{ansible_lsb.codename}}_all.deb
     when: ansible_os_family == "Debian"
 
-  - name: add the deb repo
-    apt_repository: repo='deb http://repo.percona.com/apt {{ansible_lsb.codename}} main testing' state=present update_cache=yes
-    when: ansible_os_family == "Debian"
+# - name: add the deb repo
+#   apt_repository: repo='deb http://repo.percona.com/apt {{ansible_lsb.codename}} main experimental' state=present update_cache=yes
+#   when: ansible_os_family == "Debian"
   - name: install deb packages 
     apt: name={{item}} update_cache=yes
     with_items: 
@@ -33,7 +33,7 @@
     yum: name=http://www.percona.com/downloads/percona-release/redhat/0.1-4/percona-release-0.1-4.noarch.rpm
     when: ansible_os_family == "RedHat" and ansible_distribution_major_version|int >= 6 
   - name: install packages in centos
-    yum: name={{item}} state=present enablerepo=percona-testing-x86_64
+    yum: name={{item}} state=present #enablerepo=percona-experimental-x86_64
     with_items:
     - redhat-lsb
     - libselinux-python
@@ -50,5 +50,5 @@
     command: /vagrant/package_check.sh psmdb36
 
   - name: run psmdb_test
-    command: /vagrant/psmdb_test.sh
+    command: /vagrant/psmdb_test.sh 3.6
 

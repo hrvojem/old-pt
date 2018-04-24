@@ -17,6 +17,7 @@ pt-mysql-summary
 pt-online-schema-change
 pt-pmp
 pt-query-digest
+pt-secure-collect
 pt-show-grants
 pt-sift
 pt-slave-delay

@@ -9,7 +9,7 @@
 
   - name: Install percona repository package
     apt:
-      deb: https://repo.percona.com/apt/percona-release_0.1-4.{{ansible_lsb.codename}}_all.deb
+      deb: https://repo.percona.com/apt/percona-release_0.1-5.{{ansible_lsb.codename}}_all.deb
     when: ansible_os_family == "Debian"
 
   - name: add the deb repo
@@ -59,6 +59,9 @@
     - percona-toolkit
     - percona-xtrabackup-24
     when: ansible_os_family == "RedHat"
+
+  - name: start my.cnf change test
+    command: /vagrant/check_mycnf_pre.sh
 
   - name: start mysql service with service command
     command: service mysql start
@@ -143,3 +146,6 @@
 
   - name: check that Percona Server 5.7 package version is correct
     command: /vagrant/package_check.sh ps57
+
+  - name: finish my.cnf change test
+    command: /vagrant/check_mycnf_post.sh

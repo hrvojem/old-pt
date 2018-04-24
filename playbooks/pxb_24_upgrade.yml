@@ -7,13 +7,13 @@
 
   tasks:
   # Add an Apt signing key, will not download if present
-  - name: Install percona repository package
-    apt:
-      deb: https://repo.percona.com/apt/percona-release_0.1-5.{{ansible_lsb.codename}}_all.deb
+  - apt_key: id=CD2EFD2A keyserver=keys.gnupg.net state=present
+    when: ansible_os_family == "Debian"
+  - apt_key: id=8507EFA5 keyserver=keys.gnupg.net state=present
     when: ansible_os_family == "Debian"
 
   - name: add the deb repo
-    apt_repository: repo='deb http://repo.percona.com/apt {{ansible_lsb.codename}} main testing' state=present update_cache=yes
+    apt_repository: repo='deb http://repo.percona.com/apt {{ansible_lsb.codename}} main' state=present update_cache=yes
     when: ansible_os_family == "Debian"
 
   - name: add the yum percona repos 
@@ -34,23 +34,23 @@
     - vim
     - sysbench
     - pv
-    - percona-server-server-5.6
-    - percona-xtrabackup-24
-    - percona-xtrabackup-test-24
-    - percona-xtrabackup-dbg-24
     - percona-toolkit
+    - percona-server-server-5.6
+    - percona-xtrabackup
+    - percona-xtrabackup-test
+    - percona-xtrabackup-dbg
     when: ansible_os_family == "Debian"
 
   - name: install packages in centos
-    yum: name={{item}} state=present enablerepo=percona-testing-x86_64
+    yum: name={{item}} state=present #enablerepo=percona-testing-x86_64
     with_items:
     - libselinux-python
     - sysbench
-    - Percona-Server-server-57
+    - Percona-Server-server-56
     - percona-toolkit
-    - percona-xtrabackup-24
-    - percona-xtrabackup-test-24
-    - percona-xtrabackup-24-debuginfo
+    - percona-xtrabackup
+    - percona-xtrabackup-test
+    - percona-xtrabackup-debuginfo
     when: ansible_os_family == "RedHat"
 
   - command: /etc/init.d/mysql start
@@ -62,18 +62,8 @@
   - command: systemctl start mysql
     when: ansible_os_family == "RedHat" and ansible_distribution_major_version == "7"
 
-  - name: set root password
-    command: /vagrant/setpass_57.sh
-    when: ansible_os_family == "RedHat"
-
-  - name: copy .my.cnf
-    template: src=../templates/my_57.j2
-              dest=/root/.my.cnf
-              mode=0640 owner=root group=root
-    when: ansible_os_family == "RedHat"
-
-  - name: PXB-2.4 package version check
-    command: /vagrant/package_check.sh pxb24
+  - name: install plugins
+    command: /vagrant/plugins_test_55.sh
 
   - name: running sysbench
     command: /vagrant/sb.sh
@@ -81,5 +71,34 @@
   - name: run backup
     command: /usr/bin/xtrabackup --backup --user=root --target-dir=/tmp/backups/
 
-  - name: prepare backup
+  - name: remove the Percona apt main repository
+    apt_repository: repo='deb http://repo.percona.com/apt {{ ansible_lsb.codename }} main' state=absent update_cache=yes
+    when: ansible_os_family == "Debian"
+
+  - name: enable deb testing repos
+    apt_repository: repo='deb http://repo.percona.com/apt {{ ansible_lsb.codename }} main testing' state=absent update_cache=yes
+    when: ansible_os_family == "Debian"
+
+  - name: run upgrade on Debian/Ubuntu
+    apt: upgrade=yes
+    when: ansible_os_family == "Debian"
+
+  - name: upgrade Percona Server to new rpm packages
+    yum: name={{item}} state=latest enablerepo=percona-testing-x86_64
+    with_items:
+    - percona-xtrabackup
+    - percona-xtrabackup-test
+    - percona-xtrabackup-debuginfo
+    when: ansible_os_family == "RedHat"
+
+  - name: PXB-2.3 package version check
+    command: /vagrant/package_check.sh pxb23
+
+  - name: prepare older version backup
     command: /usr/bin/xtrabackup --prepare --target-dir=/tmp/backups/
+
+  - name: run backup with new PXB version
+    command: /usr/bin/xtrabackup --backup --user=root --target-dir=/tmp/backups_upgrade/
+
+  - name: prepare new version backup
+    command: /usr/bin/xtrabackup --prepare --target-dir=/tmp/backups_upgrade/

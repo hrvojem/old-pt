@@ -1,12 +1,12 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-playbook = "playbooks/common_56.yml"
-deb_distro = "bento/debian-9"
-deb1_playbook = "playbooks/pxc57.yml"
-deb_common_playbook = "playbooks/pxc57_common.yml"
-deb_garbd_playbook = "playbooks/pxc57_garbd.yml"
-rhel_distro = "bento/centos-6.9"
+playbook = "playbooks/common_57_upgrade.yml"
+deb_distro = "bento/ubuntu-18.04"
+deb1_playbook = "playbooks/pxc56.yml"
+deb_common_playbook = "playbooks/pxc56_common.yml"
+deb_garbd_playbook = "playbooks/pxc56_garbd.yml"
+rhel_distro = "bento/centos-7.4"
 rhel1_playbook = "playbooks/percona1_pxc57.yml"
 rhel_playbook = "playbooks/percona2_pxc57.yml"
 rhel_garbd_playbook = "playbooks/percona4_pxc57.yml"
@@ -98,6 +98,20 @@ Vagrant.configure("2") do |config|
     end
     artful_config.vm.host_name = "artful"
   end
+
+  config.vm.define :bionic do |bionic_config|
+    bionic_config.vm.box = "bento/ubuntu-18.04" 
+    config.vm.provision "shell", path: "zesty.sh"
+    config.vm.provision "ansible" do |ansible|
+      ansible.playbook = playbook
+      ansible.host_key_checking = "false"
+    end
+    bionic_config.vm.provider :virtualbox do |vb|
+      vb.customize ["modifyvm", :id, "--memory", "2048", "--ioapic", "on" ]
+    end
+    bionic_config.vm.host_name = "bionic"
+  end
+
 
 
   config.vm.define :centos6 do |centos6_config|

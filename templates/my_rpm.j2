@@ -27,7 +27,8 @@ innodb_autoinc_lock_mode=2
 wsrep_node_address={{ansible_eth1.ipv4.address}}
 
 # SST method
-wsrep_sst_method=xtrabackup-v2
+wsrep_sst_method=rsync
+#wsrep_sst_method=xtrabackup-v2
 
 # Cluster name
 wsrep_cluster_name=my_ubuntu_cluster

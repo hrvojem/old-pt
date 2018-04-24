@@ -23,13 +23,19 @@ else
 fi
 
 # Enable auditLog and profiling/rate limit to see if services start with those
-if [ "$VERSIONS" == "3.0" ]; then
+if [ "$VERSION" == "3.0" ]; then
   echo "Skipping usage of profiling rate limit functionality because not available in 3.0"
   sed -i 's/#operationProfiling:/operationProfiling:\n  mode: all\n  slowOpThresholdMs: 200/' /etc/mongod.conf
 else
   sed -i 's/#operationProfiling:/operationProfiling:\n  mode: all\n  slowOpThresholdMs: 200\n  rateLimit: 100/' /etc/mongod.conf
 fi
 sed -i 's/#auditLog:/audit:\n  destination: file\n  path: \/tmp\/audit.json/' /etc/mongod.conf
+
+# Enable --useDeprecatedMongoRocks for 3.6 to be able to start service with mongorocks
+if [ "$VERSION" == "3.6" ]; then
+  echo "Adding --useDeprecatedMongoRocks option to mongod.cnf" 
+  sed -i '/engine: rocksdb/a \  useDeprecatedMongoRocks: true' /etc/mongod.conf
+fi
 
 function start_service {
   local redhatrelease=""
@@ -39,7 +45,7 @@ function start_service {
   local lsbrelease=$(lsb_release -sc 2>/dev/null || echo "")
   if [ "${lsbrelease}" != "" -a "${lsbrelease}" = "trusty" ]; then
     echo "starting mongod service directly with init script..."
-    /etc/init.d/mongod start
+      /etc/init.d/mongod start
   elif [ "${redhatrelease}" = "5"  ]; then
     echo "starting mongod service directly with init script..."
     /etc/init.d/mongod start
@@ -101,7 +107,7 @@ function test_hotbackup {
   rm -rf /tmp/backup
   mkdir -p /tmp/backup
   chown mongod:mongod -R /tmp/backup
-  BACKUP_RET=$(mongo admin --eval 'db.runCommand({createBackup: 1, backupDir: "/tmp/backup"})'|grep -c '"ok" : 1')
+  BACKUP_RET=$(mongo admin --eval "$(cat ~/.mongorc.js); db.runCommand({createBackup: 1, backupDir: '/tmp/backup'})"|grep -c '"ok" : 1')
   rm -rf /tmp/backup
   if [ ${BACKUP_RET} = 0 ]; then
     echo "Backup failed for storage engine: ${engine}"
@@ -183,4 +189,5 @@ for engine in mmapv1 PerconaFT rocksdb wiredTiger inMemory; do
     sed -i "/engine: *${engine}/s//#engine: ${engine}/g" /etc/mongod.conf
     clean_datadir
   fi
+  start_service
 done
