@@ -60,9 +60,6 @@
     - percona-xtrabackup-24
     when: ansible_os_family == "RedHat"
 
-  - name: start my.cnf change test
-    command: /vagrant/check_mycnf_pre.sh
-
   - name: start mysql service with service command
     command: service mysql start
     when: ansible_os_family == "RedHat" and ansible_distribution_major_version == "6"
@@ -113,6 +110,9 @@
     with_items:
     - rsyslog-mysql
     when: ansible_os_family == "Debian"
+
+  - name: start my.cnf change test
+    command: /vagrant/check_mycnf_pre.sh
 
   - name: remove the Percona apt main repository
     apt_repository: repo='deb http://repo.percona.com/apt {{ ansible_lsb.codename }} main' state=absent update_cache=yes

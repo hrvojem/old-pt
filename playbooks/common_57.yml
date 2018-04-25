@@ -128,6 +128,9 @@
   - name: install tokubackup
     command: /usr/bin/ps_tokudb_admin --enable-backup
 
+  - name: keyring plugins test
+    command: /vagrant/ps_keyring_plugins_test/ps_keyring_plugins_test.sh
+
   - name: install GR plugin
     command: /vagrant/gr.sh
 
