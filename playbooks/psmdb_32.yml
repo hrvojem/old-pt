@@ -33,7 +33,7 @@
     when: ansible_os_family == "RedHat" and ansible_distribution_major_version|int >= 6 
 
   - name: install packages in centos
-    yum: name={{item}} state=present  #enablerepo=percona-testing-x86_64
+    yum: name={{item}} state=present enablerepo=percona-testing-x86_64
     with_items:
     - redhat-lsb
     - libselinux-python
@@ -47,11 +47,9 @@
   - command: systemctl start mongod
     when: ansible_os_family == "RedHat" and ansible_distribution_major_version == "7"
 
+  - name: run psmdb_test
+    command: /vagrant/psmdb_test.sh 3.2
+
   - name: run package_test
     command: /vagrant/package_check.sh psmdb32
 
-  - name: set pass and enable auth
-    command: /vagrant/psmdb_set_auth.sh
-
-  - name: run psmdb_test
-    command: /vagrant/psmdb_test.sh 3.2

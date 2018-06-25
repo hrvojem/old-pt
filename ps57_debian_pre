@@ -1,2 +1,4 @@
 # packages needed on Ubuntu Xenial before older versions can be manually installed
-apt-get install mysql-common debsums libaio1 libcurl3 libmecab2
+apt-get install mysql-common debsums libaio1 libcurl3 libmecab2 libnuma1 psmisc -y
+dpkg -i percona-server-common-5.7_5.7.21-20-1.$(lsb_release -sc)_amd64.deb 
+dpkg -i libperconaserverclient20_5.7.21-20-1.$(lsb_release -sc)_amd64.deb percona-server-client-5.7_5.7.21-20-1.$(lsb_release -sc)_amd64.deb percona-server-server-5.7_5.7.21-20-1.$(lsb_release -sc)_amd64.deb

@@ -18,12 +18,12 @@
 
   - name: Install percona repository package
     apt:
-      deb: https://repo.percona.com/apt/percona-release_0.1-5.{{ansible_lsb.codename}}_all.deb
+      deb: https://repo.percona.com/apt/percona-release_0.1-6.{{ansible_lsb.codename}}_all.deb
 
-  - name: add the percona repo
-    apt_repository:
-      repo: 'deb http://repo.percona.com/apt {{ansible_lsb.codename}} main testing'
-      state: present
+# - name: add the percona repo
+#   apt_repository:
+#     repo: 'deb http://repo.percona.com/apt {{ansible_lsb.codename}} main testing'
+#     state: present
 
   - name: install vim, pv, python-mysqldb, and PXC-5.6
     apt: name={{item}} update_cache=yes
@@ -58,5 +58,5 @@
   - name: run sysbench
     command: /vagrant/sb.sh
 
-  - name: version check
-    command: /vagrant/version_check.sh pxc56
+# - name: version check
+#   command: /vagrant/version_check.sh pxc56

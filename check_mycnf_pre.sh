@@ -26,12 +26,12 @@ function check_file {
   if [ -f /etc/debian_version ]; then
     echo " this is debian/ubuntu"
     rm -rf /etc/mysql/my.cnf
-    cp -pvr /vagrant/deb.cnf /etc/mysql/my.cnf
+    cp /vagrant/deb.cnf /etc/mysql/my.cnf
     md5sum /etc/mysql/my.cnf | awk {'print $1'} > /tmp/mycnf_sum
   else
     echo " this is centos"
     rm -rf /etc/my.cnf
-    cp -pvr /vagrant/rpm.cnf /etc/my.cnf
+    cp /vagrant/rpm.cnf /etc/my.cnf
     md5sum /etc/my.cnf | awk {'print $1'} > /tmp/mycnf_sum
   fi
 }
@@ -40,13 +40,13 @@ function check_symlink {
   if [ -f /etc/debian_version ]; then
     echo " this is debian/ubuntu"
     rm -rf /etc/mysql/my.cnf
-    cp -pvr /vagrant/deb.cnf /etc/mysql/percona.cnf
+    cp /vagrant/deb.cnf /etc/mysql/percona.cnf
     ln -s /etc/mysql/percona.cnf /etc/mysql/my.cnf
     md5sum /etc/mysql/my.cnf | awk {'print $1'} > /tmp/mycnf_sum
   else
     echo " this is centos"
     rm -rf /etc/my.cnf
-    cp -pvr /vagrant/rpm.cnf /etc/percona.cnf
+    cp /vagrant/rpm.cnf /etc/percona.cnf
     ln -s /etc/percona.cnf /etc/my.cnf
     md5sum /etc/my.cnf | awk {'print $1'} > /tmp/mycnf_sum
   fi

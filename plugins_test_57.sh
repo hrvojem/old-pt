@@ -1,5 +1,11 @@
 #!/bin/bash
 set -e
+
+if [ $(cat /etc/debian_version) == "7.11" ]; then
+        echo "this is wheezy"
+        ERROR_LOG="/var/lib/mysql/wheezy.err"
+fi
+
 mysql -e "CREATE FUNCTION fnv1a_64 RETURNS INTEGER SONAME 'libfnv1a_udf.so'"
 mysql -e "CREATE FUNCTION fnv_64 RETURNS INTEGER SONAME 'libfnv_udf.so'"
 mysql -e "CREATE FUNCTION murmur_hash RETURNS INTEGER SONAME 'libmurmur_udf.so'"
@@ -18,3 +24,8 @@ mysql -e "CREATE DATABASE world2;"
 pv /vagrant/world_innodb.sql | mysql -D world
 pv /vagrant/world_innodb.sql | mysql -D world2
 mysql < /vagrant/tokudb_compression.sql
+
+if [ $(cat /etc/debian_version) == "7.11" ]; then
+        echo "this is wheezy"
+        ERROR_LOG="/var/lib/mysql/wheezy.err"
+fi

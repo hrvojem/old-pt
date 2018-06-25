@@ -1,0 +1,22 @@
+---
+# This playbook sets up a clean server without percona repos,
+# and with EPEL repos only for centos
+
+- hosts: all
+  name: Prepare a clean machine with percona (and EPEL) repo(s) installed
+  become: true
+  become_method: sudo
+
+  tasks:
+  - name: epel 6 repo
+    yum: name=https://dl.fedoraproject.org/pub/epel/epel-release-latest-6.noarch.rpm state=present
+    when: ansible_os_family == "RedHat" and ansible_distribution_major_version == "6"
+  - name: epel 7 repo
+    yum: name=https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm state=present
+    when: ansible_os_family == "RedHat" and ansible_distribution_major_version == "7"
+  - name: install packages in centos
+    yum: name={{item}} state=present
+    with_items:
+    - libselinux-python
+    - pv
+    when: ansible_os_family == "RedHat"

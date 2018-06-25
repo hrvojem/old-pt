@@ -9,19 +9,18 @@
 
   - name: Install percona repository package
     apt:
-      deb: https://repo.percona.com/apt/percona-release_0.1-4.{{ansible_lsb.codename}}_all.deb
+      deb: https://repo.percona.com/apt/percona-release_0.1-5.{{ansible_lsb.codename}}_all.deb
     when: ansible_os_family == "Debian"
 
-# - name: add the deb repo
-#   apt_repository: repo='deb http://repo.percona.com/apt {{ansible_lsb.codename}} main testing' state=present update_cache=yes
-#   when: ansible_os_family == "Debian"
-
+  - name: add the deb repo
+    apt_repository: repo='deb http://repo.percona.com/apt {{ansible_lsb.codename}} main testing' state=present update_cache=yes
+    when: ansible_os_family == "Debian"
 
   # Enable SELinux on CentOS
-  - selinux: 
-      policy: targeted
-      state: enforcing
-    when: ansible_os_family == "RedHat"
+# - selinux: 
+#     policy: targeted
+#     state: enforcing
+#   when: ansible_os_family == "RedHat"
 
   - name: add the yum percona repos 
     yum: name=https://www.percona.com/downloads/percona-release/redhat/0.1-4/percona-release-0.1-4.noarch.rpm state=present
@@ -45,14 +44,14 @@
     - percona-server-test-5.5
     - percona-server-5.5-dbg
     - percona-server-source-5.5
-    - percona-nagios-plugins
-    - percona-cacti-templates
-    - percona-zabbix-templates
+#   - percona-nagios-plugins
+#   - percona-cacti-templates
+#   - percona-zabbix-templates
     - sysbench
     when: ansible_os_family == "Debian"
 
   - name: install packages in centos
-    yum: name={{item}} state=present #enablerepo=percona-testing-x86_64
+    yum: name={{item}} state=present enablerepo=percona-testing-x86_64
     with_items:
     - libselinux-python
     - Percona-Server-server-55

@@ -8,15 +8,15 @@
   tasks:
   - name: Install percona repository package
     apt:
-      deb: https://repo.percona.com/apt/percona-release_0.1-5.{{ansible_lsb.codename}}_all.deb
+      deb: https://repo.percona.com/apt/percona-release_0.1-6.{{ansible_lsb.codename}}_all.deb
     when: ansible_os_family == "Debian"
 
 # - name: add the deb repo
-#   apt_repository: repo='deb http://repo.percona.com/apt {{ansible_lsb.codename}} main testing' state=present update_cache=yes
+#   apt_repository: repo='deb http://repo.percona.com/apt {{ansible_lsb.codename}} testing' state=present update_cache=yes
 #   when: ansible_os_family == "Debian"
 
   - name: add the yum percona repos 
-    yum: name=http://www.percona.com/downloads/percona-release/redhat/0.1-4/percona-release-0.1-4.noarch.rpm
+    yum: name=http://www.percona.com/downloads/percona-release/redhat/0.1-6/percona-release-0.1-6.noarch.rpm
     when: ansible_os_family == "RedHat" 
 
   - name: epel 6 repo
@@ -59,7 +59,7 @@
     when: ansible_os_family == "Debian"
 
   - name: install packages in centos
-    yum: name={{item}} state=present #enablerepo=percona-testing-x86_64 
+    yum: name={{item}} state=present enablerepo=percona-testing-x86_64 
     with_items:
     - libselinux-python
     - pv
@@ -89,10 +89,10 @@
   - service: name=mysql state=started
 #   when: ansible_os_family == "RedHat"
 
-  - name: copy group replication settings
-    template: src=../templates/group_replication.j2
-              dest=/etc/mysql/percona-server.conf.d/gr.cnf
-    when: ansible_os_family == "Debian"
+# - name: copy group replication settings
+#   template: src=../templates/group_replication.j2
+#             dest=/etc/mysql/percona-server.conf.d/gr.cnf
+#   when: ansible_os_family == "Debian"
  
   - name: set root password
     command: /vagrant/setpass_57.sh
@@ -131,8 +131,8 @@
   - name: keyring plugins test
     command: /vagrant/ps_keyring_plugins_test/ps_keyring_plugins_test.sh
 
-  - name: install GR plugin
-    command: /vagrant/gr.sh
+# - name: install GR plugin
+#   command: /vagrant/gr.sh
 
   - name: version check
     command: /vagrant/version_check.sh ps57

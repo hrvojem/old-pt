@@ -9,7 +9,7 @@
 
   - name: Install percona repository package
     apt:
-      deb: https://repo.percona.com/apt/percona-release_0.1-5.{{ansible_lsb.codename}}_all.deb
+      deb: https://repo.percona.com/apt/percona-release_0.1-6.{{ansible_lsb.codename}}_all.deb
     when: ansible_os_family == "Debian"
 
   - name: add the deb repo
@@ -17,7 +17,7 @@
     when: ansible_os_family == "Debian"
 
   - name: add the yum percona repos 
-    yum: name=https://www.percona.com/downloads/percona-release/redhat/0.1-4/percona-release-0.1-4.noarch.rpm state=present
+    yum: name=https://www.percona.com/downloads/percona-release/redhat/0.1-6/percona-release-0.1-6.noarch.rpm state=present
     when: ansible_os_family == "RedHat" and ansible_distribution_major_version|int >= 6
 
   - name: epel 6 repo
@@ -112,7 +112,7 @@
     when: ansible_os_family == "Debian"
 
   - name: start my.cnf change test
-    command: /vagrant/check_mycnf_pre.sh
+    command: /vagrant/check_mycnf_pre.sh file
 
   - name: remove the Percona apt main repository
     apt_repository: repo='deb http://repo.percona.com/apt {{ ansible_lsb.codename }} main' state=absent update_cache=yes

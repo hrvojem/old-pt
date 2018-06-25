@@ -1,5 +1,10 @@
 #!/usr/bin/env bats
 
+SYSTEMCTL=0
+SERVICE=0
+SYSVCONFIG=0
+CHKCONFIG=0
+
 if [ ! -z "$(which systemctl 2>/dev/null)" ]; then
   SYSTEMCTL=1
 fi
@@ -161,10 +166,7 @@ function teardown(){
 }
 
 @test "check if mongo service is enabled in systemd" {
-  if [ -f /etc/redhat-release ]; then
-    skip "disabled because centos (BLD-741)"
-    # https://jira.percona.com/browse/BLD-741
-  elif [ ${SYSTEMCTL} -eq 1 ]; then
+  if [ ${SYSTEMCTL} -eq 1 ]; then
     result=$(systemctl is-enabled mongod)
     [ $result == "enabled" ]
   else
@@ -175,15 +177,12 @@ function teardown(){
 @test "check if mongo service is enabled in sysvinit" {
   if [ ${SYSTEMCTL} -eq 1 ]; then
     skip "init system is systemd so other test will do the check"
-  elif [ -f /etc/redhat-release ]; then
-    skip "disabled for centos (BLD-741)"
-    # https://jira.percona.com/browse/BLD-741
   elif [ ${SYSVCONFIG} -eq 1 ]; then
     result=$(sysv-rc-conf --list mongod|grep -o ":on"|wc -l)
     [ $result -gt 3 ]
   elif [ ${CHKCONFIG} -eq 1 ]; then
     result=$(chkconfig --list mongod|grep -o ":on"|wc -l)
-    [ $result -gt 2 ]
+    [ $result -gt 1 ]
   else
     skip "system doesn't have chkconfig or sysv-rc-conf commands"
   fi

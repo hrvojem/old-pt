@@ -1,12 +1,12 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-playbook = "playbooks/clean.yml"
-deb_distro = "bento/ubuntu-18.04"
-deb1_playbook = "playbooks/pxc56.yml"
-deb_common_playbook = "playbooks/pxc56_common.yml"
-deb_garbd_playbook = "playbooks/pxc56_garbd.yml"
-rhel_distro = "bento/centos-7.4"
+playbook = "playbooks/pxb_24.yml"
+deb_distro = "bento/debian-9"
+deb1_playbook = "playbooks/pxc57.yml"
+deb_common_playbook = "playbooks/pxc57_common.yml"
+deb_garbd_playbook = "playbooks/pxc57_garbd.yml"
+rhel_distro = "bento/centos-6.9"
 rhel1_playbook = "playbooks/percona1_pxc57.yml"
 rhel_playbook = "playbooks/percona2_pxc57.yml"
 rhel_garbd_playbook = "playbooks/percona4_pxc57.yml"
@@ -100,6 +100,7 @@ Vagrant.configure("2") do |config|
   end
 
   config.vm.define :bionic do |bionic_config|
+#   bionic_config.vm.box = "ubuntu/bionic64"
     bionic_config.vm.box = "bento/ubuntu-18.04" 
     config.vm.provision "shell", path: "zesty.sh"
     config.vm.provision "ansible" do |ansible|
@@ -125,7 +126,7 @@ Vagrant.configure("2") do |config|
   end
 
   config.vm.define :centos7 do |centos7_config|
-    centos7_config.vm.box = "bento/centos-7.4"
+    centos7_config.vm.box = "bento/centos-7.5"
     config.vm.provision "ansible" do |ansible|
       ansible.playbook = playbook
       ansible.host_key_checking = "false"

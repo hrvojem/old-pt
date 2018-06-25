@@ -1,5 +1,10 @@
 #!/usr/bin/env bats
 
+SYSTEMCTL=0
+SERVICE=0
+SYSVCONFIG=0
+CHKCONFIG=0
+
 if [ ! -z "$(which systemctl 2>/dev/null)" ]; then
   SYSTEMCTL=1
 fi
@@ -160,6 +165,7 @@ function teardown(){
   if [ ${SERVICE} -eq 1 ]; then
     service mysql start 3>&-
     [ $? -eq 0 ]
+    sleep 10
     run is_running
     [ $status -eq 0 ]
   else
@@ -182,6 +188,7 @@ function teardown(){
   if [ ${SERVICE} -eq 1 ]; then
     service mysql restart 3>&-
     [ $? -eq 0 ]
+    sleep 10
     run is_running
     [ $status -eq 0 ]
   else
@@ -231,17 +238,17 @@ function teardown(){
 }
 
 # disabled until https://jira.percona.com/browse/BLD-737 is fixed
- @test "add nonexisting option to config file (/etc/mysql/my.cnf) and start with service" {
-   if [ ${SERVICE} -eq 1 ]; then
-     stopit
-     fix_timeout
-     echo "[mysqld]" >> ${MYSQLCONF}
-     echo "nonexistingoption=1" >> ${MYSQLCONF}
-     run service mysql start
-     [ $status -eq 1 ]
-     run is_running
-     [ $status -eq 1 ]
-   else
-     skip "system doesn't have service command"
-   fi
- }
+# @test "add nonexisting option to config file (/etc/mysql/my.cnf) and start with service" {
+#   if [ ${SERVICE} -eq 1 ]; then
+#     stopit
+#     fix_timeout
+#     echo "[mysqld]" >> ${MYSQLCONF}
+#     echo "nonexistingoption=1" >> ${MYSQLCONF}
+#     run service mysql start
+#     [ $status -eq 1 ]
+#     run is_running
+#     [ $status -eq 1 ]
+#   else
+#     skip "system doesn't have service command"
+#   fi
+# }
