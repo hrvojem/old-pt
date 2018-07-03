@@ -1,0 +1,118 @@
+---
+# This playbook tests the PXC-5.7 upgrade 
+
+- hosts: all
+  become: true
+  become_method: sudo
+
+  tasks:
+
+  - name: Install percona repository package
+    apt:
+      deb: https://repo.percona.com/apt/percona-release_0.1-6.{{ansible_lsb.codename}}_all.deb
+    when: ansible_os_family == "Debian"
+
+  - name: add the deb repo
+    apt_repository: repo='deb http://repo.percona.com/apt {{ansible_lsb.codename}} main' state=present update_cache=yes
+    when: ansible_os_family == "Debian"
+
+  - name: add the yum percona repos 
+    yum: name=https://www.percona.com/downloads/percona-release/redhat/0.1-6/percona-release-0.1-6.noarch.rpm state=present
+    when: ansible_os_family == "RedHat" and ansible_distribution_major_version|int >= 6
+
+  - name: epel 6 repo
+    yum: name=https://dl.fedoraproject.org/pub/epel/epel-release-latest-6.noarch.rpm state=present
+    when: ansible_os_family == "RedHat" and ansible_distribution_major_version == "6"
+
+  - name: epel 7 repo
+    yum: name=https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm state=present 
+    when: ansible_os_family == "RedHat" and ansible_distribution_major_version == "7"
+
+  - name: install deb packages 
+    apt: name={{item}} update_cache=yes
+    with_items: 
+    - vim
+    - pv
+    - percona-xtradb-cluster-full-57
+    - percona-toolkit
+    when: ansible_os_family == "Debian"
+
+  - name: install packages in centos
+    yum: name={{item}} state=present #enablerepo=percona-testing-x86_64
+    with_items:
+    - libselinux-python
+    - pv
+    - Percona-XtraDB-Cluster-57
+    - percona-toolkit
+    when: ansible_os_family == "RedHat"
+
+  - name: start mysql service with service command
+    command: service mysql start
+    when: ansible_os_family == "RedHat" and ansible_distribution_major_version == "6"
+
+  - name: start mysql service with systemd
+    command: systemctl start mysql
+    when: ansible_os_family == "RedHat" and ansible_distribution_major_version == "7"
+
+  - name: set root password
+    command: /vagrant/setpass_57.sh
+    when: ansible_os_family == "RedHat"
+
+  - name: copy .my.cnf
+    template: src=../templates/my_57.j2
+              dest=/root/.my.cnf
+              mode=0640 owner=root group=root
+    when: ansible_os_family == "RedHat"
+
+  - service: name=mysql state=restarted
+    when: ansible_os_family == "RedHat" and ansible_distribution_major_version == "6"
+
+  - service: name=mysqld state=restarted
+    when: ansible_os_family == "RedHat" and ansible_distribution_major_version == "7"
+
+  - service: name=mysql state=restarted
+    when: ansible_os_family == "Debian"
+
+  - name: install 3rd party packages
+    apt: name={{item}}
+    with_items:
+    - rsyslog-mysql
+    when: ansible_os_family == "Debian"
+
+  - name: start my.cnf change test
+    command: /vagrant/check_mycnf_pre.sh symlink
+
+  - name: remove the Percona apt main repository
+    apt_repository: repo='deb http://repo.percona.com/apt {{ ansible_lsb.codename }} main' state=absent update_cache=yes
+    when: ansible_os_family == "Debian"
+
+  - name: enable deb testing repos
+    apt_repository: repo='deb http://repo.percona.com/apt {{ ansible_lsb.codename }} main testing' state=present update_cache=yes
+    when: ansible_os_family == "Debian" 
+
+  - name: run upgrade on Debian/Ubuntu
+    apt: upgrade=yes
+    when: ansible_os_family == "Debian" 
+    
+  - name: upgrade Percona XtraDB Cluster to new rpm packages
+    yum: name={{item}} state=latest enablerepo=percona-testing-x86_64
+    with_items:
+    - Percona-XtraDB-Cluster-57
+    when: ansible_os_family == "RedHat"
+
+  - name: run mysql_upgrade
+    command: /usr/bin/mysql_upgrade
+
+  - name: check that Percona XtraDB Cluster 5.7 version is correct
+    command: /vagrant/version_check.sh pxc57
+
+  - name: check that Percona XtraDB Cluster 5.7 package version is correct
+    command: /vagrant/package_check.sh pxc57
+
+  - name: finish my.cnf change test
+    command: /vagrant/check_mycnf_post.sh
+
+  - name: install plugins
+    command: /vagrant/plugins_test_pxc_57.sh
+
+
