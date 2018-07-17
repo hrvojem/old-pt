@@ -4,7 +4,7 @@
 
   - name: Install percona repository package
     apt:
-      deb: https://repo.percona.com/apt/percona-release_0.1-4.{{ansible_lsb.codename}}_all.deb
+      deb: https://repo.percona.com/apt/percona-release_0.1-6.{{ansible_lsb.codename}}_all.deb
     when: ansible_os_family == "Debian"
 
   - name: add the Percona testing deb repo
@@ -12,7 +12,7 @@
     when: ansible_os_family == "Debian"
 
   - name: add the Percona testing yum repos for centos 6 and 7
-    yum: name=https://www.percona.com/redir/downloads/percona-release/redhat/0.1-4/percona-release-0.1-4.noarch.rpm
+    yum: name=https://www.percona.com/redir/downloads/percona-release/redhat/0.1-6/percona-release-0.1-6.noarch.rpm
     when: ansible_os_family == "RedHat" 
 
   - name: change the default repo in yum repo file to testing
