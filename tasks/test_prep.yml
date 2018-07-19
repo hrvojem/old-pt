@@ -1,7 +1,6 @@
-
   - name: Install percona repository package
     apt:
-      deb: https://repo.percona.com/apt/percona-release_0.1-4.{{ansible_lsb.codename}}_all.deb
+      deb: https://repo.percona.com/apt/percona-release_0.1-6.{{ansible_lsb.codename}}_all.deb
     when: ansible_os_family == "Debian"
 
   - name: setup epel 6 repo
@@ -28,13 +27,13 @@
     apt: name="{{ item }}" update_cache=no
     with_items:
     - sysv-rc-conf
-    when: ansible_os_family == "Debian" and (ansible_distribution_release == "trusty" or ansible_distribution_release == "wheezy")
+    when: ansible_os_family == "Debian" and ansible_distribution_release == "trusty"
 
   - name: update systemd-sysv integration on debian/ubuntu
     apt: name="{{ item }}" update_cache=yes state=latest
     with_items:
     - systemd-sysv
-    when: ansible_os_family == "Debian" and ansible_distribution_release != "trusty" and ansible_distribution_release != "wheezy"
+    when: ansible_os_family == "Debian" and ansible_distribution_release != "trusty"
 
   - name: install needed packages for running tests with yum
     yum: name="{{ item }}" state=latest
