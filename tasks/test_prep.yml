@@ -1,7 +1,13 @@
-  - name: Install percona repository package
-    apt:
-      deb: https://repo.percona.com/apt/percona-release_0.1-6.{{ansible_lsb.codename}}_all.deb
-    when: ansible_os_family == "Debian"
+
+  # - name: setup throttling for yum
+  #   command: echo "throttle=300k" >> /etc/yum.conf
+  #   when: ansible_os_family == "RedHat"
+  #
+  # - name: setup throttling for apt
+  #   copy: src=../apt-throttling
+  #         dest=/etc/apt/apt.conf.d/
+  #         mode=0640 owner=root group=root
+  #   when: ansible_os_family == "Debian"
 
   - name: setup epel 6 repo
     yum: name=https://dl.fedoraproject.org/pub/epel/epel-release-latest-6.noarch.rpm state=present
@@ -27,13 +33,13 @@
     apt: name="{{ item }}" update_cache=no
     with_items:
     - sysv-rc-conf
-    when: ansible_os_family == "Debian" and ansible_distribution_release == "trusty"
+    when: ansible_os_family == "Debian" and (ansible_distribution_release == "precise" or ansible_distribution_release == "trusty" or ansible_distribution_release == "wheezy")
 
   - name: update systemd-sysv integration on debian/ubuntu
     apt: name="{{ item }}" update_cache=yes state=latest
     with_items:
     - systemd-sysv
-    when: ansible_os_family == "Debian" and ansible_distribution_release != "trusty"
+    when: ansible_os_family == "Debian" and ansible_distribution_release != "precise" and ansible_distribution_release != "trusty" and ansible_distribution_release != "wheezy"
 
   - name: install needed packages for running tests with yum
     yum: name="{{ item }}" state=latest
@@ -55,6 +61,13 @@
   - name: import rpm gpg key on sles12
     command: rpmkeys --import https://www.percona.com/downloads/RPM-GPG-KEY-percona
     when: ansible_os_family == "Suse" and ansible_distribution_major_version == "12"
+
+  # - name: setup SDK repo on SLES
+  #   zypper: name="{{ item }}" state=present
+  #   with_items:
+  #   - /package-testing/sle-sdk-release-11.4-1.55.x86_64.rpm
+  #   - /package-testing/sle-sdk-release-SDK-11.4-1.55.x86_64.rpm
+  #   when: ansible_os_family == "Suse"
 
   - name: update image
     command: zypper -n update
