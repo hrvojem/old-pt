@@ -12,9 +12,9 @@
       deb: https://repo.percona.com/apt/percona-release_0.1-6.{{ansible_lsb.codename}}_all.deb
     when: ansible_os_family == "Debian"
 
-# - name: add the deb repo
-#   apt_repository: repo='deb http://repo.percona.com/apt {{ansible_lsb.codename}} main testing' state=present update_cache=yes
-#   when: ansible_os_family == "Debian"
+  - name: add the deb repo
+    apt_repository: repo='deb http://repo.percona.com/apt {{ansible_lsb.codename}} main testing' state=present update_cache=yes
+    when: ansible_os_family == "Debian"
 
   - name: add the yum percona repos 
     yum: name=http://www.percona.com/downloads/percona-release/redhat/0.1-6/percona-release-0.1-6.noarch.rpm
@@ -33,6 +33,7 @@
     with_items: 
     - vim
     - sysbench
+    - sysbench-tpcc
     - pv
     - percona-server-server-5.6
     - percona-xtrabackup
@@ -50,6 +51,7 @@
     with_items:
     - libselinux-python
     - sysbench
+    - sysbench-tpcc
     - Percona-Server-server-56
     - Percona-Server-test-56
     - Percona-Server-56-debuginfo
@@ -108,5 +110,8 @@
   - name: PXB-2.3 package version check
     command: /vagrant/package_check.sh pxb23
 
-  - name: running sysbench
-    command: /vagrant/sb.sh
+  - name: run sysbench tpcc prepare script
+    command: /usr/share/sysbench/tpcc.lua --mysql-user=root --mysql-db=sbt --time=30 --threads=64 --report-interval=1 --tables=3 --scale=5 --db-driver=mysql prepare
+
+  - name: run sysbench tpcc benchmark
+    command: /usr/share/sysbench/tpcc.lua --mysql-user=root --mysql-db=sbt --time=30 --threads=64 --report-interval=1 --tables=3 --scale=5 --db-driver=mysql run

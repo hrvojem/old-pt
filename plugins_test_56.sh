@@ -13,6 +13,7 @@ mysql -e "INSTALL PLUGIN QUERY_RESPONSE_TIME_WRITE SONAME 'query_response_time.s
 mysql -e "INSTALL PLUGIN scalability_metrics SONAME 'scalability_metrics.so';"
 mysql -e "INSTALL PLUGIN connection_control SONAME 'connection_control.so';"
 mysql -e "SHOW PLUGINS;"
+mysql -e "CREATE DATABASE sbt;"
 mysql -e "CREATE DATABASE world;"
 mysql -e "CREATE DATABASE world2;"
 cat /vagrant/world_innodb.sql | mysql -D world
