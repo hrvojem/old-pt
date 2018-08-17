@@ -7,26 +7,16 @@
 
   tasks:
 
-  - name: Install percona repository package
-    apt:
-      deb: https://repo.percona.com/apt/percona-release_0.1-6.{{ansible_lsb.codename}}_all.deb
-    when: ansible_os_family == "Debian"
+  - name: include tasks for test env setup
+    include: ../tasks/test_prep.yml
 
-  - name: add the deb repo
-    apt_repository: repo='deb http://repo.percona.com/apt {{ansible_lsb.codename}} main testing' state=present update_cache=yes
-    when: ansible_os_family == "Debian"
+  - name: include tasks for enabling test repo
+    include: ../tasks/enable_testing_repo.yml
+    when: lookup('env', 'install_repo') == "testing" or lookup('env', 'install_repo') == ""
 
-  - name: add the yum percona repos 
-    yum: name=http://www.percona.com/downloads/percona-release/redhat/0.1-6/percona-release-0.1-6.noarch.rpm
-    when: ansible_os_family == "RedHat" and ansible_distribution_major_version|int >= 6
-
-  - name: epel 6 repo
-    yum: name=https://dl.fedoraproject.org/pub/epel/epel-release-latest-6.noarch.rpm state=present
-    when: ansible_os_family == "RedHat" and ansible_distribution_major_version == "6"
-
-  - name: epel 7 repo
-    yum: name=https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm state=present
-    when: ansible_os_family == "RedHat" and ansible_distribution_major_version == "7"
+  - name: include tasks for enabling main repo
+    include: ../tasks/enable_main_repo.yml
+    when: lookup('env', 'install_repo') == "main"
 
   - name: install deb packages 
     apt: name={{item}} update_cache=yes
@@ -64,10 +54,10 @@
     when: ansible_os_family == "RedHat"
 
   # Enable SELinux on CentOS
-  - selinux:
-      policy: targeted
-      state: permissive
-    when: ansible_os_family == "RedHat"
+# - selinux:
+#     policy: targeted
+#     state: permissive
+#   when: ansible_os_family == "RedHat"
 
   - name: use service to start mysql
     command: service mysql start
