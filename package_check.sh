@@ -40,6 +40,9 @@ elif [ $1 = "pxb23" ]; then
 elif [ $1 = "pxb24" ]; then
   version=${PXB24_VER}
   pkg_version=${PXB24_PKG_VER}
+elif [ $1 = "pxb80" ]; then
+  version=${PXB80_VER}
+  pkg_version=${PXB80_PKG_VER}
 elif [ $1 = "psmdb30" ]; then
   version=${PSMDB30_VER}
 elif [ $1 = "psmdb32" ]; then
@@ -176,9 +179,11 @@ elif [ ${product} = "pmm" ]; then
   echo "Package check for PMM is not implemented!"
   exit 1
 
-elif [ ${product} = "pxb23" -o ${product} = "pxb24" ]; then
+elif [ ${product} = "pxb23" -o ${product} = "pxb24" -o ${product} = "pxb80" ]; then
   if [ ${product} = "pxb24" ]; then
     extra_version="-24"
+  elif [ ${product} = "pxb80" ]; then
+    extra_version="-80"
   else
     extra_version=""
   fi

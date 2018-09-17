@@ -112,7 +112,7 @@
     when: ansible_os_family == "Debian"
 
   - name: start my.cnf change test
-    command: /vagrant/check_mycnf_pre.sh file
+    command: /vagrant/check_mycnf_pre.sh default
 
   - name: remove the Percona apt main repository
     apt_repository: repo='deb http://repo.percona.com/apt {{ ansible_lsb.codename }} main' state=absent update_cache=yes

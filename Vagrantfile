@@ -1,15 +1,15 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-playbook = "playbooks/common_56.yml"
-deb_distro = "bento/ubuntu-14.04"
-deb1_playbook = "playbooks/pxc57.yml"
-deb_common_playbook = "playbooks/pxc57_common.yml"
-deb_garbd_playbook = "playbooks/pxc57_garbd.yml"
-rhel_distro = "bento/centos-7.5"
-rhel1_playbook = "playbooks/percona1_pxc57.yml"
-rhel_playbook = "playbooks/percona2_pxc57.yml"
-rhel_garbd_playbook = "playbooks/percona4_pxc57.yml"
+playbook = "playbooks/clean.yml"
+deb_distro = "bento/ubuntu-18.04"
+deb1_playbook = "playbooks/pxc56.yml"
+deb_common_playbook = "playbooks/pxc56_common.yml"
+deb_garbd_playbook = "playbooks/pxc56_garbd.yml"
+rhel_distro = "bento/centos-6"
+rhel1_playbook = "playbooks/percona1_pxc56.yml"
+rhel_playbook = "playbooks/percona2_pxc56.yml"
+rhel_garbd_playbook = "playbooks/percona4_pxc56.yml"
 
 Vagrant.configure("2") do |config|
   # All Vagrant configuration is done here. The most pxb configuration
@@ -23,16 +23,6 @@ Vagrant.configure("2") do |config|
       ansible.host_key_checking = "false"
     end
     sles12_config.vm.host_name = "sles12"
-  end
-
-  config.vm.define :wheezy do |wheezy_config|
-    wheezy_config.vm.box = "bento/debian-7"
-#   wheezy_config.vm.box = "bento/debian-7-i386"
-    config.vm.provision "ansible" do |ansible|
-      ansible.playbook = playbook
-      ansible.host_key_checking = "false"
-    end
-    wheezy_config.vm.host_name = "wheezy"
   end
 
   config.vm.define :jessie do |jessie_config|
@@ -116,8 +106,7 @@ Vagrant.configure("2") do |config|
 
 
   config.vm.define :centos6 do |centos6_config|
-    centos6_config.vm.box = "bento/centos-6.9"
-#   centos6_config.vm.box = "bento/centos-6.8-i386"
+    centos6_config.vm.box = "bento/centos-6"
     config.vm.provision "ansible" do |ansible|
       ansible.playbook = playbook
       ansible.host_key_checking = "false"
@@ -126,7 +115,7 @@ Vagrant.configure("2") do |config|
   end
 
   config.vm.define :centos7 do |centos7_config|
-    centos7_config.vm.box = "bento/centos-7.5"
+    centos7_config.vm.box = "bento/centos-7"
     config.vm.provision "ansible" do |ansible|
       ansible.playbook = playbook
       ansible.host_key_checking = "false"
@@ -134,20 +123,7 @@ Vagrant.configure("2") do |config|
     centos7_config.vm.host_name = "centos7"
   end
 
-  config.vm.define :centos7psx do |centos7ps_config|
-    centos7ps_config.vm.box = "bento/centos-7.4"
-    config.vm.provision "ansible" do |ansible|
-      ansible.playbook = playbook
-      ansible.host_key_checking = "false"
-    end
-    centos7ps_config.vm.host_name = "centos7ps"
-  end
-
-
   config.vm.define :pxc1 do |pxc1_config|
-    if deb_distro == "bento/ubuntu-17.04" then
-       config.vm.provision "shell", path: "zesty.sh"
-    end   
     config.vm.provision "ansible" do |ansible|
       ansible.playbook = deb1_playbook
       ansible.host_key_checking = "false"
@@ -161,9 +137,6 @@ Vagrant.configure("2") do |config|
   end
 
   config.vm.define :pxc2 do |pxc2_config|
-    if deb_distro == "bento/ubuntu-17.04" then
-       config.vm.provision "shell", path: "zesty.sh"
-    end   
     config.vm.provision "ansible" do |ansible|
       ansible.playbook = deb_common_playbook
       ansible.host_key_checking = "false"
@@ -177,9 +150,6 @@ Vagrant.configure("2") do |config|
   end
 
   config.vm.define :pxc3 do |pxc3_config|
-    if deb_distro == "bento/ubuntu-17.04" then
-       config.vm.provision "shell", path: "zesty.sh"
-    end   
     config.vm.provision "ansible" do |ansible|
       ansible.playbook = deb_common_playbook
       ansible.host_key_checking = "false"
@@ -193,9 +163,6 @@ Vagrant.configure("2") do |config|
   end
 
   config.vm.define :pxc4 do |pxc4_config|
-    if deb_distro == "bento/ubuntu-17.04" then
-       config.vm.provision "shell", path: "zesty.sh"
-    end   
     config.vm.provision "ansible" do |ansible|
       ansible.playbook = deb_garbd_playbook
       ansible.host_key_checking = "false"

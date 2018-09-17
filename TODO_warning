@@ -1,0 +1,25 @@
+changed: [centos6] => (item=rm -f master.zip)
+changed: [centos6] => (item=mv package-testing-master /package-testing)
+ [WARNING]: Consider using the file module with state=absent rather than
+running rm.  If you need to use command because file is insufficient you can
+add warn=False to this command task or set command_warnings=False in
+ansible.cfg to get rid of this message.
+
+ [WARNING]: Consider using the get_url or uri module rather than running wget.
+If you need to use command because get_url or uri is insufficient you can add
+warn=False to this command task or set command_warnings=False in ansible.cfg to
+get rid of this message.
+
+ [WARNING]: Consider using the unarchive module rather than running unzip.  If
+you need to use command because unarchive is insufficient you can add
+warn=False to this command task or set command_warnings=False in ansible.cfg to
+get rid of this message.
+
+TASK [change the default repo in yum repo file to testing] *********************
+Thursday 16 August 2018  16:49:12 +0200 (0:00:04.035)       0:00:42.606 *******
+changed: [centos6] => (item=sed -r -i '/^baseurl = http:\/\/repo.percona.com\/testing\/\$releasever\/RPMS\/\$basearch$/ { n ; s/^enabled = .*$/enabled = 1/ }' /etc/yum.repos.d/percona-release.repo)
+changed: [centos6] => (item=sed -r -i '/^baseurl = http:\/\/repo.percona.com\/testing\/\$releasever\/RPMS\/noarch$/ { n ; s/^enabled = .*$/enabled = 1/ }' /etc/yum.repos.d/percona-release.repo)
+ [WARNING]: Consider using the replace, lineinfile or template module rather
+than running sed.  If you need to use command because replace, lineinfile or
+template is insufficient you can add warn=False to this command task or set
+command_warnings=False in ansible.cfg to get rid of this message.

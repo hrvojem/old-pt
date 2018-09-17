@@ -21,7 +21,7 @@
     - 192.168.70.72
     - 192.168.70.71
   - name: add the percona repo
-    yum: name=http://www.percona.com/downloads/percona-release/redhat/0.1-4/percona-release-0.1-4.noarch.rpm
+    yum: name=http://www.percona.com/downloads/percona-release/redhat/0.1-6/percona-release-0.1-6.noarch.rpm
   - name: add the epel repo for centos7
     yum: name=https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm state=present
     when: ansible_os_family == "RedHat" and ansible_distribution_major_version == "7"
@@ -33,8 +33,8 @@
     with_items:
     - Percona-XtraDB-Cluster-garbd-3
   - name: configure garbd
-    template: src=../templates/garbd.j2
+    template: src=../templates/garbd_rpm.j2
               dest=/etc/sysconfig/garb
               mode=0640 owner=root group=root
   # start mysql service
-  #- command: service garbd start
+  - command: service garb start

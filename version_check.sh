@@ -42,6 +42,8 @@ elif [ $1 = "pxb23" ]; then
   version=${PXB23_VER}
 elif [ $1 = "pxb24" ]; then
   version=${PXB24_VER}
+elif [ $1 = "pxb80" ]; then
+  version=${PXB80_VER}
 elif [ $1 = "pmm" ]; then
   version=${PMM_VER}
 elif [ $1 = "proxysql" ]; then
@@ -120,7 +122,7 @@ elif [ ${product} = "pmm" ]; then
     echo "${product} version is correct and ${version}" >> ${log}
   fi
 
-elif [ ${product} = "pxb23" -o ${product} = "pxb24" ]; then
+elif [ ${product} = "pxb23" -o ${product} = "pxb24" -o ${product} = "pxb80"]; then
   echo "version check var is: ${version_check}"
   version_check=$(xtrabackup --version 2>&1|grep -c ${version})
   echo "version check var is: ${version_check}"
