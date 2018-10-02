@@ -1,15 +1,15 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-playbook = "playbooks/clean.yml"
-deb_distro = "bento/ubuntu-18.04"
-deb1_playbook = "playbooks/pxc56.yml"
-deb_common_playbook = "playbooks/pxc56_common.yml"
-deb_garbd_playbook = "playbooks/pxc56_garbd.yml"
-rhel_distro = "bento/centos-6"
-rhel1_playbook = "playbooks/percona1_pxc56.yml"
-rhel_playbook = "playbooks/percona2_pxc56.yml"
-rhel_garbd_playbook = "playbooks/percona4_pxc56.yml"
+playbook = "playbooks/common_80.yml"
+deb_distro = "bento/debian-8"
+deb1_playbook = "playbooks/pxc57.yml"
+deb_common_playbook = "playbooks/pxc57_common.yml"
+deb_garbd_playbook = "playbooks/pxc57_garbd.yml"
+rhel_distro = "bento/centos-7"
+rhel1_playbook = "playbooks/percona1_pxc57.yml"
+rhel_playbook = "playbooks/percona2_pxc57.yml"
+rhel_garbd_playbook = "playbooks/percona4_pxc57.yml"
 
 Vagrant.configure("2") do |config|
   # All Vagrant configuration is done here. The most pxb configuration

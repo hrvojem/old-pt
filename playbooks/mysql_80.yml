@@ -1,0 +1,66 @@
+---
+# This playbook sets up the percona repo
+
+- hosts: all
+  become: true
+  become_method: sudo
+
+  tasks:
+# - name: Install percona repository package
+#   apt:
+#     deb: https://repo.percona.com/apt/percona-release_0.1-6.{{ansible_lsb.codename}}_all.deb
+#   when: ansible_os_family == "Debian"
+
+  - name: Install MySQL apt repository package
+    apt:
+      deb: https://dev.mysql.com/get/mysql-apt-config_0.8.10-1_all.deb
+    when: ansible_os_family == "Debian"
+
+# - name: add the ubuntu repo
+#   apt_repository: repo='deb http://repo.mysql.com/apt/ubuntu/ {{ansible_lsb.codename}} mysql-8.0' state=present update_cache=yes
+#   when: ansible_distribution == 'Ubuntu'
+
+# - name: add the tools repo
+#   apt_repository: repo='deb http://repo.mysql.com/apt/ubuntu/ {{ansible_lsb.codename}} mysql-tools' state=present update_cache=yes
+#   when: ansible_distribution == 'Ubuntu'
+
+# - name: add the yum percona repos 
+#   yum: name=http://www.percona.com/downloads/percona-release/redhat/0.1-6/percona-release-0.1-6.noarch.rpm
+#   when: ansible_os_family == "RedHat" 
+
+  - name: Install MySQL RHEL 6 yum repository package 
+    yum: name=https://dev.mysql.com/get/mysql80-community-release-el6-1.noarch.rpm state=present
+    when: ansible_os_family == "RedHat" and ansible_distribution_major_version == "6"
+
+  - name: Install MySQL RHEL 7 yum repository package 
+    yum: name=https://dev.mysql.com/get/mysql80-community-release-el7-1.noarch.rpm state=present
+    when: ansible_os_family == "RedHat" and ansible_distribution_major_version == "7"
+
+# - name: epel 6 repo
+#   yum: name=https://dl.fedoraproject.org/pub/epel/epel-release-latest-6.noarch.rpm state=present
+#   when: ansible_os_family == "RedHat" and ansible_distribution_major_version == "6"
+
+# - name: epel 7 repo
+#   yum: name=https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm state=present
+#   when: ansible_os_family == "RedHat" and ansible_distribution_major_version == "7"
+
+  # Enable SELinux on CentOS
+# - selinux:
+#     policy: targeted
+#     state: enforcing
+#   when: ansible_os_family == "RedHat"
+
+  - name: install deb packages 
+    apt: name={{item}} update_cache=yes
+    with_items: 
+    - vim
+    - pv
+    - unzip
+    when: ansible_os_family == "Debian"
+
+  - name: install MySQL Community deb packages 
+    apt: name={{item}} update_cache=yes
+    with_items: 
+    - mysql-community-server
+    when: ansible_os_family == "Debian"
+

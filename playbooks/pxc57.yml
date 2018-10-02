@@ -51,6 +51,9 @@
   - name: install plugins
     command: /vagrant/pxc_plugins_57.sh 
 
+  - name: check PXC-5.7 version
+    command: /vagrant/version_check.sh pxc57
+
 # - name: run sysbench
 #   command: /vagrant/sb.sh
 

@@ -11,9 +11,9 @@
       deb: https://repo.percona.com/apt/percona-release_0.1-6.{{ansible_lsb.codename}}_all.deb
     when: ansible_os_family == "Debian"
 
-# - name: add the deb repo
-#   apt_repository: repo='deb http://repo.percona.com/apt {{ansible_lsb.codename}} testing' state=present update_cache=yes
-#   when: ansible_os_family == "Debian"
+  - name: add the deb repo
+    apt_repository: repo='deb http://repo.percona.com/apt {{ansible_lsb.codename}} experimental' state=present update_cache=yes
+    when: ansible_os_family == "Debian"
 
   - name: add the yum percona repos 
     yum: name=http://www.percona.com/downloads/percona-release/redhat/0.1-6/percona-release-0.1-6.noarch.rpm
@@ -45,35 +45,35 @@
     apt: name={{item}} update_cache=yes
     with_items: 
     - percona-toolkit
-    - percona-server-server-5.7
-    - percona-server-test-5.7
-    - percona-server-5.7-dbg
-    - percona-server-source-5.7
-    - percona-server-tokudb-5.7
-    - percona-server-rocksdb-5.7
-    - percona-xtrabackup-test-24
-    - percona-xtrabackup-dbg-24
-    - percona-xtrabackup-24
+    - percona-server-server-8.0
+    - percona-server-test-8.0
+    - percona-server-8.0-dbg
+    - percona-server-source-8.0
+    - percona-server-tokudb-8.0
+    - percona-server-rocksdb-8.0
+    - percona-xtrabackup-test-80
+    - percona-xtrabackup-dbg-80
+    - percona-xtrabackup-80
     - sysbench
     - sysbench-tpcc
     when: ansible_os_family == "Debian"
 
   - name: install packages in centos
-    yum: name={{item}} state=present enablerepo=percona-testing-x86_64 
+    yum: name={{item}} state=present enablerepo=percona-experimental-x86_64 
     with_items:
     - libselinux-python
     - pv
     - unzip
-    - Percona-Server-server-57
-    - Percona-Server-test-57
-    - Percona-Server-57-debuginfo
-    - Percona-Server-devel-57
-    - Percona-Server-tokudb-57
-    - Percona-Server-rocksdb-57
+    - Percona-Server-server-80
+    - Percona-Server-test-80
+    - Percona-Server-80-debuginfo
+    - Percona-Server-devel-80
+    - Percona-Server-tokudb-80
+    - Percona-Server-rocksdb-80
     - percona-toolkit
-    - percona-xtrabackup-24
-    - percona-xtrabackup-test-24
-    - percona-xtrabackup-24-debuginfo
+    - percona-xtrabackup-80
+    - percona-xtrabackup-test-80
+    - percona-xtrabackup-80-debuginfo
     when: ansible_os_family == "RedHat"
 
   - name: install latest bats from github
@@ -87,6 +87,12 @@
     - rm -rf bats-master
 
   - service: name=mysql state=started
+#   when: ansible_os_family == "RedHat"
+
+# - name: copy group replication settings
+#   template: src=../templates/group_replication.j2
+#             dest=/etc/mysql/percona-server.conf.d/gr.cnf
+#   when: ansible_os_family == "Debian"
 
   - name: set root password
     command: /vagrant/setpass_57.sh
@@ -105,28 +111,16 @@
     when: ansible_os_family == "Debian"
 
   - name: install tokudb
-    command: /usr/bin/ps-admin --enable-tokudb
+    command: /usr/bin/ps-admin --enable-tokubackup
 
   - name: install rocksdb
     command: /usr/bin/ps-admin --enable-rocksdb
 
   - name: install plugins
-    command: /vagrant/plugins_test_57.sh
-
-  - name: install tokubackup
-    command: /usr/bin/ps-admin --enable-tokubackup
-
-  - name: keyring plugins test
-    command: /vagrant/ps_keyring_plugins_test/ps_keyring_plugins_test.sh
-
-# - name: install GR plugin
-#   command: /vagrant/gr.sh
+    command: /vagrant/plugins_test_80.sh
 
   - name: version check
-    command: /vagrant/version_check.sh ps57
+    command: /vagrant/version_check.sh ps80
 
-  - name: Percona Server 5.7 package version check
-    command: /vagrant/package_check.sh ps57
-
-  - name: PXB-2.4 package version check
-    command: /vagrant/package_check.sh pxb24
+  - name: Percona Server 8.0 package version check
+    command: /vagrant/package_check.sh ps80

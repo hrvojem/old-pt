@@ -24,6 +24,10 @@ elif [ $1 = "ps57" ]; then
   version=${PS57_VER}
   release=${PS57_VER#*-}
   revision=${PS57_REV}
+elif [ $1 = "ps80" ]; then
+  version=${PS80_VER}
+  release=${PS80_VER#*-}
+  revision=${PS80_REV}
 elif [ $1 = "pxc56" ]; then
   version=${PXC56_VER}
   release=${PXC56_VER#*-}
@@ -62,7 +66,7 @@ product=$1
 log="/tmp/${product}_package_check.log"
 echo -n > $log
 
-if [ ${product} = "ps55" -o ${product} = "ps56" -o ${product} = "ps57" ]; then
+if [ ${product} = "ps55" -o ${product} = "ps56" -o ${product} = "ps57" -o ${product} = "ps80" ]; then
   if [ -f /etc/redhat-release ]; then
     centos_maj_version=$(cat /etc/redhat-release | grep -oE '[0-9]+' | head -n 1)
     rpm_maj_version=$(echo ${product} | sed 's/^[a-z]*//') # 56
@@ -77,7 +81,7 @@ if [ ${product} = "ps55" -o ${product} = "ps56" -o ${product} = "ps57" ]; then
     elif [ ${product} = "ps56" ]; then
       rpm_opt_package="Percona-Server-tokudb-${rpm_maj_version}"
       rpm_num_pkgs="7"
-    elif [ ${product} = "ps57" ]; then
+    elif [ ${product} = "ps57" -o ${product} = "ps80" ]; then
       if [ ${centos_maj_version} == "7" ]; then
         rpm_num_pkgs="8"
         rpm_opt_package="Percona-Server-tokudb-${rpm_maj_version} Percona-Server-shared-compat-${rpm_maj_version}"

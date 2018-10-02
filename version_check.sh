@@ -24,6 +24,10 @@ elif [ $1 = "ps57" ]; then
   version=${PS57_VER}
   release=${PS57_VER#*-}
   revision=${PS57_REV}
+elif [ $1 = "ps80" ]; then
+  version=${PS80_VER}
+  release=${PS80_VER#*-}
+  revision=${PS80_REV}
 elif [ $1 = "pxc56" ]; then
   version=${PXC56_VER%-*}
   release=${PXC56_VER#*-}
@@ -59,7 +63,7 @@ product=$1
 log="/tmp/${product}_version_check.log"
 echo -n > ${log}
 
-if [ ${product} = "ps55" -o ${product} = "ps56" -o ${product} = "ps57" ]; then
+if [ ${product} = "ps55" -o ${product} = "ps56" -o ${product} = "ps57" -o ${product} = "ps80" ]; then
   for i in @@INNODB_VERSION @@VERSION @@TOKUDB_VERSION; do
     if [ ${product} = "ps55" -a ${i} = "@@TOKUDB_VERSION" ]; then
       echo "${i} is empty" >> ${log}

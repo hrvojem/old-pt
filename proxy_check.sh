@@ -2,7 +2,7 @@
 
 set -e
 
-if [ "$(grep -c 6 /etc/redhat-release)" -eq 1 ]; then
+if [ -f /etc/redhat-release ] && [ "$(grep -c 6 /etc/redhat-release)" -eq 1 ]; then
 	psoutput=$(pgrep proxysql | wc -l)
 else
 	psoutput=$(pgrep -c proxysql)
