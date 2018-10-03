@@ -2,11 +2,11 @@
 # vi: set ft=ruby :
 
 playbook = "playbooks/common_80.yml"
-deb_distro = "bento/debian-8"
+deb_distro = "bento/ubuntu-18.04"
 deb1_playbook = "playbooks/pxc57.yml"
 deb_common_playbook = "playbooks/pxc57_common.yml"
 deb_garbd_playbook = "playbooks/pxc57_garbd.yml"
-rhel_distro = "bento/centos-7"
+rhel_distro = "bento/centos-6"
 rhel1_playbook = "playbooks/percona1_pxc57.yml"
 rhel_playbook = "playbooks/percona2_pxc57.yml"
 rhel_garbd_playbook = "playbooks/percona4_pxc57.yml"
