@@ -8,15 +8,11 @@
   tasks:
   - name: Install percona repository package
     apt:
-      deb: https://repo.percona.com/apt/percona-release_0.1-6.{{ansible_lsb.codename}}_all.deb
-    when: ansible_os_family == "Debian"
-
-  - name: add the deb repo
-    apt_repository: repo='deb http://repo.percona.com/apt {{ansible_lsb.codename}} experimental' state=present update_cache=yes
+      deb: https://repo.percona.com/apt/percona-release_0.1-8.{{ansible_lsb.codename}}_all.deb
     when: ansible_os_family == "Debian"
 
   - name: add the yum percona repos 
-    yum: name=http://www.percona.com/downloads/percona-release/redhat/0.1-6/percona-release-0.1-6.noarch.rpm
+    yum: name=https://repo.percona.com/yum/percona-release-0.1-8.noarch.rpm
     when: ansible_os_family == "RedHat" 
 
   - name: epel 6 repo
@@ -33,47 +29,78 @@
 #     state: enforcing
 #   when: ansible_os_family == "RedHat"
 
+  - name: install packages in centos
+    yum: 
+      name: "{{ packages }}" 
+      state: present 
+    vars:
+      packages:
+      - libselinux-python
+      - pv
+      - unzip
+    when: ansible_os_family == "RedHat"
+
+  - name: enable ps-80 repos 
+    command: percona-release enable ps-80 testing
+
+  - name: enable tools repos 
+    command: percona-release enable tools testing
+
+# - name: BLD-1173 workaround
+#   template: src=../templates/percona-tools-testing.repo
+#             dest=/etc/yum.repos.d/percona-tools-testing.repo
+#             mode=0640 owner=root group=root
+#   when: ansible_os_family == "RedHat" 
+
   - name: install deb packages 
-    apt: name={{item}} update_cache=yes
-    with_items: 
-    - vim
-    - pv
-    - unzip
+    apt: 
+      name: "{{ packages }}" 
+      update_cache: yes
+    vars:
+      packages:
+      - vim
+      - pv
+      - unzip
+      - sysbench
     when: ansible_os_family == "Debian"
 
   - name: install deb packages 
-    apt: name={{item}} update_cache=yes
-    with_items: 
-    - percona-toolkit
-    - percona-server-server-8.0
-    - percona-server-test-8.0
-    - percona-server-8.0-dbg
-    - percona-server-source-8.0
-    - percona-server-tokudb-8.0
-    - percona-server-rocksdb-8.0
-    - percona-xtrabackup-test-80
-    - percona-xtrabackup-dbg-80
-    - percona-xtrabackup-80
-    - sysbench
-    - sysbench-tpcc
+    apt: 
+      name: "{{ packages }}"
+      update_cache: yes
+    vars:
+      packages:
+      - percona-toolkit
+      - percona-server-server
+      - percona-server-test
+      - percona-server-source
+      - percona-server-tokudb
+      - percona-server-rocksdb
+      - percona-xtrabackup-test-80
+      - percona-xtrabackup-dbg-80
+      - percona-xtrabackup-80
+      - sysbench
+      - sysbench-tpcc
     when: ansible_os_family == "Debian"
 
   - name: install packages in centos
-    yum: name={{item}} state=present enablerepo=percona-experimental-x86_64 
-    with_items:
-    - libselinux-python
-    - pv
-    - unzip
-    - Percona-Server-server-80
-    - Percona-Server-test-80
-    - Percona-Server-80-debuginfo
-    - Percona-Server-devel-80
-    - Percona-Server-tokudb-80
-    - Percona-Server-rocksdb-80
-    - percona-toolkit
-    - percona-xtrabackup-80
-    - percona-xtrabackup-test-80
-    - percona-xtrabackup-80-debuginfo
+    yum: 
+      name: "{{ packages }}" 
+      state: present #enablerepo=percona-experimental-x86_64 
+    vars:
+      packages:
+      - percona-server-server
+      - percona-server-test
+      - percona-server-debuginfo
+      - percona-server-devel
+      - percona-server-tokudb
+      - percona-server-rocksdb
+      - percona-toolkit
+      - percona-xtrabackup-80
+      - percona-xtrabackup-test-80
+      - percona-xtrabackup-80-debuginfo
+      - sysbench
+      - sysbench-tpcc
     when: ansible_os_family == "RedHat"
 
   - name: install latest bats from github
@@ -116,8 +143,8 @@
   - name: install rocksdb
     command: /usr/bin/ps-admin --enable-rocksdb
 
-  - name: install plugins
-    command: /vagrant/plugins_test_80.sh
+# - name: install plugins
+#   command: /vagrant/plugins_test_80.sh
 
   - name: version check
     command: /vagrant/version_check.sh ps80

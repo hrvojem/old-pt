@@ -3,10 +3,10 @@
 set -e
 
 if [ "$#" -ne 1 ]; then
-  echo "This script requires product parameter: ps56 or ps57 !"
+  echo "This script requires product parameter: ps56, ps58 or ps80 !"
   echo "Usage: ./comp_test.sh <prod>"
   exit 1
-elif [ $1 != "ps56" -a $1 != "ps57" ]; then
+elif [ $1 != "ps56" -a $1 != "ps57" -a $1 != "ps80" ]; then
   echo "Product not recognized!"
   exit 1
 fi
@@ -68,17 +68,17 @@ for se in TokuDB RocksDB; do
             sed -i "s/ @@COMMENT_PARTITIONED@@//g" /tmp/create_table.sql
             old_row_format="${new_row_format}"
             if [ ${comp_lib} = "no" ]; then
-              new_row_format="ROW_FORMAT=TOKUDB_UNCOMPRESSED"
+              new_row_format="TOKUDB_UNCOMPRESSED"
             elif [ ${comp_lib} = "default" ]; then
               new_row_format=""
             elif [ ${comp_lib} = "zlib" ]; then
-              new_row_format="ROW_FORMAT=TOKUDB_ZLIB"
+              new_row_format="TOKUDB_ZLIB"
             elif [ ${comp_lib} = "quicklz" ]; then
-              new_row_format="ROW_FORMAT=TOKUDB_QUICKLZ"
+              new_row_format="TOKUDB_QUICKLZ"
             elif [ ${comp_lib} = "lzma" ]; then
-              new_row_format="ROW_FORMAT=TOKUDB_LZMA"
+              new_row_format="TOKUDB_LZMA"
             elif [ ${comp_lib} = "snappy" ]; then
-              new_row_format="ROW_FORMAT=TOKUDB_SNAPPY"
+              new_row_format="TOKUDB_SNAPPY"
             fi
               sed -i "s/ @@ROW_FORMAT_OPT@@/ ${new_row_format}/g" /tmp/create_table.sql
           fi

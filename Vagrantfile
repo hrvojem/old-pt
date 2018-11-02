@@ -1,7 +1,7 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-playbook = "playbooks/common_80.yml"
+playbook = "playbooks/common_57.yml"
 deb_distro = "bento/ubuntu-18.04"
 deb1_playbook = "playbooks/pxc57.yml"
 deb_common_playbook = "playbooks/pxc57_common.yml"
@@ -39,6 +39,7 @@ Vagrant.configure("2") do |config|
   end
 
   config.vm.define :stretch do |stretch_config|
+#   stretch_config.vm.box = "debian/stretch64"
     stretch_config.vm.box = "bento/debian-9"
     config.vm.provision "ansible" do |ansible|
       ansible.playbook = playbook
@@ -77,16 +78,16 @@ Vagrant.configure("2") do |config|
     xenial_config.vm.host_name = "xenial"
   end
 
-  config.vm.define :artful do |artful_config|
-    artful_config.vm.box = "bento/ubuntu-17.10"
+  config.vm.define :cosmic do |cosmic_config|
+    cosmic_config.vm.box = "bento/ubuntu-18.10"
     config.vm.provision "ansible" do |ansible|
       ansible.playbook = playbook
       ansible.host_key_checking = "false"
     end
-    artful_config.vm.provider :virtualbox do |vb|
+    cosmic_config.vm.provider :virtualbox do |vb|
       vb.customize ["modifyvm", :id, "--memory", "2048", "--ioapic", "on" ]
     end
-    artful_config.vm.host_name = "artful"
+    cosmic_config.vm.host_name = "cosmic"
   end
 
   config.vm.define :bionic do |bionic_config|

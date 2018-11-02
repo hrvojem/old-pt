@@ -8,15 +8,11 @@
   tasks:
   - name: Install percona repository package
     apt:
-      deb: https://repo.percona.com/apt/percona-release_0.1-6.{{ansible_lsb.codename}}_all.deb
+      deb: https://repo.percona.com/apt/percona-release_0.1-8.{{ansible_lsb.codename}}_all.deb
     when: ansible_os_family == "Debian"
 
-# - name: add the deb repo
-#   apt_repository: repo='deb http://repo.percona.com/apt {{ansible_lsb.codename}} testing' state=present update_cache=yes
-#   when: ansible_os_family == "Debian"
-
   - name: add the yum percona repos 
-    yum: name=http://www.percona.com/downloads/percona-release/redhat/0.1-6/percona-release-0.1-6.noarch.rpm
+    yum: name=https://repo.percona.com/yum/percona-release-0.1-8.noarch.rpm
     when: ansible_os_family == "RedHat" 
 
   - name: epel 6 repo
@@ -27,6 +23,9 @@
     yum: name=https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm state=present
     when: ansible_os_family == "RedHat" and ansible_distribution_major_version == "7"
 
+  - name: enable testing repo
+    command: percona-release enable percona testing
+
   # Enable SELinux on CentOS
 # - selinux:
 #     policy: targeted
@@ -34,46 +33,55 @@
 #   when: ansible_os_family == "RedHat"
 
   - name: install deb packages 
-    apt: name={{item}} update_cache=yes
-    with_items: 
-    - vim
-    - pv
-    - unzip
+    apt: 
+      name: "{{ packages }}"
+      update_cache: yes
+    vars:
+      packages:
+      - vim
+      - pv
+      - unzip
     when: ansible_os_family == "Debian"
 
-  - name: install deb packages 
-    apt: name={{item}} update_cache=yes
-    with_items: 
-    - percona-toolkit
-    - percona-server-server-5.7
-    - percona-server-test-5.7
-    - percona-server-5.7-dbg
-    - percona-server-source-5.7
-    - percona-server-tokudb-5.7
-    - percona-server-rocksdb-5.7
-    - percona-xtrabackup-test-24
-    - percona-xtrabackup-dbg-24
-    - percona-xtrabackup-24
-    - sysbench
-    - sysbench-tpcc
+  - name: install percona deb packages 
+    apt: 
+      name: "{{ packages }}" 
+      update_cache: yes
+    vars: 
+      packages:
+      - percona-toolkit
+      - percona-server-server-5.7
+      - percona-server-test-5.7
+      - percona-server-5.7-dbg
+      - percona-server-source-5.7
+      - percona-server-tokudb-5.7
+      - percona-server-rocksdb-5.7
+      - percona-xtrabackup-test-24
+      - percona-xtrabackup-dbg-24
+      - percona-xtrabackup-24
+      - sysbench
+      - sysbench-tpcc
     when: ansible_os_family == "Debian"
 
   - name: install packages in centos
-    yum: name={{item}} state=present enablerepo=percona-testing-x86_64 
-    with_items:
-    - libselinux-python
-    - pv
-    - unzip
-    - Percona-Server-server-57
-    - Percona-Server-test-57
-    - Percona-Server-57-debuginfo
-    - Percona-Server-devel-57
-    - Percona-Server-tokudb-57
-    - Percona-Server-rocksdb-57
-    - percona-toolkit
-    - percona-xtrabackup-24
-    - percona-xtrabackup-test-24
-    - percona-xtrabackup-24-debuginfo
+    yum: 
+      name: "{{ packages }}" 
+      state: present
+    vars:
+      packages:
+      - libselinux-python
+      - pv
+      - unzip
+      - Percona-Server-server-57
+      - Percona-Server-test-57
+      - Percona-Server-57-debuginfo
+      - Percona-Server-devel-57
+      - Percona-Server-tokudb-57
+      - Percona-Server-rocksdb-57
+      - percona-toolkit
+      - percona-xtrabackup-24
+      - percona-xtrabackup-test-24
+      - percona-xtrabackup-24-debuginfo
     when: ansible_os_family == "RedHat"
 
   - name: install latest bats from github
