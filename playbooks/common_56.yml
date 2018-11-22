@@ -19,45 +19,53 @@
     when: lookup('env', 'install_repo') == "main"
 
   - name: install deb packages 
-    apt: name={{item}} update_cache=yes
-    with_items: 
-    - vim
-    - sysbench
-    - sysbench-tpcc
-    - pv
-    - percona-server-server-5.6
-    - percona-xtrabackup
-    - percona-xtrabackup-test
-    - percona-xtrabackup-dbg
-    - percona-toolkit
-    - percona-server-test-5.6
-    - percona-server-5.6-dbg
-    - percona-server-source-5.6
-    - percona-server-tokudb-5.6
+    apt:
+      name: "{{ packages }}"
+      update_cache: yes
+    vars: 
+      packages:
+      - vim
+      - sysbench
+      - sysbench-tpcc
+      - pv
+      - percona-server-server-5.6
+      - percona-xtrabackup
+      - percona-xtrabackup-test
+      - percona-xtrabackup-dbg
+      - percona-toolkit
+      - percona-server-test-5.6
+      - percona-server-5.6-dbg
+      - percona-server-source-5.6
+      - percona-server-tokudb-5.6
     when: ansible_os_family == "Debian"
 
   - name: install packages in centos
-    yum: name={{item}} state=present enablerepo=percona-testing-x86_64
-    with_items:
-    - libselinux-python
-    - sysbench
-    - sysbench-tpcc
-    - Percona-Server-server-56
-    - Percona-Server-test-56
-    - Percona-Server-56-debuginfo
-    - Percona-Server-devel-56
-    - Percona-Server-tokudb-56
-    - percona-toolkit
-    - percona-xtrabackup
-    - percona-xtrabackup-test
-    - percona-xtrabackup-debuginfo
+    yum: 
+      name: "{{ packages }}" 
+      state: present 
+      enablerepo: percona-experimental-x86_64
+    vars:
+      packages:
+      - libselinux-python
+      - sysbench
+      - sysbench-tpcc
+      - Percona-Server-server-56
+      - Percona-Server-test-56
+      - Percona-Server-56-debuginfo
+      - Percona-Server-devel-56
+      - Percona-Server-tokudb-56
+      - Percona-Server-selinux-56
+      - percona-toolkit
+      - percona-xtrabackup
+      - percona-xtrabackup-test
+      - percona-xtrabackup-debuginfo
     when: ansible_os_family == "RedHat"
 
   # Enable SELinux on CentOS
-# - selinux:
-#     policy: targeted
-#     state: permissive
-#   when: ansible_os_family == "RedHat"
+  - selinux:
+      policy: targeted
+      state: enforcing
+    when: ansible_os_family == "RedHat"
 
   - name: use service to start mysql
     command: service mysql start

@@ -13,7 +13,12 @@
     include_tasks: ../tasks/test_prep.yml
 
   - name: include tasks for enabling test repo
-    include_tasks: ../tasks/enable_testing_repo.yml
+    include: ../tasks/enable_testing_repo.yml
+    when: lookup('env', 'install_repo') == "testing" or lookup('env', 'install_repo') == ""
+
+  - name: include tasks for enabling main repo
+    include: ../tasks/enable_main_repo.yml
+    when: lookup('env', 'install_repo') == "main"
 
   - name: download and extract world database
     command: "{{ item }}"
@@ -121,11 +126,6 @@
   - name: install tokudb and restart server
     command: /usr/bin/ps_tokudb_admin --enable --enable-backup
 
-  - name: copy group replication settings
-    template: src=../templates/group_replication.j2
-              dest=/etc/mysql/percona-server.conf.d/gr.cnf
-    when: ansible_os_family == "Debian"
-
   - name: restart mysql service
     service: name=mysql state=restarted
 
@@ -134,6 +134,9 @@
 
   - name: install plugins, import world database, test tokudb
     command: /package-testing/plugins_test_57.sh ps
+
+  - name: keyring plugins test
+    command: /package-testing/scripts/ps_keyring_plugins_test/ps_keyring_plugins_test.sh
 
   - name: re-run ps_admin to install rocksdb
     command: /usr/bin/ps-admin --enable-rocksdb
@@ -156,11 +159,8 @@
   - name: check that Percona XtraBackup package versions are correct
     command: /package-testing/package_check.sh pxb24
 
-# - name: run some MyRocks tests
-#   command: /package-testing/scripts/ps_myrocks_test.sh
-
-  - name: install GR plugin
-    command: /package-testing/gr.sh
+  - name: run some MyRocks tests
+    command: /package-testing/scripts/ps_myrocks_test.sh
 
   - name: run mysql compression tests script
     command: /package-testing/scripts/mysql-comp-test/mysql_comp_test.sh ps57
@@ -176,6 +176,70 @@
 
   - name: run bats integration tests for ps-admin script
     command: /usr/local/bin/bats /package-testing/bats/ps-admin_integration.bats
+
+# Start PAM test
+  - group:
+      name: developer
+      state: present
+
+  - group:
+      name: dbadmin
+      state: present
+
+  - user:
+      name: test_pam
+      shell: /bin/bash
+      password: $6$mrqBDJUyh13p$elUkdb99/v4fPxnLIS2TAXSUhVt16PvOvIPzVqobKKZKHHMRyXOmJ4puhybn0Go0HpL1RNYvREgqF02qYnGOX1
+
+  - user:
+      name: test_pam2
+      shell: /bin/bash
+      password: $6$mrqBDJUyh13p$elUkdb99/v4fPxnLIS2TAXSUhVt16PvOvIPzVqobKKZKHHMRyXOmJ4puhybn0Go0HpL1RNYvREgqF02qYnGOX1
+      groups: developer
+      append: yes
+
+  - user:
+      name: test_pam3
+      shell: /bin/bash
+      password: $6$mrqBDJUyh13p$elUkdb99/v4fPxnLIS2TAXSUhVt16PvOvIPzVqobKKZKHHMRyXOmJ4puhybn0Go0HpL1RNYvREgqF02qYnGOX1
+      groups: dbadmin
+      append: yes
+
+  - user:
+      name: test_pam_compat
+      shell: /bin/bash
+      password: $6$mrqBDJUyh13p$elUkdb99/v4fPxnLIS2TAXSUhVt16PvOvIPzVqobKKZKHHMRyXOmJ4puhybn0Go0HpL1RNYvREgqF02qYnGOX1
+
+  - user:
+      name: mysql
+      groups: shadow
+      append: yes
+    when: ansible_os_family == "Debian"
+
+  - file:
+      path: /etc/shadow
+      group: mysql
+      mode: "g+r"
+    when: ansible_os_family == "RedHat"
+
+  - name: copy config file for mysql PAM into system dir
+    template:
+      src: ../scripts/ps_pam_test/mysqld
+      dest: /etc/pam.d/mysqld
+      owner: root
+      group: root
+      mode: 0644
+      force: yes
+
+  - name: restart mysql service
+    service: name=mysql state=restarted
+
+  - name: run mysql setup for PAM
+    command: /usr/local/bin/bats /package-testing/scripts/ps_pam_test/ps_pam_mysql_setup.bats
+
+  - name: run bats tests for PAM
+    command: /usr/local/bin/bats /package-testing/scripts/ps_pam_test/ps_pam_test.bats
+# End PAM test
 
   - name: install 3rd party packages with apt
     apt: name={{item}}
@@ -195,8 +259,12 @@
   - name: start mysql service
     service: name=mysql state=started
 
-  - name: check that mysqladmin shutdown works correctly
-    command: /package-testing/madmin_check.sh
+  - name: uninstall PAM before final package uninstall
+    command: /usr/local/bin/bats /package-testing/scripts/ps_pam_test/ps_pam_mysql_uninstall.bats
+
+# temporary commented out until BLD-906 is fixed
+# - name: check that mysqladmin shutdown works correctly
+#   command: /package-testing/madmin_check.sh
 
   - name: remove Percona Server deb packages
     apt: name={{item}} update_cache=no state=absent

@@ -3,7 +3,7 @@
 set -e
 
 if [ "$#" -ne 1 ]; then
-  echo "This script requires product parameter: ps55, ps56 or ps57 !"
+  echo "This script requires product parameter: ps55, ps56, ps57 or ps80!"
   echo "Usage: ./package_check.sh <prod>"
   exit 1
 fi
@@ -81,7 +81,7 @@ if [ ${product} = "ps55" -o ${product} = "ps56" -o ${product} = "ps57" -o ${prod
     elif [ ${product} = "ps56" ]; then
       rpm_opt_package="Percona-Server-tokudb-${rpm_maj_version}"
       rpm_num_pkgs="7"
-    elif [ ${product} = "ps57" -o ${product} = "ps80" ]; then
+    elif [ ${product} = "ps57" -o ${product} = "ps57" ]; then
       if [ ${centos_maj_version} == "7" ]; then
         rpm_num_pkgs="8"
         rpm_opt_package="Percona-Server-tokudb-${rpm_maj_version} Percona-Server-shared-compat-${rpm_maj_version}"
@@ -186,7 +186,7 @@ elif [ ${product} = "pmm" ]; then
 elif [ ${product} = "pxb23" -o ${product} = "pxb24" -o ${product} = "pxb80" ]; then
   if [ ${product} = "pxb24" ]; then
     extra_version="-24"
-  elif [ ${product} = "pxb80" ]; then
+  elif [ ${product} = "pxb80"]; then
     extra_version="-80"
   else
     extra_version=""

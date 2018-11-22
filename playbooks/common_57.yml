@@ -61,6 +61,7 @@
       - percona-xtrabackup-24
       - sysbench
       - sysbench-tpcc
+      - pmm-client
     when: ansible_os_family == "Debian"
 
   - name: install packages in centos

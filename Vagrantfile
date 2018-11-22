@@ -1,7 +1,7 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-playbook = "playbooks/common_57.yml"
+playbook = "playbooks/common_57_upgrade.yml"
 deb_distro = "bento/ubuntu-18.04"
 deb1_playbook = "playbooks/pxc57.yml"
 deb_common_playbook = "playbooks/pxc57_common.yml"
@@ -78,17 +78,17 @@ Vagrant.configure("2") do |config|
     xenial_config.vm.host_name = "xenial"
   end
 
-  config.vm.define :cosmic do |cosmic_config|
-    cosmic_config.vm.box = "bento/ubuntu-18.10"
-    config.vm.provision "ansible" do |ansible|
-      ansible.playbook = playbook
-      ansible.host_key_checking = "false"
-    end
-    cosmic_config.vm.provider :virtualbox do |vb|
-      vb.customize ["modifyvm", :id, "--memory", "2048", "--ioapic", "on" ]
-    end
-    cosmic_config.vm.host_name = "cosmic"
-  end
+# config.vm.define :cosmic do |cosmic_config|
+#   cosmic_config.vm.box = "bento/ubuntu-18.10"
+#   config.vm.provision "ansible" do |ansible|
+#     ansible.playbook = playbook
+#     ansible.host_key_checking = "false"
+#   end
+#   cosmic_config.vm.provider :virtualbox do |vb|
+#     vb.customize ["modifyvm", :id, "--memory", "2048", "--ioapic", "on" ]
+#   end
+#   cosmic_config.vm.host_name = "cosmic"
+# end
 
   config.vm.define :bionic do |bionic_config|
 #   bionic_config.vm.box = "ubuntu/bionic64"
