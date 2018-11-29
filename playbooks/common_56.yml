@@ -43,7 +43,7 @@
     yum: 
       name: "{{ packages }}" 
       state: present 
-      enablerepo: percona-experimental-x86_64
+      enablerepo: percona-testing-x86_64
     vars:
       packages:
       - libselinux-python

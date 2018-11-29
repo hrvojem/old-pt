@@ -143,8 +143,8 @@
   - name: install rocksdb
     command: /usr/bin/ps-admin --enable-rocksdb
 
-# - name: install plugins
-#   command: /vagrant/plugins_test_80.sh
+  - name: install plugins
+    command: /vagrant/plugins_test_80.sh ps
 
   - name: version check
     command: /vagrant/version_check.sh ps80
