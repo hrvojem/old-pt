@@ -26,14 +26,17 @@
 #     state: present
 
   - name: install vim, pv, python-mysqldb, and PXC-5.6
-    apt: name={{item}} update_cache=yes
-    with_items:
-    - vim
-    - sysbench
-    - pv
-    - percona-xtradb-cluster-full-56
-#   - percona-xtradb-cluster-56
-    - python-mysqldb
+    apt: 
+      name: "{{ packages }}"
+      update_cache: yes
+    vars:
+      packages:
+      - vim
+      - sysbench
+      - pv
+      - percona-xtradb-cluster-full-56
+  #   - percona-xtradb-cluster-56
+      - python-mysqldb
 
   - name: stop mysql service
     service: name=mysql pattern=/usr/bin/mysqld_safe state=stopped 

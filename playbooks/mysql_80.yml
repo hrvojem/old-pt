@@ -36,13 +36,16 @@
     yum: name=https://dev.mysql.com/get/mysql80-community-release-el7-1.noarch.rpm state=present
     when: ansible_os_family == "RedHat" and ansible_distribution_major_version == "7"
 
-# - name: epel 6 repo
-#   yum: name=https://dl.fedoraproject.org/pub/epel/epel-release-latest-6.noarch.rpm state=present
-#   when: ansible_os_family == "RedHat" and ansible_distribution_major_version == "6"
+  - name: include tasks for enabling tools test repo
+    include: ../tasks/enable_pxb8_testing_repo.yml
 
-# - name: epel 7 repo
-#   yum: name=https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm state=present
-#   when: ansible_os_family == "RedHat" and ansible_distribution_major_version == "7"
+  - name: epel 6 repo
+    yum: name=https://dl.fedoraproject.org/pub/epel/epel-release-latest-6.noarch.rpm state=present
+    when: ansible_os_family == "RedHat" and ansible_distribution_major_version == "6"
+
+  - name: epel 7 repo
+    yum: name=https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm state=present
+    when: ansible_os_family == "RedHat" and ansible_distribution_major_version == "7"
 
   # Enable SELinux on CentOS
 # - selinux:
@@ -51,16 +54,72 @@
 #   when: ansible_os_family == "RedHat"
 
   - name: install deb packages 
-    apt: name={{item}} update_cache=yes
-    with_items: 
-    - vim
-    - pv
-    - unzip
+    apt:
+      name: "{{ packages }}"
+      update_cache: yes 
+    vars: 
+      packages:
+      - vim
+      - pv
+      - unzip
     when: ansible_os_family == "Debian"
 
   - name: install MySQL Community deb packages 
-    apt: name={{item}} update_cache=yes
-    with_items: 
-    - mysql-community-server
+    apt:
+      name: "{{ packages }}"
+      update_cache: yes 
+    vars: 
+      packages:
+      - mysql-community-server
     when: ansible_os_family == "Debian"
+
+  - name: install packages in centos
+    yum:
+      name: "{{ packages }}"
+      state: present
+    vars:
+      packages:
+      - libselinux-python
+      - pv
+      - unzip
+      - mysql-community-server
+    when: ansible_os_family == "RedHat"
+
+  - name: Start the MySQL service  
+    service: name=mysql state=started
+    when: ansible_os_family == "Debian"
+
+  - name: Start the MySQL service  
+    service: name=mysqld state=started
+    when: ansible_os_family == "RedHat"
+
+  - name: set root password
+    command: /vagrant/setpass_57.sh
+    when: ansible_os_family == "RedHat" 
+
+  - name: enable tools repos
+    command: percona-release enable tools testing
+
+  - name: install PXB 8 deb packages 
+    apt:
+      name: "{{ packages }}"
+      update_cache: yes 
+    vars: 
+      packages:
+      - percona-xtrabackup-80
+      - percona-xtrabackup-test-80
+      - percona-xtrabackup-dbg-80
+    when: ansible_os_family == "Debian"
+
+  - name: install PXB 8 rpm packages
+    yum:
+      name: "{{ packages }}"
+      state: present
+    vars:
+      packages:
+      - percona-xtrabackup-80
+      - percona-xtrabackup-test-80
+      - percona-xtrabackup-80-debuginfo
+    when: ansible_os_family == "RedHat"
+
 

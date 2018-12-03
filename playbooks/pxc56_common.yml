@@ -20,16 +20,19 @@
     when: ansible_os_family == "Debian" 
 
   - name: add the testing repo
-    apt_repository: repo='deb http://repo.percona.com/apt {{ansible_lsb.codename}} main testing' state=present
+    apt_repository: repo='deb http://repo.percona.com/apt {{ansible_lsb.codename}} main experimental' state=present
 
   - name: install galera, vim, pv, python-mysqldb, pxc-56
-    apt: name={{ item }} update_cache=yes
-    with_items: 
-    - sysbench
-    - vim
-    - pv
-    - python-mysqldb
-    - percona-xtradb-cluster-56
+    apt: 
+      name: "{{ packages }}"
+      update_cache: yes
+    vars: 
+      packages:
+      - sysbench
+      - vim
+      - pv
+      - python-mysqldb
+      - percona-xtradb-cluster-56
 
   - name: stop mysql service
     service: name=mysql pattern=/usr/bin/mysqld_safe state=stopped 

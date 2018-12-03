@@ -9,7 +9,7 @@
 
   - name: Install percona repository package
     apt:
-      deb: https://repo.percona.com/apt/percona-release_0.1-6.{{ansible_lsb.codename}}_all.deb
+      deb: https://repo.percona.com/apt/percona-release_0.1-8.{{ansible_lsb.codename}}_all.deb
     when: ansible_os_family == "Debian"
 
   - name: add the deb repo
@@ -29,35 +29,42 @@
     when: ansible_os_family == "RedHat" and ansible_distribution_major_version == "7"
 
   - name: install deb packages 
-    apt: name={{item}} update_cache=yes
-    with_items: 
-    - aptitude
-    - vim
-    - pv
-    - percona-server-server-5.7
-    - percona-xtrabackup-24
-    - percona-toolkit
-    - percona-server-test-5.7
-    - percona-server-5.7-dbg
-    - percona-server-source-5.7
-    - percona-server-tokudb-5.7
-    - percona-server-rocksdb-5.7
+    apt:
+      name: "{{ packages }}"
+      update_cache: yes
+    vars: 
+      packages:
+      - aptitude
+      - vim
+      - pv
+      - percona-server-server-5.7
+      - percona-xtrabackup-24
+      - percona-toolkit
+      - percona-server-test-5.7
+      - percona-server-5.7-dbg
+      - percona-server-source-5.7
+      - percona-server-tokudb-5.7
+      - percona-server-rocksdb-5.7
     when: ansible_os_family == "Debian"
 
   - name: install packages in centos
-    yum: name={{item}} state=present #enablerepo=percona-testing-x86_64
-    with_items:
-    - libselinux-python
-    - pv
-    - Percona-Server-server-57
-    - Percona-Server-test-57
-    - Percona-Server-tokudb-57
-    - Percona-Server-rocksdb-57
-    - Percona-Server-57-debuginfo
-#   - Percona-Server-shared-compat-57
-    - Percona-Server-devel-57
-    - percona-toolkit
-    - percona-xtrabackup-24
+    yum:
+      name: "{{ packages }}"
+      state: present
+     #enablerepo: percona-testing-x86_64  
+    vars:
+      packages:
+      - libselinux-python
+      - pv
+      - Percona-Server-server-57
+      - Percona-Server-test-57
+      - Percona-Server-tokudb-57
+      - Percona-Server-rocksdb-57
+      - Percona-Server-57-debuginfo
+#     - Percona-Server-shared-compat-57
+      - Percona-Server-devel-57
+      - percona-toolkit
+      - percona-xtrabackup-24
     when: ansible_os_family == "RedHat"
 
   - name: start mysql service with service command
@@ -106,13 +113,15 @@
     command: /vagrant/plugins_test_57.sh
 
   - name: install 3rd party packages
-    apt: name={{item}}
-    with_items:
-    - rsyslog-mysql
+    apt:
+      name: "{{ packages }}"
+    vars:
+      packages:
+      - rsyslog-mysql
     when: ansible_os_family == "Debian"
 
   - name: start my.cnf change test
-    command: /vagrant/check_mycnf_pre.sh file
+    command: /vagrant/check_mycnf_pre.sh default
 
   - name: remove the Percona apt main repository
     apt_repository: repo='deb http://repo.percona.com/apt {{ ansible_lsb.codename }} main' state=absent update_cache=yes
@@ -127,15 +136,19 @@
     when: ansible_os_family == "Debian" 
     
   - name: upgrade Percona Server to new rpm packages
-    yum: name={{item}} state=latest enablerepo=percona-testing-x86_64
-    with_items:
-    - Percona-Server-server-57
-    - Percona-Server-test-57
-    - Percona-Server-57-debuginfo
-    - Percona-Server-devel-57
-    - Percona-Server-tokudb-57
-    - Percona-Server-rocksdb-57
-#   - Percona-Server-shared-compat-57
+    yum:
+       name: "{{ packages }}"
+       state: latest
+       enablerepo: percona-testing-x86_64  
+    vars:
+      packages:
+      - Percona-Server-server-57
+      - Percona-Server-test-57
+      - Percona-Server-57-debuginfo
+      - Percona-Server-devel-57
+      - Percona-Server-tokudb-57
+      - Percona-Server-rocksdb-57
+#     - Percona-Server-shared-compat-57
     when: ansible_os_family == "RedHat"
 
   - name: run mysql_upgrade
