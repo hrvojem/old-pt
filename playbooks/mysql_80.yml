@@ -13,7 +13,7 @@
 
   - name: Install MySQL apt repository package
     apt:
-      deb: https://dev.mysql.com/get/mysql-apt-config_0.8.10-1_all.deb
+      deb: https://dev.mysql.com/get/mysql-apt-config_0.8.11-1_all.deb
     when: ansible_os_family == "Debian"
 
 # - name: add the ubuntu repo
@@ -35,9 +35,6 @@
   - name: Install MySQL RHEL 7 yum repository package 
     yum: name=https://dev.mysql.com/get/mysql80-community-release-el7-1.noarch.rpm state=present
     when: ansible_os_family == "RedHat" and ansible_distribution_major_version == "7"
-
-  - name: include tasks for enabling tools test repo
-    include: ../tasks/enable_pxb8_testing_repo.yml
 
   - name: epel 6 repo
     yum: name=https://dl.fedoraproject.org/pub/epel/epel-release-latest-6.noarch.rpm state=present
@@ -97,8 +94,8 @@
     command: /vagrant/setpass_57.sh
     when: ansible_os_family == "RedHat" 
 
-  - name: enable tools repos
-    command: percona-release enable tools testing
+  - name: include tasks for enabling tools test repo
+    include: ../tasks/enable_pxb8_testing_repo.yml
 
   - name: install PXB 8 deb packages 
     apt:
@@ -122,4 +119,11 @@
       - percona-xtrabackup-80-debuginfo
     when: ansible_os_family == "RedHat"
 
+  - name: PXB version check
+    command: /vagrant/version_check.sh pxb80
 
+  - name: import databases
+    command: /vagrant/upstream_db.sh
+
+  - name: run backup
+    command: /usr/bin/xtrabackup --backup --user=root --target-dir=/tmp/backups/
