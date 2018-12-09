@@ -1,7 +1,7 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-playbook = "playbooks/ps_80.yml"
+playbook = "playbooks/psmdb40_major_upgrade_to.yml"
 deb_distro = "bento/debian-9"
 deb1_playbook = "playbooks/pxc56.yml"
 deb_common_playbook = "playbooks/pxc56_common.yml"

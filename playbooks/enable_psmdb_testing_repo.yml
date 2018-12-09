@@ -1,3 +1,6 @@
+  - name: include playbook for removing Percona repo
+    include: remove_percona_repository.yml
+
   - name: Install percona repository package
     apt:
       deb: https://repo.percona.com/apt/percona-release_0.1-10.{{ansible_lsb.codename}}_all.deb
@@ -7,5 +10,5 @@
     yum: name=https://repo.percona.com/yum/percona-release-0.1-10.noarch.rpm
     when: ansible_os_family == "RedHat" 
 
-  - name: enable the PS-80 testing repo
-    command: percona-release enable-only tools
+  - name: enable the PSMDB testing repo
+    command: percona-release enable-only psmdb-40 testing

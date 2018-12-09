@@ -1,0 +1,44 @@
+---
+# This playbook sets up the mongodb-org repo and installs mongodb 3.6
+
+- hosts: all
+  become: true
+  become_method: sudo
+
+  tasks:
+  # Add the mongodb apt signing key, will not download if present
+  - apt_key: id=9DA31620334BD75D9DCB49F368818C72E52529D4 keyserver=keyserver.ubuntu.com state=present
+    when: ansible_os_family == "Debian"
+
+  - name: add the mongo ubuntu repo
+    apt_repository: repo='deb https://repo.mongodb.org/apt/ubuntu {{ansible_lsb.codename}}/mongodb-org/4.0 multiverse' state=present update_cache=yes
+    when: ansible_distribution == "Ubuntu"
+
+  - name: add the mongo debian repo
+    apt_repository: repo='deb http://repo.mongodb.org/apt/debian {{ansible_lsb.codename}}/mongodb-org/4.0 main' state=present update_cache=yes
+    when: ansible_distribution == "Debian"
+
+  - name: install packages in centos
+    yum: name={{item}} state=present 
+    with_items:
+    - libselinux-python
+    when: ansible_os_family == "RedHat"
+
+  - name: add centos repository
+    copy:
+      src: ../mongodb-org-3.6.repo
+      dest:  /etc/yum.repos.d/
+    when: ansible_os_family == "RedHat"
+
+  - name: install mongodb-org packages in centos
+    yum: name={{item}} state=present 
+    with_items:
+    - mongodb-org
+    when: ansible_os_family == "RedHat"
+
+  - name: install deb packages 
+    apt: name={{item}} update_cache=yes
+    with_items: 
+    - vim
+    - mongodb-org
+    when: ansible_os_family == "Debian"
