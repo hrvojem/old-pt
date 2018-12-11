@@ -1,5 +1,5 @@
 ---
-# This playbook sets up the mongodb-org repo and installs mongodb 3.6
+# This playbook sets up the mongodb-org repo and installs mongodb 4.0
 
 - hosts: all
   become: true
@@ -19,26 +19,35 @@
     when: ansible_distribution == "Debian"
 
   - name: install packages in centos
-    yum: name={{item}} state=present 
-    with_items:
-    - libselinux-python
+    yum:
+      name: "{{ packages }}"
+      state: present 
+    vars:
+      packages:
+      - libselinux-python
     when: ansible_os_family == "RedHat"
 
   - name: add centos repository
     copy:
-      src: ../mongodb-org-3.6.repo
+      src: ../mongodb-org-4.0.repo
       dest:  /etc/yum.repos.d/
     when: ansible_os_family == "RedHat"
 
   - name: install mongodb-org packages in centos
-    yum: name={{item}} state=present 
-    with_items:
-    - mongodb-org
+    yum:
+      name: "{{ packages }}"
+      state: present 
+    vars:
+      packages:
+      - mongodb-org
     when: ansible_os_family == "RedHat"
 
   - name: install deb packages 
-    apt: name={{item}} update_cache=yes
-    with_items: 
-    - vim
-    - mongodb-org
+    apt:
+      name: "{{ packages }}"
+      update_cache: yes
+    vars: 
+      packages:
+      - vim
+      - mongodb-org
     when: ansible_os_family == "Debian"

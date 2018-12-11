@@ -19,9 +19,12 @@
     when: ansible_distribution == "Debian"
 
   - name: install packages in centos
-    yum: name={{item}} state=present 
-    with_items:
-    - libselinux-python
+    yum:
+      name: "{{ packages }}"
+      state: present 
+    vars:
+      packages:
+      - libselinux-python
     when: ansible_os_family == "RedHat"
 
   - name: add centos repository
@@ -31,16 +34,22 @@
     when: ansible_os_family == "RedHat"
 
   - name: install mongodb-org packages in centos
-    yum: name={{item}} state=present 
-    with_items:
-    - mongodb-org
+    yum:
+      name: "{{ packages }}"
+      state: present  
+    vars:
+      packages:
+      - mongodb-org
     when: ansible_os_family == "RedHat"
 
   - name: install deb packages 
-    apt: name={{item}} update_cache=yes
-    with_items: 
-    - vim
-    - mongodb-org
+    apt:
+      name: "{{ packages }}"
+      update_cache: yes
+    vars: 
+      packages:
+      - vim
+      - mongodb-org
     when: ansible_os_family == "Debian"
 
   - name: Install percona repository package

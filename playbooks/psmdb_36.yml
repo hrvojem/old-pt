@@ -16,12 +16,15 @@
 #   apt_repository: repo='deb http://repo.percona.com/apt {{ansible_lsb.codename}} main experimental' state=present update_cache=yes
 #   when: ansible_os_family == "Debian"
   - name: install deb packages 
-    apt: name={{item}} update_cache=yes
-    with_items: 
-    - vim
-    - pv
-    - percona-server-mongodb-36
-    - percona-server-mongodb-36-dbg
+    apt:
+      name: "{{ packages }}"
+      update_cache: yes  
+    vars: 
+      packages:
+      - vim
+      - pv
+      - percona-server-mongodb-36
+      - percona-server-mongodb-36-dbg
     when: ansible_os_family == "Debian"
   - name: epel 6 repo
     yum: name=https://dl.fedoraproject.org/pub/epel/epel-release-latest-6.noarch.rpm state=present
@@ -33,13 +36,17 @@
     yum: name=http://www.percona.com/downloads/percona-release/redhat/0.1-4/percona-release-0.1-4.noarch.rpm
     when: ansible_os_family == "RedHat" and ansible_distribution_major_version|int >= 6 
   - name: install packages in centos
-    yum: name={{item}} state=present #enablerepo=percona-experimental-x86_64
-    with_items:
-    - redhat-lsb
-    - libselinux-python
-    - pv
-    - Percona-Server-MongoDB-36
-    - Percona-Server-MongoDB-36-debuginfo
+    yum:
+      name: "{{ packages }}"
+      state: present 
+     #enablerepo: percona-experimental-x86_64
+    vars:
+      packages:
+      - redhat-lsb
+      - libselinux-python
+      - pv
+      - Percona-Server-MongoDB-36
+      - Percona-Server-MongoDB-36-debuginfo
     when: ansible_os_family == "RedHat"
   - command: service mongod start
     when: ansible_os_family == "RedHat" and ansible_distribution_major_version == "6"
