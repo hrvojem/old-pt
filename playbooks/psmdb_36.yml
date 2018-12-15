@@ -1,61 +1,93 @@
 ---
-# This playbook sets up the mongodb-org repo and installs mongodb
+# This playbook does following:
+#   enables Percona testing repository
+#   installs PSMDB 3.6
+#   does some tests
+#- import_playbook: test_prep.yml
 
 - hosts: all
   become: true
   become_method: sudo
 
   tasks:
-  # Add the percona apt signing key, will not download if present
-  - name: add the deb repo
-    apt:
-      deb: https://repo.percona.com/apt/percona-release_0.1-6.{{ansible_lsb.codename}}_all.deb
+  - name: include tasks for test env setup
+    include_tasks: ../tasks/test_prep.yml
+
+  - name: include tasks for enabling test repo
+    include_tasks: ../tasks/enable_testing_repo.yml
+    when: lookup('env', 'install_repo') == "testing" or lookup('env', 'install_repo') == ""
+
+  - name: include tasks for enabling main repo
+    include_tasks: ../tasks/enable_main_repo.yml
+    when: lookup('env', 'install_repo') == "main"
+
+  - name: include tasks for enabling experimental repo
+    include_tasks: ../tasks/enable_experimental_repo.yml
+    when: lookup('env', 'install_repo') == "experimental"
+
+  - name: install Percona Server for MongoDB 3.6 new deb packages
+    apt: name={{item}} update_cache=yes state=latest
+    with_items:
+    - percona-server-mongodb-36
+    - percona-server-mongodb-36-dbg
     when: ansible_os_family == "Debian"
 
-# - name: add the deb repo
-#   apt_repository: repo='deb http://repo.percona.com/apt {{ansible_lsb.codename}} main experimental' state=present update_cache=yes
-#   when: ansible_os_family == "Debian"
-  - name: install deb packages 
-    apt:
-      name: "{{ packages }}"
-      update_cache: yes  
-    vars: 
-      packages:
-      - vim
-      - pv
-      - percona-server-mongodb-36
-      - percona-server-mongodb-36-dbg
-    when: ansible_os_family == "Debian"
-  - name: epel 6 repo
-    yum: name=https://dl.fedoraproject.org/pub/epel/epel-release-latest-6.noarch.rpm state=present
-    when: ansible_os_family == "RedHat" and ansible_distribution_major_version == "6"
-  - name: epel 7 repo
-    yum: name=https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm state=present
-    when: ansible_os_family == "RedHat" and ansible_distribution_major_version == "7"
-  - name: add the yum percona repos
-    yum: name=http://www.percona.com/downloads/percona-release/redhat/0.1-4/percona-release-0.1-4.noarch.rpm
-    when: ansible_os_family == "RedHat" and ansible_distribution_major_version|int >= 6 
-  - name: install packages in centos
-    yum:
-      name: "{{ packages }}"
-      state: present 
-     #enablerepo: percona-experimental-x86_64
-    vars:
-      packages:
-      - redhat-lsb
-      - libselinux-python
-      - pv
-      - Percona-Server-MongoDB-36
-      - Percona-Server-MongoDB-36-debuginfo
+  - name: install Percona Server for MongoDB 3.6 new rpm packages
+    yum: name={{item}} state=latest
+    with_items:
+    - Percona-Server-MongoDB-36
+    - Percona-Server-MongoDB-36-debuginfo
     when: ansible_os_family == "RedHat"
-  - command: service mongod start
+
+  - name: start mongod with service
+    command: service mongod start
     when: ansible_os_family == "RedHat" and ansible_distribution_major_version == "6"
-  - command: systemctl start mongod
+
+  - name: start mongod with systemctl
+    command: systemctl start mongod
     when: ansible_os_family == "RedHat" and ansible_distribution_major_version == "7"
 
-  - name: run package_test
-    command: /vagrant/package_check.sh psmdb36
+  - name: check that PSMDB 3.6 package versions are correct
+    command: /package-testing/package_check.sh psmdb36
 
-  - name: run psmdb_test
-    command: /vagrant/psmdb_test.sh 3.6
+  - name: test SE change, import data, restart service
+    command: /package-testing/scripts/psmdb_test.sh 3.6
 
+  - name: set pass and enable auth
+    command: /package-testing/scripts/psmdb_set_auth.sh
+
+  - name: run bats tests for mongo init scripts
+    command: /usr/local/bin/bats /package-testing/bats/mongo-init-scripts.bats
+
+  - name: install numactl package on debian
+    apt: name={{item}} update_cache=no state=latest
+    with_items:
+    - numactl
+    when: ansible_os_family == "Debian"
+
+  - name: install numactl package on centos
+    yum: name={{item}} state=latest
+    with_items:
+    - numactl
+    when: ansible_os_family == "RedHat"
+
+  - name: run bats tests for mongo init scripts after numactl install
+    command: /usr/local/bin/bats /package-testing/bats/mongo-init-scripts.bats
+
+  - name: start mongod service
+    service: name=mongod state=started
+
+  - name: remove Percona Server for MongoDB 3.6 deb packages
+    apt: name={{item}} update_cache=no state=absent
+    with_items:
+    - percona-server-mongodb-36-server
+    when: ansible_os_family == "Debian"
+
+  - name: remove Percona Server for MongoDB 3.6 rpm packages
+    yum: name={{item}} state=absent
+    with_items:
+    - Percona-Server-MongoDB-36-server
+    when: ansible_os_family == "RedHat"
+
+  - name: check if process is stopped after package removal
+    command: /package-testing/check_running.sh mongodb stopped

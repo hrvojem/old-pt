@@ -9,8 +9,8 @@
   tasks:
   - name: Install percona repository package
     apt:
-#      deb: https://repo.percona.com/apt/percona-release_0.1-10.{{ansible_lsb.codename}}_all.deb
-      deb: https://repo.percona.com/apt/percona-release_latest.{{ansible_lsb.codename}}_all.deb
+      deb: https://repo.percona.com/apt/percona-release_0.1-10.{{ansible_lsb.codename}}_all.deb
+ #     deb: https://repo.percona.com/apt/percona-release_latest.{{ansible_lsb.codename}}_all.deb
     when: ansible_os_family == "Debian"
 # - name: add the deb repo
 #   apt_repository: repo='deb http://repo.percona.com/apt {{ansible_lsb.codename}} main experimental' state=present update_cache=yes

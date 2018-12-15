@@ -10,7 +10,7 @@
 
   - name: Install percona repository package
     apt:
-      deb: https://repo.percona.com/apt/percona-release_0.1-6.{{ansible_lsb.codename}}_all.deb
+      deb: https://repo.percona.com/apt/percona-release_0.1-10.{{ansible_lsb.codename}}_all.deb
     when: ansible_os_family == "Debian"
 
   - debug: var=ansible_all_ipv4_addresses
@@ -24,14 +24,18 @@
     apt_repository: repo='deb http://repo.percona.com/apt {{ansible_lsb.codename}} main testing' state=present
 
   - name: install galera, vim, pv, python-mysqldb, pxc-57
-    apt: name={{ item }} update_cache=yes
-    with_items: 
-    - vim
-    - pv
-    - unzip
-    - sysbench
-    - python-mysqldb
-    - percona-xtradb-cluster-57
+    apt:
+     name: "{{ packages }}"
+     update_cache: yes
+    vars: 
+      packages:
+      - vim
+      - pv
+      - unzip
+      - sysbench
+      - python-mysqldb
+      - percona-xtradb-cluster-57
+
   - name: stop mysql service
     service: name=mysql pattern=/usr/bin/mysqld_safe state=stopped 
 

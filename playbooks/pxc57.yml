@@ -18,21 +18,24 @@
 
   - name: Install percona repository package
     apt:
-      deb: https://repo.percona.com/apt/percona-release_0.1-6.{{ansible_lsb.codename}}_all.deb
+      deb: https://repo.percona.com/apt/percona-release_0.1-10.{{ansible_lsb.codename}}_all.deb
     when: ansible_os_family == "Debian"
 
 # - name: add the repo
 #   apt_repository: repo='deb http://repo.percona.com/apt {{ansible_lsb.codename}} main testing' state=present
 
   - name: install vim, pv, python-mysqldb, and PXC-5.7
-    apt: name={{item}} update_cache=yes
-    with_items:
-    - vim
-    - pv
-    - percona-xtradb-cluster-full-57 
-    - sysbench
-    - python-mysqldb
-#   - percona-xtradb-cluster-57
+    apt:
+      name: "{{ packages }}"
+      update_cache: yes
+    vars:
+      packages:
+      - vim
+      - pv
+      - percona-xtradb-cluster-full-57 
+      - sysbench
+      - python-mysqldb
+#     - percona-xtradb-cluster-57
  
   - name: stop mysql service
     service: name=mysql pattern=/usr/bin/mysqld_safe state=stopped 
@@ -54,11 +57,8 @@
   - name: check PXC-5.7 version
     command: /vagrant/version_check.sh pxc57
 
-# - name: run sysbench
-#   command: /vagrant/sb.sh
-
-# - name: install 3rd party packages
-#   apt: name={{item}} 
-#   with_items:
-#   - cacti
-#   - rsyslog-mysql
+  - name: install 3rd party packages
+    apt: name={{item}} 
+    with_items:
+    - cacti
+    - rsyslog-mysql

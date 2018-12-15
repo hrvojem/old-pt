@@ -1,0 +1,174 @@
+---
+# This playbook sets up the mongodb-org repo and installs mongodb 4.0
+
+- hosts: all
+  become: true
+  become_method: sudo
+
+  tasks:
+  - name: install dirmngr for Stretch 
+    apt:
+      name: "{{ packages }}"
+      update_cache: yes
+    vars:
+      packages:
+      - dirmngr
+    when: ansible_os_family == "Debian" and ansible_distribution_release == "stretch"
+
+  - name: Add the mongodb apt signing key, will not download if present
+    apt_key: id=9DA31620334BD75D9DCB49F368818C72E52529D4 keyserver=keyserver.ubuntu.com state=present
+    when: ansible_os_family == "Debian"
+
+  - name: add the mongo ubuntu repo
+    apt_repository: repo='deb https://repo.mongodb.org/apt/ubuntu {{ansible_lsb.codename}}/mongodb-org/4.0 multiverse' state=present update_cache=yes
+    when: ansible_distribution == "Ubuntu"
+
+  - name: add the mongo debian repo
+    apt_repository: repo='deb http://repo.mongodb.org/apt/debian {{ansible_lsb.codename}}/mongodb-org/4.0 main' state=present update_cache=yes
+    when: ansible_distribution == "Debian"
+
+  - name: install packages in centos
+    yum:
+      name: "{{ packages }}"
+      state: present 
+    vars:
+      packages:
+      - libselinux-python
+    when: ansible_os_family == "RedHat"
+
+  - name: add centos repository
+    copy:
+      src: ../mongodb-org-4.0.repo
+      dest:  /etc/yum.repos.d/
+    when: ansible_os_family == "RedHat"
+
+  - name: install mongodb-org packages in centos
+    yum:
+      name: "{{ packages }}"
+      state: present 
+    vars:
+      packages:
+      - mongodb-org
+    when: ansible_os_family == "RedHat"
+
+  - name: install deb packages 
+    apt:
+      name: "{{ packages }}"
+      update_cache: yes
+    vars: 
+      packages:
+      - vim
+      - mongodb-org
+    when: ansible_os_family == "Debian"
+  
+  - name: start mongod with service
+    command: service mongod start
+
+  - name: check if process is running
+    command: /package-testing/check_running.sh mongodb running
+
+# - name: add a line to the config file
+#   command: echo "#test" >> /etc/mongod.conf
+
+  - name: include tasks for test env setup
+    include_tasks: ../tasks/test_prep.yml
+
+  - name: include tasks for enabling test repo
+    include_tasks: ../tasks/enable_psmdb_testing_repo.yml
+    when: lookup('env', 'install_repo') == "testing" or lookup('env', 'install_repo') == ""
+
+  - name: include tasks for enabling main repo
+    include_tasks: ../tasks/enable_psmdb_main_repo.yml
+    when: lookup('env', 'install_repo') == "main"
+
+  - name: include tasks for enabling experimental repo
+    include_tasks: ../tasks/enable_psmdb_experimental_repo.yml
+    when: lookup('env', 'install_repo') == "experimental"
+
+  - name: install Percona Server for MongoDB 4.0 new deb packages
+    apt:
+      name: "{{ packages }}"
+      update_cache: yes
+      state: latest
+    vars:
+      packages:
+      - percona-server-mongodb
+      - percona-server-mongodb-dbg
+    when: ansible_os_family == "Debian"
+
+  - name: install Percona Server for MongoDB 4.0 new rpm packages
+    yum:
+      name: "{{ packages }}"
+      state: latest
+    vars:
+      packages:
+      - percona-server-mongodb
+      - percona-server-mongodb-debuginfo
+    when: ansible_os_family == "RedHat"
+
+  - name: start mongod with service
+    command: service mongod start
+    when: ansible_os_family == "RedHat" and ansible_distribution_major_version == "6"
+
+  - name: start mongod with systemctl
+    command: systemctl start mongod
+    when: ansible_os_family == "RedHat" and ansible_distribution_major_version == "7"
+
+  - name: check that PSMDB 4.0 package versions are correct
+    command: /package-testing/package_check.sh psmdb40
+
+  - name: test SE change, import data, restart service
+    command: /package-testing/scripts/psmdb_test.sh 4.0
+
+  - name: set pass and enable auth
+    command: /package-testing/scripts/psmdb_set_auth.sh
+
+  - name: run bats tests for mongo init scripts
+    command: /usr/local/bin/bats /package-testing/bats/mongo-init-scripts.bats
+
+  - name: install numactl package on debian
+    apt:
+      name: "{{ packages }}"
+      update_cache: no
+      state: latest
+    vars:
+      packages:
+      - numactl
+    when: ansible_os_family == "Debian"
+
+  - name: install numactl package on centos
+    yum:
+      name: "{{ packages }}"
+      state: latest
+    vars:
+      packages:
+      - numactl
+    when: ansible_os_family == "RedHat"
+
+  - name: run bats tests for mongo init scripts after numactl install
+    command: /usr/local/bin/bats /package-testing/bats/mongo-init-scripts.bats
+
+  - name: start mongod service
+    service: name=mongod state=started
+
+  - name: remove Percona Server for MongoDB 4.0 deb packages
+    apt:
+      name: "{{ packages }}"
+      update_cache: no
+      state: absent
+    vars:
+      packages:
+      - percona-server-mongodb-server
+    when: ansible_os_family == "Debian"
+
+  - name: remove Percona Server for MongoDB 4.0 rpm packages
+    yum:
+      name: "{{ packages }}"
+      state: absent
+    vars:
+      packages:
+      - percona-server-mongodb-server
+    when: ansible_os_family == "RedHat"
+
+  - name: check if process is stopped after package removal
+    command: /package-testing/check_running.sh mongodb stopped

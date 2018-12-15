@@ -3,9 +3,9 @@
 
 playbook = "playbooks/clean.yml"
 deb_distro = "bento/debian-9"
-deb1_playbook = "playbooks/pxc56.yml"
-deb_common_playbook = "playbooks/pxc56_common.yml"
-deb_garbd_playbook = "playbooks/pxc56_garbd.yml"
+deb1_playbook = "playbooks/pxc57.yml"
+deb_common_playbook = "playbooks/pxc57_common.yml"
+deb_garbd_playbook = "playbooks/pxc57_garbd.yml"
 rhel_distro = "bento/centos-6"
 rhel1_playbook = "playbooks/percona1_pxc57.yml"
 rhel_playbook = "playbooks/percona2_pxc57.yml"
@@ -67,7 +67,6 @@ Vagrant.configure("2") do |config|
   config.vm.define :xenial do |xenial_config|
     xenial_config.vm.box = "bento/ubuntu-16.04"
 #   xenial_config.vm.box = "bento/ubuntu-16.04-i386"
-#   config.vm.provision "shell", path: "zesty.sh"
     config.vm.provision "ansible" do |ansible|
       ansible.playbook = playbook
       ansible.host_key_checking = "false"
@@ -78,17 +77,17 @@ Vagrant.configure("2") do |config|
     xenial_config.vm.host_name = "xenial"
   end
 
-# config.vm.define :cosmic do |cosmic_config|
-#   cosmic_config.vm.box = "bento/ubuntu-18.10"
-#   config.vm.provision "ansible" do |ansible|
-#     ansible.playbook = playbook
-#     ansible.host_key_checking = "false"
-#   end
-#   cosmic_config.vm.provider :virtualbox do |vb|
-#     vb.customize ["modifyvm", :id, "--memory", "2048", "--ioapic", "on" ]
-#   end
-#   cosmic_config.vm.host_name = "cosmic"
-# end
+  config.vm.define :cosmic do |cosmic_config|
+    cosmic_config.vm.box = "ubuntu-18.10"
+    config.vm.provision "ansible" do |ansible|
+      ansible.playbook = playbook
+      ansible.host_key_checking = "false"
+    end
+    cosmic_config.vm.provider :virtualbox do |vb|
+      vb.customize ["modifyvm", :id, "--memory", "2048", "--ioapic", "on" ]
+    end
+    cosmic_config.vm.host_name = "cosmic"
+  end
 
   config.vm.define :bionic do |bionic_config|
 #   bionic_config.vm.box = "ubuntu/bionic64"
