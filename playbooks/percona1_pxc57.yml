@@ -11,9 +11,12 @@
     when: ansible_os_family == "RedHat" and ansible_distribution_major_version == "6"
 
   - name: install stuff
-    yum: name={{item}} state=present
-    with_items:
-    - libselinux-python
+    yum: 
+      name: "{{ packages }}"
+      state: present 
+    vars:
+      packages:
+      - libselinux-python
 
   - name: disable selinux
     selinux: state=disabled
@@ -37,13 +40,17 @@
     when: ansible_os_family == "RedHat" and ansible_distribution_major_version == "6"
 
   - name: install PXC
-    yum: name={{item}} state=present #enablerepo=percona-testing-x86_64
-    with_items:
-#   - Percona-XtraDB-Cluster-full-57-5.7.22-29.26.1.el{{ansible_distribution_major_version}}.x86_64
-    - Percona-XtraDB-Cluster-full-57.x86_64 
-    - pv 
-    - MySQL-python 
-    - sysbench
+    yum: 
+      name: "{{ packages }}"
+      state: present 
+      enablerepo: percona-testing-x86_64
+    vars:
+      packages:
+  #   - Percona-XtraDB-Cluster-full-57-5.7.22-29.26.1.el{{ansible_distribution_major_version}}.x86_64
+      - Percona-XtraDB-Cluster-full-57.x86_64 
+      - pv 
+      - MySQL-python 
+      - sysbench
  
   - name: copy pxc config
     template: src=../templates/my_rpm.j2 dest=/etc/my.cnf
@@ -80,5 +87,5 @@
   - name: install plugins
     command: /vagrant/pxc_plugins_57.sh
 
-  - name: check PXC-5.7 version
-    command: /vagrant/version_check.sh pxc57
+# - name: check PXC-5.7 version
+#   command: /vagrant/version_check.sh pxc57

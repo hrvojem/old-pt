@@ -54,11 +54,13 @@
   - name: install plugins
     command: /vagrant/pxc_plugins_57.sh 
 
-  - name: check PXC-5.7 version
-    command: /vagrant/version_check.sh pxc57
+# - name: check PXC-5.7 version
+#   command: /vagrant/version_check.sh pxc57
 
   - name: install 3rd party packages
-    apt: name={{item}} 
-    with_items:
-    - cacti
-    - rsyslog-mysql
+    apt:
+      name: "{{ packages }}"
+    vars:
+      packages:
+#     - cacti
+      - rsyslog-mysql

@@ -15,12 +15,16 @@
 #   apt_repository: repo='deb http://repo.percona.com/apt {{ansible_lsb.codename}} main testing' state=present
   # Add an Apt signing key, will not download if present
   - name: install garbd
-    apt: name={{ item }} update_cache=yes
-    with_items: 
-    - vim
-    - pv
-    - python-mysqldb
-    - percona-xtradb-cluster-garbd-5.7
+    apt:
+      name: "{{ packages }}"
+      update_cache: yes 
+    vars: 
+      packages:
+      - vim
+      - pv
+      - python-mysqldb
+      - percona-xtradb-cluster-garbd-5.7
+
   - name: configure garbd
     template: src=../templates/garbd.j2 
               dest=/etc/default/garbd
