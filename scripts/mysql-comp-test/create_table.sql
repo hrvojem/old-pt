@@ -1,7 +1,5 @@
 USE comp_test;
 
-set session tokudb_row_format =' @@ROW_FORMAT_OPT@@ ';
-
 CREATE TABLE t1_@@SE_COMP@@ (
 	a1 INT,
 	a2 DECIMAL(65,10),

@@ -43,7 +43,7 @@
     yum: 
       name: "{{ packages }}"
       state: present 
-      enablerepo: percona-testing-x86_64
+#     enablerepo: percona-testing-x86_64
     vars:
       packages:
   #   - Percona-XtraDB-Cluster-full-57-5.7.22-29.26.1.el{{ansible_distribution_major_version}}.x86_64

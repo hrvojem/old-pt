@@ -30,8 +30,8 @@
     yum: name=https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm state=present
     when: ansible_os_family == "RedHat" and ansible_distribution_major_version == "7"
   - name: add the yum percona repos
-    yum: name=https://repo.percona.com/yum/percona-release-latest.noarch.rpm
-#    yum: name=https://repo.percona.com/yum/percona-release-0.1-10.noarch.rpm
+#    yum: name=https://repo.percona.com/yum/percona-release-latest.noarch.rpm
+    yum: name=https://repo.percona.com/yum/percona-release-0.1-10.noarch.rpm
     when: ansible_os_family == "RedHat" and ansible_distribution_major_version|int >= 6
   - name: install packages in centos
     yum: 

@@ -9,6 +9,7 @@ if [ ! -f ${ERROR_LOG} ]; then
   exit 1
 fi
 
+echo "1"
 WARNINGS_BEFORE=$(grep -c "\[Warning\]" ${ERROR_LOG} || true)
 ERRORS_BEFORE=$(grep -c "\[ERROR\]" ${ERROR_LOG} || true)
 

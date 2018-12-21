@@ -2,14 +2,14 @@
 # vi: set ft=ruby :
 
 playbook = "playbooks/common_57.yml"
-deb_distro = "bento/ubuntu-14.04"
-deb1_playbook = "playbooks/pxc57.yml"
-deb_common_playbook = "playbooks/pxc57_common.yml"
-deb_garbd_playbook = "playbooks/pxc57_garbd.yml"
-rhel_distro = "bento/centos-7"
+deb_distro = "bento/debian-8"
+deb1_playbook = "playbooks/pxc56.yml"
+deb_common_playbook = "playbooks/pxc56_common.yml"
+deb_garbd_playbook = "playbooks/pxc56_garbd.yml"
+rhel_distro = "bento/centos-6"
 rhel1_playbook = "playbooks/percona1_pxc57.yml"
-rhel_playbook = "playbooks/percona2_pxc57.yml"
-rhel_garbd_playbook = "playbooks/percona4_pxc57.yml"
+rhel_playbook = "playbooks/percona2_pxc56.yml"
+rhel_garbd_playbook = "playbooks/percona4_pxc56.yml"
 
 Vagrant.configure("2") do |config|
   # All Vagrant configuration is done here. The most pxb configuration
@@ -75,10 +75,12 @@ Vagrant.configure("2") do |config|
       vb.customize ["modifyvm", :id, "--memory", "2048", "--ioapic", "on" ]
     end
     xenial_config.vm.host_name = "xenial"
+    xenial_config.vm.network :private_network, ip: "192.168.70.31"
   end
 
   config.vm.define :cosmic do |cosmic_config|
-    cosmic_config.vm.box = "ubuntu-18.10"
+    cosmic_config.vm.box = "bento/ubuntu-18.10"
+    config.vm.provision "shell", path: "zesty.sh"
     config.vm.provision "ansible" do |ansible|
       ansible.playbook = playbook
       ansible.host_key_checking = "false"
@@ -101,6 +103,7 @@ Vagrant.configure("2") do |config|
       vb.customize ["modifyvm", :id, "--memory", "2048", "--ioapic", "on" ]
     end
     bionic_config.vm.host_name = "bionic"
+    bionic_config.vm.network :private_network, ip: "192.168.70.32"
   end
 
 

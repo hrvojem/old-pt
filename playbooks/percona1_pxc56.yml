@@ -7,54 +7,81 @@
 
   tasks:
   - debug: var=ansible_all_ipv4_addresses
+
   - set_fact:
       man_ip: "{{ item }}"
     with_items: "{{ ansible_all_ipv4_addresses }}"
     when: "item.startswith('192.168')"
+
   - debug: var=man_ip
+
   - name: remove mysql-libs
-    yum: name=mysql-libs state=absent
-  - name: install stuff
-    yum: name={{item}} state=present
-    with_items:
-    - libselinux-python
-# - selinux: state=disabled
+    yum:
+      name: mysql-libs
+      state: absent
+
   - name: add firewall rules
     command: /sbin/iptables -I INPUT -s {{item}} -p tcp -j ACCEPT
     with_items:
     - 192.168.70.73
     - 192.168.70.72
     - 192.168.70.71
+
   - name: add the percona repo
     yum: name=http://www.percona.com/downloads/percona-release/redhat/0.1-6/percona-release-0.1-6.noarch.rpm
     when: ansible_os_family == "RedHat" and ansible_distribution_major_version|int >= 6
+
   - name: add the epel repo for centos7 
     yum: name=https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm state=present
     when: ansible_os_family == "RedHat" and ansible_distribution_major_version == "7"
+
   - name: add the epel repo for centos6
     yum: name=https://dl.fedoraproject.org/pub/epel/epel-release-latest-6.noarch.rpm state=present
     when: ansible_os_family == "RedHat" and ansible_distribution_major_version == "6"
+
   - name: install pv
-    yum: name=pv  state=present
-    yum: name=Percona-XtraDB-Cluster-full-56.x86_64 state=present #enablerepo=percona-testing-x86_64 
+    yum:
+      name: "{{ packages }}"
+      state: present
+     #enablerepo: percona-testing-x86_64 
+    vars:
+      packages:
+      - pv
+      - Percona-XtraDB-Cluster-full-56.x86_64
+      - libselinux-python
+
   - name: install MySQL-python and sysbench
-    yum: name={{item}} state=present
-    with_items: 
-    - MySQL-python 
-    - sysbench
+    yum:
+      name: "{{ packages }}"
+      state: present
+    vars: 
+      packages:
+      - MySQL-python 
+      - sysbench
+      - sysbench-tpcc
+
   - name: copy pxc config
     template: src=../templates/my_rpm.j2 dest=/etc/my.cnf
     when: ansible_os_family == "RedHat" and ansible_distribution_major_version|int <= 6
+
   - name: copy pxc config
     template: src=../templates/my_rpm_7.j2 dest=/etc/my.cnf
     when: ansible_os_family == "RedHat" and ansible_distribution_major_version == "7"
+
   - command: service mysql bootstrap-pxc
     when: ansible_os_family == "RedHat" and ansible_distribution_major_version == "6"
+
   - command: systemctl start mysql@bootstrap.service
     when: ansible_os_family == "RedHat" and ansible_distribution_major_version == "7"
+
   - name: create the backup user
     mysql_user: name=sstuser password=s3cretPass priv="*.*:PROCESS,RELOAD,LOCK TABLES,REPLICATION CLIENT" state=present
+
   - name: install plugins
     command: /vagrant/plugins_test_pxc_56.sh
-  - name: run sysbench
-    command: /vagrant/sb.sh
+
+  - name: run sysbench tpcc prepare script
+    command: /usr/share/sysbench/tpcc.lua --mysql-user=root --mysql-db=sbt --time=30 --threads=64 --report-interval=1 --tables=3 --scale=5 --db-driver=mysql prepare
+
+  - name: run sysbench tpcc benchmark
+    command: /usr/share/sysbench/tpcc.lua --mysql-user=root --mysql-db=sbt --time=30 --threads=64 --report-interval=1 --tables=3 --scale=5 --db-driver=mysql run

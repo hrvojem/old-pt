@@ -8,6 +8,7 @@
   tasks:
   - name: remove mysql-libs
     yum: name=mysql-libs state=absent
+
   - name: install {{item}}
     yum: name={{item}} state=present
     with_items:
