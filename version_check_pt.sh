@@ -66,7 +66,7 @@ function xbt_test {
        exit 1
     else
        echo "${i} version is correct and ${version}" >> ${log}
-    fi 
+    fi
   done
 }
 
@@ -118,7 +118,7 @@ elif [ ${product} = "pxc56" -o ${product} = "pxc57" ]; then
   fi
 
 elif [ ${product} = "pt" ]; then
-  for i in `cat /vagrant/pt`; do
+  for i in `cat /package-testing/pt`; do
     version_check=$(${i} --version|grep -c ${version})
     if [ ${version_check} -eq 0 ]; then
       echo "${i} version is not good!"

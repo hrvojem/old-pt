@@ -106,6 +106,7 @@
       - percona-xtrabackup-80
       - percona-xtrabackup-test-80
       - percona-xtrabackup-dbg-80
+      - percona-toolkit
     when: ansible_os_family == "Debian"
 
   - name: install PXB 8 rpm packages
@@ -117,10 +118,14 @@
       - percona-xtrabackup-80
       - percona-xtrabackup-test-80
       - percona-xtrabackup-80-debuginfo
+      - percona-toolkit
     when: ansible_os_family == "RedHat"
 
   - name: PXB version check
     command: /vagrant/version_check.sh pxb80
+
+  - name: PT version check
+    command: /vagrant/version_check.sh pt
 
   - name: import databases
     command: /vagrant/upstream_db.sh

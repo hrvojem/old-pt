@@ -26,17 +26,24 @@
     when: lookup('env', 'install_repo') == "experimental"
 
   - name: install Percona Server for MongoDB 3.6 new deb packages
-    apt: name={{item}} update_cache=yes state=latest
-    with_items:
-    - percona-server-mongodb-36
-    - percona-server-mongodb-36-dbg
+    apt:
+      name: "{{ packages }}"
+      update_cache: yes
+      state: latest
+    vars:
+      packages:
+      - percona-server-mongodb-36
+      - percona-server-mongodb-36-dbg
     when: ansible_os_family == "Debian"
 
   - name: install Percona Server for MongoDB 3.6 new rpm packages
-    yum: name={{item}} state=latest
-    with_items:
-    - Percona-Server-MongoDB-36
-    - Percona-Server-MongoDB-36-debuginfo
+    yum:
+      name: "{{ packages }}"
+      state: latest 
+    vars:
+      packages:
+      - Percona-Server-MongoDB-36
+      - Percona-Server-MongoDB-36-debuginfo
     when: ansible_os_family == "RedHat"
 
   - name: start mongod with service
@@ -77,16 +84,33 @@
   - name: start mongod service
     service: name=mongod state=started
 
+  - name: Install percona backup for mongo
+    apt:
+      deb: https://github.com/percona/percona-backup-mongodb/releases/download/v0.2.0/percona-backup-mongodb_0.2.0_linux_amd64.deb
+    when: ansible_os_family == "Debian"
+
+  - name: add the Percona testing yum repos for centos 6 and 7
+    yum:
+      name: https://github.com/percona/percona-backup-mongodb/releases/download/v0.2.0/percona-backup-mongodb_0.2.0_linux_amd64.rpm 
+    when: ansible_os_family == "RedHat"
+
   - name: remove Percona Server for MongoDB 3.6 deb packages
-    apt: name={{item}} update_cache=no state=absent
-    with_items:
-    - percona-server-mongodb-36-server
+    apt:
+      name: "{{ packages }}"
+      update_cache: no
+      state: absent
+    vars:
+      packages:
+      - percona-server-mongodb-36-server
     when: ansible_os_family == "Debian"
 
   - name: remove Percona Server for MongoDB 3.6 rpm packages
-    yum: name={{item}} state=absent
-    with_items:
-    - Percona-Server-MongoDB-36-server
+    yum:
+      name: "{{ packages }}"
+      state: absent
+    vars:
+      packages:
+      - Percona-Server-MongoDB-36-server
     when: ansible_os_family == "RedHat"
 
   - name: check if process is stopped after package removal

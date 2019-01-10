@@ -8,4 +8,4 @@
     when: ansible_os_family == "RedHat" 
 
   - name: enable the PS-80 testing repo
-    command: percona-release enable-only tools
+    command: percona-release enable-only tools 
