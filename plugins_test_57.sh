@@ -29,15 +29,15 @@ mysql -e "INSTALL PLUGIN QUERY_RESPONSE_TIME_WRITE SONAME 'query_response_time.s
 mysql -e "INSTALL PLUGIN mysqlx SONAME 'mysqlx.so';"
 mysql -e "SHOW PLUGINS;"
 mysql -e "CREATE DATABASE world;"
-sed -i '18,21 s/^/-- /' /package-testing/world.sql
+sed -i '18,21 s/^/-- /' /vagrant/world_innodb.sql
 pv /package-testing/world.sql | mysql -D world
 if [ ! -z "$1" ]; then
   if [ "$1" = "ps" ]; then
     mysql -e "CREATE DATABASE world2;"
     mysql -e "CREATE DATABASE world3;"
-    pv /package-testing/world.sql | mysql -D world2
-    pv /package-testing/world.sql | mysql -D world3
-    mysql < /package-testing/tokudb_compression.sql
+    pv /vagrant/world_innodb.sql | mysql -D world2
+    pv /vagrant/world_innodb.sql | mysql -D world3
+    mysql < /vagrant/tokudb_compression.sql
   fi
 fi
 

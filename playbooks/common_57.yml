@@ -8,11 +8,11 @@
   tasks:
   - name: Install percona repository package
     apt:
-      deb: https://repo.percona.com/apt/percona-release_0.1-10.{{ansible_lsb.codename}}_all.deb
+      deb: https://repo.percona.com/apt/percona-release_latest.generic_all.deb
     when: ansible_os_family == "Debian"
 
   - name: add the yum percona repos 
-    yum: name=https://repo.percona.com/yum/percona-release-0.1-10.noarch.rpm
+    yum: name=https://repo.percona.com/yum/percona-release-latest.noarch.rpm
     when: ansible_os_family == "RedHat" 
 
   - name: epel 6 repo
@@ -24,7 +24,8 @@
     when: ansible_os_family == "RedHat" and ansible_distribution_major_version == "7"
 
   - name: enable testing repo
-    command: percona-release enable original testing
+    command: percona-release setup ps57
+#   command: percona-release enable original testing
 
   # Enable SELinux on CentOS
 # - selinux:
@@ -126,7 +127,7 @@
     command: /usr/bin/ps-admin --enable-tokubackup
 
   - name: keyring plugins test
-    command: /vagrant/ps_keyring_plugins_test/ps_keyring_plugins_test.sh
+    command: /vagrant/ps_keyring_plugins_test/ps_keyring_plugins_test.sh ps57
 
 # - name: install GR plugin
 #   command: /vagrant/gr.sh
