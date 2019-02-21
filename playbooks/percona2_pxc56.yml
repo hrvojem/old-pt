@@ -10,43 +10,56 @@
     yum: name=mysql-libs state=absent
 
   - name: install {{item}}
-    yum: name={{item}} state=present
-    with_items:
-    - libselinux-python
+    yum:
+      name: "{{ packages }}"
+      state: present
+    vars:
+      packages:
+      - libselinux-python
     #- vim
 # - selinux: state=disabled
+
   - name: add firewall rules
     command: /sbin/iptables -I INPUT -s {{item}} -p tcp -j ACCEPT
     with_items:
     - 192.168.70.73
     - 192.168.70.72
     - 192.168.70.71
+
   - name: add the percona repo
-    yum: name=http://www.percona.com/downloads/percona-release/redhat/0.1-6/percona-release-0.1-6.noarch.rpm
-    when: ansible_os_family == "RedHat" and ansible_distribution_major_version|int >= 6
+    yum: name=https://repo.percona.com/yum/percona-release-latest.noarch.rpm
+    when: ansible_os_family == "RedHat"
+
   - name: add the epel repo for centos7 
     yum: name=https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm state=present 
     when: ansible_os_family == "RedHat" and ansible_distribution_major_version == "7"
+
   - name: add the epel repo for centos6
     yum: name=https://dl.fedoraproject.org/pub/epel/epel-release-latest-6.noarch.rpm state=present 
     when: ansible_os_family == "RedHat" and ansible_distribution_major_version == "6"
+
+  - name: enable testing repos
+    command: percona-release enable original testing
+
   - name: install PXC
-    yum: name={{item}} state=present enablerepo=percona-testing-x86_64
-    with_items:
-    - Percona-XtraDB-Cluster-56.x86_64
+    yum: 
+      name: "{{ packages }}"
+      state: present
+    vars:
+      packages:
+      - Percona-XtraDB-Cluster-56.x86_64
+
   - name: copy pxc config
     template: src=../templates/my_rpm.j2 dest=/etc/my.cnf
     when: ansible_os_family == "RedHat" and ansible_distribution_major_version == "6"
-  - name: copy pxc config
-    template: src=../templates/my_rpm.j2 dest=/etc/my.cnf
-    when: ansible_os_family == "RedHat" and ansible_distribution_major_version == "5"
+
   - name: copy pxc config
     template: src=../templates/my_rpm_7.j2 dest=/etc/my.cnf
     when: ansible_os_family == "RedHat" and ansible_distribution_major_version == "7"
-  - command: /etc/init.d/mysql start
-    when: ansible_os_family == "RedHat" and ansible_distribution_major_version == "5"
+
   - command: service mysql start
     when: ansible_os_family == "RedHat" and ansible_distribution_major_version == "6"
+
   - command: systemctl start mysql
     when: ansible_os_family == "RedHat" and ansible_distribution_major_version == "7"
 

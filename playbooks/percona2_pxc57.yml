@@ -9,11 +9,15 @@
   - name: remove mysql-libs
     yum: name=mysql-libs state=absent
     when: ansible_os_family == "RedHat" and ansible_distribution_major_version == "6"
-  - name: install {{item}}
-    yum: name={{item}} state=present
-    with_items:
-    - libselinux-python
-    - unzip
+
+  - name: install packages
+    yum:
+      name: "{{ packages }}"
+      state: present 
+    vars:
+      packages:
+      - libselinux-python
+      - unzip
 
   - selinux: state=disabled
 
@@ -25,7 +29,7 @@
     - 192.168.70.71
 
   - name: add the percona repo
-    yum: name=http://www.percona.com/downloads/percona-release/redhat/0.1-6/percona-release-0.1-6.noarch.rpm
+    yum: name=https://repo.percona.com/yum/percona-release-latest.noarch.rpm
 
   - name: add the epel repo for centos7 
     yum: name=https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm state=present
@@ -35,11 +39,13 @@
     yum: name=https://dl.fedoraproject.org/pub/epel/epel-release-latest-6.noarch.rpm state=present
     when: ansible_os_family == "RedHat" and ansible_distribution_major_version == "6"
 
+  - name: enable testing repo
+    command: percona-release enable original testing
+
   - name: install PXC
     yum: 
       name: "{{ packages }}"
       state: present
-      enablerepo: percona-testing-x86_64
     vars:
       packages:
       - Percona-XtraDB-Cluster-57.x86_64

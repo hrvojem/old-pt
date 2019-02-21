@@ -1,1 +1,2 @@
-yum upgrade -y --enablerepo=percona-testing-x86_64
+percona-release enable original testing
+yum upgrade -y 

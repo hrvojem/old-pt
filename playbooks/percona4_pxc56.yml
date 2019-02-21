@@ -9,32 +9,47 @@
   - name: remove mysql-libs
     yum: name=mysql-libs state=absent
     when: ansible_os_family == "RedHat" and ansible_distribution_major_version == "6"
+
   - name: install stuff
     yum: name={{item}} state=present
     with_items:
     - libselinux-python
+
   - selinux: state=disabled
+
   - name: add firewall rules
     command: /sbin/iptables -I INPUT -s {{item}} -p tcp -j ACCEPT
     with_items:
     - 192.168.70.73
     - 192.168.70.72
     - 192.168.70.71
+
   - name: add the percona repo
-    yum: name=http://www.percona.com/downloads/percona-release/redhat/0.1-6/percona-release-0.1-6.noarch.rpm
+    yum: name=https://repo.percona.com/yum/percona-release-latest.noarch.rpm
+
   - name: add the epel repo for centos7
     yum: name=https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm state=present
     when: ansible_os_family == "RedHat" and ansible_distribution_major_version == "7"
+
   - name: add the epel repo for centos6
     yum: name=https://dl.fedoraproject.org/pub/epel/epel-release-latest-6.noarch.rpm state=present
     when: ansible_os_family == "RedHat" and ansible_distribution_major_version == "6"
+
+  - name: enable testing repo
+    command: percona-release enable original testing
+
   - name: install PXC
-    yum: name={{item}} state=present enablerepo=percona-testing-x86_64
-    with_items:
-    - Percona-XtraDB-Cluster-garbd-3
+    yum:
+      name: "{{ packages }}"
+      state: present 
+    vars:
+      packages:
+      - Percona-XtraDB-Cluster-garbd-3
+
   - name: configure garbd
     template: src=../templates/garbd_rpm.j2
               dest=/etc/sysconfig/garb
               mode=0640 owner=root group=root
-  # start mysql service
-  - command: service garb start
+
+  - name: start mysql service
+    command: service garb start
