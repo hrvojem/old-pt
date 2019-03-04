@@ -1,39 +1,23 @@
 ---
 # This playbook sets up the percona repo
 
+- import_playbook: test_prep.yml
+
 - hosts: all
   become: true
   become_method: sudo
 
   tasks:
+
 # - name: Install percona repository package
 #   apt:
-#     deb: https://repo.percona.com/apt/percona-release_0.1-6.{{ansible_lsb.codename}}_all.deb
+#     deb: https://repo.percona.com/apt/percona-release_latest.generic_all.deb
 #   when: ansible_os_family == "Debian"
 
   - name: Install MySQL apt repository package
     apt:
       deb: https://dev.mysql.com/get/mysql-apt-config_0.8.12-1_all.deb
     when: ansible_os_family == "Debian"
-
-  - name: replace the default 8.0 repo with 5.7
-    replace:
-      path: /etc/apt/sources.list.d/mysql.list
-      regex: '^mysql-8.0$'
-      replace: 'mysql-5.7'
-      backup: yes
-
-# - name: add the ubuntu repo
-#   apt_repository: repo='deb http://repo.mysql.com/apt/ubuntu/ {{ansible_lsb.codename}} mysql-8.0' state=present update_cache=yes
-#   when: ansible_distribution == 'Ubuntu'
-
-# - name: add the tools repo
-#   apt_repository: repo='deb http://repo.mysql.com/apt/ubuntu/ {{ansible_lsb.codename}} mysql-tools' state=present update_cache=yes
-#   when: ansible_distribution == 'Ubuntu'
-
-# - name: add the yum percona repos 
-#   yum: name=http://www.percona.com/downloads/percona-release/redhat/0.1-6/percona-release-0.1-6.noarch.rpm
-#   when: ansible_os_family == "RedHat" 
 
   - name: Install MySQL RHEL 6 yum repository package 
     yum: name=https://dev.mysql.com/get/mysql80-community-release-el6-1.noarch.rpm state=present
@@ -50,12 +34,6 @@
   - name: epel 7 repo
     yum: name=https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm state=present
     when: ansible_os_family == "RedHat" and ansible_distribution_major_version == "7"
-
-  # Enable SELinux on CentOS
-# - selinux:
-#     policy: targeted
-#     state: enforcing
-#   when: ansible_os_family == "RedHat"
 
   - name: install deb packages 
     apt:
@@ -131,11 +109,14 @@
   - name: PXB version check
     command: /vagrant/version_check.sh pxb80
 
-  - name: PT version check
-    command: /vagrant/version_check.sh pt
+# - name: PT version check
+#   command: /vagrant/version_check.sh pt
 
   - name: import databases
     command: /vagrant/upstream_db.sh
 
   - name: run backup
     command: /usr/bin/xtrabackup --backup --user=root --target-dir=/tmp/backups/
+
+  - name: run backup
+    command: /usr/bin/xtrabackup --prepare --user=root --target-dir=/tmp/backups/

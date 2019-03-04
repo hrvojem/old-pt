@@ -1,6 +1,8 @@
 ---
 # This playbook sets up the pxc
 
+- import_playbook: test_prep.yml
+
 - hosts: all
   become: true
   become_method: sudo
@@ -16,11 +18,11 @@
  
   - name: Install percona repository package
     apt:
-      deb: https://repo.percona.com/apt/percona-release_0.1-6.{{ansible_lsb.codename}}_all.deb
+      deb: https://repo.percona.com/apt/percona-release_latest.generic_all.deb
     when: ansible_os_family == "Debian" 
 
   - name: add the testing repo
-    apt_repository: repo='deb http://repo.percona.com/apt {{ansible_lsb.codename}} main testing' state=present
+    command: percona-release enable original testing
 
   - name: install galera, vim, pv, python-mysqldb, pxc-56
     apt: 

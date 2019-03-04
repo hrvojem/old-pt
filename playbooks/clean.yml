@@ -9,13 +9,8 @@
   tasks:
   - name: Install percona repository package
     apt:
-      deb: https://repo.percona.com/apt/percona-release_0.1-6.{{ansible_lsb.codename}}_all.deb
- #     deb: https://repo.percona.com/apt/percona-release_latest.{{ansible_lsb.codename}}_all.deb
+      deb: https://repo.percona.com/apt/percona-release_latest.generic_all.deb
     when: ansible_os_family == "Debian"
-
-# - name: add the deb repo
-#   apt_repository: repo='deb http://repo.percona.com/apt {{ansible_lsb.codename}} main experimental' state=present update_cache=yes
-#   when: ansible_os_family == "Debian"
 
   - name: install deb packages 
     apt: 
@@ -35,9 +30,8 @@
     when: ansible_os_family == "RedHat" and ansible_distribution_major_version == "7"
 
   - name: add the yum percona repos
-#    yum: name=https://repo.percona.com/yum/percona-release-latest.noarch.rpm
-    yum: name=http://www.percona.com/downloads/percona-release/redhat/0.1-6/percona-release-0.1-6.noarch.rpm
-    when: ansible_os_family == "RedHat" and ansible_distribution_major_version|int >= 6
+    yum: name=https://repo.percona.com/yum/percona-release-latest.noarch.rpm
+    when: ansible_os_family == "RedHat"
 
   - name: install packages in centos
     yum: 

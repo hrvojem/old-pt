@@ -15,6 +15,7 @@ mysql -e "INSTALL PLUGIN mysqlx SONAME 'mysqlx.so';"
 mysql -e "INSTALL PLUGIN keyring_vault SONAME 'keyring_vault.so';"
 mysql -e "SHOW PLUGINS;"
 mysql -e "CREATE DATABASE world;"
+mysql -e "CREATE DATABASE sbt;"
 mysql -e "CREATE DATABASE world2;"
 pv /vagrant/world_innodb.sql | mysql -D world
 pv /vagrant/world_innodb.sql | mysql -D world2

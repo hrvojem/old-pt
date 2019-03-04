@@ -30,6 +30,8 @@ if [ $(grep -c "\[mysqld\]" ${MYCNF}) -eq 0 ]; then
 fi
 sed -i '/\[mysqld\]/a early_plugin_load=keyring_file.so' ${MYCNF}
 sed -i '/\[mysqld\]/a encrypt_binlog=ON' ${MYCNF}
+sed -i '/\[mysqld\]/a log-bin=binlog' ${MYCNF}
+sed -i '/\[mysqld\]/a server-id=12' ${MYCNF}
 sed -i '/\[mysqld\]/a master_verify_checksum=ON' ${MYCNF}
 sed -i '/\[mysqld\]/a binlog_checksum=CRC32' ${MYCNF}
 service mysql start

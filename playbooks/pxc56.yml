@@ -1,6 +1,8 @@
 ---
 # This playbook sets up the first PXC node from percona repo
 
+- import_playbook: test_prep.yml
+
 - hosts: all
   name: install and set up the first PXC node from the main percona repo
   become: true
@@ -18,12 +20,10 @@
 
   - name: Install percona repository package
     apt:
-      deb: https://repo.percona.com/apt/percona-release_0.1-6.{{ansible_lsb.codename}}_all.deb
+      deb: https://repo.percona.com/apt/percona-release_latest.generic_all.deb
 
-# - name: add the percona repo
-#   apt_repository:
-#     repo: 'deb http://repo.percona.com/apt {{ansible_lsb.codename}} main testing'
-#     state: present
+  - name: enable testing repo
+    command: percona-release enable original testing
 
   - name: install vim, pv, python-mysqldb, and PXC-5.6
     apt: 

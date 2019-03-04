@@ -29,7 +29,6 @@
 
   - name: add the percona repo
     yum: name=https://repo.percona.com/yum/percona-release-latest.noarch.rpm
-#   yum: name=http://www.percona.com/downloads/percona-release/redhat/0.1-6/percona-release-0.1-6.noarch.rpm
     when: ansible_os_family == "RedHat"
 
   - name: add the epel repo for centos7 
@@ -44,7 +43,6 @@
     yum:
       name: "{{ packages }}"
       state: present
-     #enablerepo: percona-testing-x86_64 
     vars:
       packages:
       - pv
@@ -86,3 +84,6 @@
 
   - name: run sysbench tpcc benchmark
     command: /usr/share/sysbench/tpcc.lua --mysql-user=root --mysql-db=sbt --time=30 --threads=64 --report-interval=1 --tables=3 --scale=5 --db-driver=mysql run
+
+  - name: version check
+    command: /vagrant/version_check.sh pxc56
