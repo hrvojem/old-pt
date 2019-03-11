@@ -1,0 +1,14 @@
+[mysqld]
+# Encryption
+server-id               =201
+#log_bin                =ON
+log_bin                 =/var/lib/mysql/binlog
+#log_bin_basename       =/var/lib/mysql/binlog #PS 8.0
+log_bin_index           =/var/lib/mysql/binlog.index
+binlog_format           =ROW            #change
+
+#relay_log              =rl-bin    ##PS 8.0
+relay_log               =/var/lib/mysql/rl-bin
+#relay_log_basename     =/var/lib/mysql/rl-bin ##PS 8.0
+relay_log_index         =/var/lib/mysql/rl-bin-index
+relay_log_info_repository       = FILE   #change

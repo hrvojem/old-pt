@@ -1,0 +1,5 @@
+[mysqld]
+encrypt_binlog=ON
+early_plugin_load=keyring_file.so
+master_verify_checksum=ON
+binlog_checksum=CRC32
