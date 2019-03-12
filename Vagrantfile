@@ -1,7 +1,7 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-playbook = "playbooks/ps_80_pt.yml"
+playbook = "playbooks/ps_80_upgrade.yml"
 deb_distro = "bento/debian-8"
 deb1_playbook = "playbooks/pxc57.yml"
 deb_common_playbook = "playbooks/pxc57_common.yml"
@@ -125,6 +125,16 @@ Vagrant.configure("2") do |config|
     end
     centos7_config.vm.host_name = "centos7"
   end
+
+  config.vm.define :rhel8 do |rhel8_config|
+    rhel8_config.vm.box = "generic/rhel8"
+    config.vm.provision "ansible" do |ansible|
+      ansible.playbook = playbook
+      ansible.host_key_checking = "false"
+    end
+    rhel8_config.vm.host_name = "rhel8"
+  end
+
 
   config.vm.define :pxc1 do |pxc1_config|
     config.vm.provision "ansible" do |ansible|
