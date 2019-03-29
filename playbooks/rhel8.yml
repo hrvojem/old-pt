@@ -1,0 +1,50 @@
+---
+# This playbook sets up the stuff for RHEL8
+
+- hosts: all
+  name: Prepare a clean machine with percona (and EPEL) repo(s) installed
+  become: true
+  become_method: sudo
+
+  tasks:
+  - name: epel 6 repo
+    yum: name=https://dl.fedoraproject.org/pub/epel/epel-release-latest-6.noarch.rpm state=present
+    when: ansible_os_family == "RedHat" and ansible_distribution_major_version == "6"
+
+  - name: epel 7 repo
+    yum: name=https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm state=present
+    when: ansible_os_family == "RedHat" and ansible_distribution_major_version == "7"
+
+  - name: add the yum percona repos
+    yum: name=https://repo.percona.com/yum/percona-release-latest.noarch.rpm
+    when: ansible_os_family == "RedHat"
+
+  - name: install needed packages for running tests with yum
+    yum:
+      name: "{{ packages }}"
+      state: latest
+    vars:
+      packages:
+      - unzip
+      - wget
+    when: ansible_os_family == "RedHat"
+
+  - name: download package-testing repo with wget
+    command: "{{ item }}"
+    with_items:
+    - rm -rf /package-testing
+    - rm -f master.zip
+    - wget --no-check-certificate -O master.zip https://github.com/Percona-QA/package-testing/archive/master.zip
+    - unzip master.zip
+    - rm -f master.zip
+    - mv package-testing-master /package-testing
+
+  - name: install latest bats from github
+    command: "{{ item }}"
+    with_items:
+    - rm -f master.zip
+    - wget --no-check-certificate -O master.zip https://github.com/sstephenson/bats/archive/master.zip
+    - unzip master.zip
+    - rm -f master.zip
+    - bats-master/install.sh /usr/local
+    - rm -rf bats-master

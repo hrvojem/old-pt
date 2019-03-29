@@ -25,32 +25,36 @@
 
   - name: include tasks for enabling PS 8 test repo
     include: ../tasks/enable_ps8_testing_repo.yml
-    when: lookup('env', 'install_repo') == "testing" or lookup('env', 'install_repo') == ""
+    when: lookup('env', 'install_repo') == "testing" #or lookup('env', 'install_repo') == ""
 
   - name: include tasks for enabling test repo
     include: ../tasks/enable_testing_repo.yml
-    when: lookup('env', 'install_repo') == "testing" or lookup('env', 'install_repo') == ""
+    when: lookup('env', 'install_repo') == "testing" #or lookup('env', 'install_repo') == ""
 
   - name: include tasks for enabling PS 8 experimental repo
     include: ../tasks/enable_ps8_experimental_repo.yml
-    when: lookup('env', 'install_repo') == "experimental"
+    when: lookup('env', 'install_repo') == "experimental" or lookup('env', 'install_repo') == ""
+
+# - name: include tasks for enabling tools experimental repo
+#   include: ../tasks/enable_tools_experimental_repo.yml
+#   when: lookup('env', 'install_repo') == "experimental"
 
   - name: download and extract world database
     command: "{{ item }}"
     with_items:
     - wget --no-check-certificate -P /package-testing https://raw.githubusercontent.com/Percona-QA/percona-qa/master/sample_db/world.sql
 
-  - name: install Percona Toolkit new deb packages
-    include_tasks: ../tasks/install_pt.yml
-
-  - name: install sysbench new deb packages
-    include_tasks: ../tasks/install_sysbench.yml
+# - name: install Percona Toolkit new deb packages
+#   include_tasks: ../tasks/install_pt.yml
 
   - name: install Percona Server 8.0 packages
     include_tasks: ../tasks/install_ps80.yml
 
-  - name: install Percona XtraBackup 8.0 packages
-    include_tasks: ../tasks/install_pxb80.yml
+  - name: install sysbench new deb packages
+    include_tasks: ../tasks/install_sysbench.yml
+
+# - name: install Percona XtraBackup 8.0 packages
+#   include_tasks: ../tasks/install_pxb80.yml
 
   - name: start mysql service with service command
     command: service mysql start
@@ -58,7 +62,7 @@
 
   - name: start mysql service with systemctl command
     command: systemctl start mysql
-    when: ansible_os_family == "RedHat" and ansible_distribution_major_version == "7"
+    when: ansible_os_family == "RedHat" and ansible_distribution_major_version|int >= 7
 
   - name: set root password on centos
     command: /package-testing/setpass_57.sh
@@ -66,7 +70,7 @@
 
   - name: disable selinux on centos7 for TokuDB to work
     command: setenforce 0
-    when: ansible_os_family == "RedHat" and ansible_distribution_major_version == "7"
+    when: ansible_os_family == "RedHat" and ansible_distribution_major_version|int >= 7
 
   - name: install tokudb and restart server
     command: /usr/bin/ps-admin --enable-tokudb 
@@ -77,29 +81,20 @@
   - name: re-run ps-admin to finish tokudb install
     command: /usr/bin/ps-admin --enable-tokudb 
 
-  - name: check that Percona Server version is correct
-    command: /package-testing/version_check.sh ps80
+# - name: check that Percona Server version is correct
+#   command: /package-testing/version_check.sh ps80
 
-  - name: check that Percona Server package versions are correct
-    command: /package-testing/package_check.sh ps80
+# - name: check that Percona Server package versions are correct
+#   command: /package-testing/package_check.sh ps80
 
-  - name: keyring plugins test
-    command: /package-testing/scripts/ps_keyring_plugins_test/ps_keyring_plugins_test.sh ps80
+# - name: keyring plugins test
+#   command: /package-testing/scripts/ps_keyring_plugins_test/ps_keyring_plugins_test.sh ps80
 
   - name: re-run ps_admin to install rocksdb
     command: /usr/bin/ps-admin --enable-rocksdb
 
   - name: install plugins, import world database, test tokudb
     command: /package-testing/plugins_test_80.sh ps
-
-  - name: check that Percona Toolkit version is correct
-    command: /package-testing/version_check.sh pt
-
-  - name: check that Percona XtraBackup version is correct
-    command: /package-testing/version_check.sh pxb80
-
-  - name: check that Percona XtraBackup package versions are correct
-    command: /package-testing/package_check.sh pxb80
 
   - name: run some MyRocks tests
     command: /package-testing/scripts/ps_myrocks_test.sh
@@ -138,6 +133,9 @@
   - name: start mysql service
     service: name=mysql state=started
 
+  - name: check that mysqladmin shutdown works correctly
+    command: /package-testing/madmin_check.sh
+
   - name: enable tools experimental for mysql-shell package
     command: percona-release enable tools testing
 
@@ -158,9 +156,6 @@
       packages:
       - percona-mysql-shell
     when: ansible_os_family == "Debian"
-
-  - name: check that mysqladmin shutdown works correctly
-    command: /package-testing/madmin_check.sh
 
   - name: remove Percona Server deb packages
     apt: 

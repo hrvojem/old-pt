@@ -43,10 +43,10 @@
     when: ansible_os_family == "RedHat"
 
   - name: enable ps-80 repos 
-    command: percona-release enable ps-80 testing
+    command: percona-release enable ps-80 #testing
 
   - name: enable tools repos 
-    command: percona-release enable tools testing
+    command: percona-release enable tools #testing
 
   - name: install deb packages 
     apt: 

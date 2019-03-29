@@ -103,6 +103,11 @@
       - percona-xtrabackup-80-debuginfo
     when: ansible_os_family == "RedHat"
 
+  - name: install recent curl package
+    yum:
+      name: https://mirror.city-fan.org/ftp/contrib/sysutils/Mirroring/curl-7.64.0-4.0.cf.rhel6.x86_64.rpm
+      state: present
+
   - name: start mysql service with service command
     command: service mysql start
     when: ansible_os_family == "RedHat" and ansible_distribution_major_version == "6"

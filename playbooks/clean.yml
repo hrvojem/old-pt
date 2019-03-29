@@ -39,7 +39,7 @@
       state: present
     vars:
       packages:
-      - libselinux-python
+#     - libselinux-python
       - pv
     when: ansible_os_family == "RedHat"
 

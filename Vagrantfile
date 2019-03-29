@@ -1,7 +1,7 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-playbook = "playbooks/ps_80_upgrade.yml"
+playbook = "playbooks/ps_80_pt.yml"
 deb_distro = "bento/debian-8"
 deb1_playbook = "playbooks/pxc57.yml"
 deb_common_playbook = "playbooks/pxc57_common.yml"
@@ -41,6 +41,7 @@ Vagrant.configure("2") do |config|
   config.vm.define :stretch do |stretch_config|
 #   stretch_config.vm.box = "debian/stretch64"
     stretch_config.vm.box = "bento/debian-9"
+    config.vm.provision "shell", path: "rhel8.sh"
     config.vm.provision "ansible" do |ansible|
       ansible.playbook = playbook
       ansible.host_key_checking = "false"
@@ -119,6 +120,7 @@ Vagrant.configure("2") do |config|
 
   config.vm.define :centos7 do |centos7_config|
     centos7_config.vm.box = "bento/centos-7"
+    config.vm.provision "shell", path: "rhel8.sh"
     config.vm.provision "ansible" do |ansible|
       ansible.playbook = playbook
       ansible.host_key_checking = "false"
@@ -128,6 +130,7 @@ Vagrant.configure("2") do |config|
 
   config.vm.define :rhel8 do |rhel8_config|
     rhel8_config.vm.box = "generic/rhel8"
+    config.vm.provision "shell", path: "rhel8.sh"
     config.vm.provision "ansible" do |ansible|
       ansible.playbook = playbook
       ansible.host_key_checking = "false"
