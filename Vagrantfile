@@ -1,7 +1,7 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-playbook = "playbooks/ps_80_pt.yml"
+playbook = "playbooks/mysql_80.yml"
 deb_distro = "bento/debian-8"
 deb1_playbook = "playbooks/pxc57.yml"
 deb_common_playbook = "playbooks/pxc57_common.yml"
@@ -27,7 +27,6 @@ Vagrant.configure("2") do |config|
 
   config.vm.define :jessie do |jessie_config|
     jessie_config.vm.box = "bento/debian-8"
-#   jessie_config.vm.box = "bento/debian-8-i386"
     config.vm.provision "ansible" do |ansible|
       ansible.playbook = playbook
       ansible.host_key_checking = "false"
@@ -39,7 +38,6 @@ Vagrant.configure("2") do |config|
   end
 
   config.vm.define :stretch do |stretch_config|
-#   stretch_config.vm.box = "debian/stretch64"
     stretch_config.vm.box = "bento/debian-9"
     config.vm.provision "shell", path: "rhel8.sh"
     config.vm.provision "ansible" do |ansible|
@@ -51,6 +49,19 @@ Vagrant.configure("2") do |config|
       vb.customize ["modifyvm", :id, "--memory", "1024", "--ioapic", "on" ]
     end
   end
+
+  config.vm.define :buster do |buster_config|
+    buster_config.vm.box = "generic/debian10"
+    config.vm.provision "ansible" do |ansible|
+      ansible.playbook = playbook
+      ansible.host_key_checking = "false"
+    end
+    buster_config.vm.host_name = "buster"
+    buster_config.vm.provider :virtualbox do |vb|
+      vb.customize ["modifyvm", :id, "--memory", "1024", "--ioapic", "on" ]
+    end
+  end
+
 
   config.vm.define :trusty do |trusty_config|
     trusty_config.vm.box = "bento/ubuntu-14.04"
@@ -91,6 +102,20 @@ Vagrant.configure("2") do |config|
     end
     cosmic_config.vm.host_name = "cosmic"
   end
+
+  config.vm.define :disco do |disco_config|
+    disco_config.vm.box = "generic/ubuntu1904"
+    config.vm.provision "shell", path: "zesty.sh"
+    config.vm.provision "ansible" do |ansible|
+      ansible.playbook = playbook
+      ansible.host_key_checking = "false"
+    end
+    disco_config.vm.provider :virtualbox do |vb|
+      vb.customize ["modifyvm", :id, "--memory", "2048", "--ioapic", "on" ]
+    end
+    disco_config.vm.host_name = "disco"
+  end
+
 
   config.vm.define :bionic do |bionic_config|
 #   bionic_config.vm.box = "ubuntu/bionic64"
