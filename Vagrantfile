@@ -1,7 +1,7 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-playbook = "playbooks/mysql_80.yml"
+playbook = "playbooks/clean.yml"
 deb_distro = "bento/debian-8"
 deb1_playbook = "playbooks/pxc57.yml"
 deb_common_playbook = "playbooks/pxc57_common.yml"
