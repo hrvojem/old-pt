@@ -118,9 +118,12 @@ if [ ${product} = "ps55" -o ${product} = "ps56" -o ${product} = "ps57" -o ${prod
       version=$(echo ${version} | sed 's/-/-rel/') # 5.5.53-rel38.5
       deb_opt_package=""
       deb_num_pkgs="6"
-    else
+    elif [ ${product} = "ps56" ]; then
       deb_opt_package="percona-server-tokudb-${deb_maj_version}"
       deb_num_pkgs="7"
+    else
+      deb_opt_package="percona-server-tokudb-${deb_maj_version} percona-server-rocksdb-${deb_maj_version}"
+      deb_num_pkgs="8"
     fi
     if [ "$(dpkg -l | grep percona-server | grep -c ${version})" == "${deb_num_pkgs}" ]; then
       echo "all packages are installed"
@@ -156,7 +159,7 @@ elif [ ${product} = "pxc56" -o ${product} = "pxc57" ]; then
     if [ "$(rpm -qa | grep Percona-XtraDB-Cluster | grep -c ${version})" == "${rpm_num_pkgs}" ]; then
       echo "all packages are installed"
     else
-      for package in Percona-XtraDB-Cluster-server-${rpm_maj_version} Percona-XtraDB-Cluster-test-${rpm_maj_version} Percona-XtraDB-Cluster-${rpm_maj_version}-debuginfo Percona-XtraDB-Cluster-devel-${rpm_maj_version} Percona-XtraDB-Cluster-shared-${rpm_maj_version} Percona-XtraDB-Cluster-client-${rpm_maj_version} Percona-XtraDB-Cluster-full-${rpm_maj_version} Percona-XtraDB-Cluster-garbd ${rpm_opt_package}; do
+      for package in Percona-XtraDB-Cluster-server-${rpm_maj_version} Percona-XtraDB-Cluster-test-${rpm_maj_version} Percona-XtraDB-Cluster-${rpm_maj_version}-debuginfo Percona-XtraDB-Cluster-devel-${rpm_maj_version} Percona-XtraDB-Cluster-shared-${rpm_maj_version} Percona-XtraDB-Cluster-client-${rpm_maj_version} Percona-XtraDB-Cluster-full-${rpm_maj_version} Percona-XtraDB-Cluster-garbd-${rpm_maj_version} ${rpm_opt_package}; do
         if [ "$(rpm -qa | grep -c ${package}-${version})" -gt 0 ]; then
           echo "$(date +%Y%m%d%H%M%S): ${package} is installed" >> ${log}
         else
@@ -230,7 +233,12 @@ elif [ ${product} = "pxb23" -o ${product} = "pxb24" -o ${product} = "pxb80" ]; t
   fi
 
 elif [ "${product}" = "psmdb30" -o "${product}" = "psmdb32" -o "${product}" = "psmdb34" -o "${product}" = "psmdb36" -o "${product}" = "psmdb40" ]; then
-  rpm_num_pkgs="6"
+  centos_maj_version=$(cat /etc/redhat-release | grep -oE '[0-9]+' | head -n 1)
+  if [ "${centos_maj_version}" == "6" -o "${centos_maj_version}" == "7" ]; then
+    rpm_num_pkgs="6"
+  else
+    rpm_num_pkgs="10"
+  fi
   deb_num_pkgs="6"
   if [ ${product} = "psmdb32" ]; then
     extra_version="-32"
@@ -246,7 +254,7 @@ elif [ "${product}" = "psmdb30" -o "${product}" = "psmdb32" -o "${product}" = "p
     SLES=$(cat /etc/os-release | grep -c '^NAME=\"SLES' || true)
   fi
   if [ -f /etc/redhat-release -o ${SLES} -eq 1 ]; then
-    if [ "$(rpm -qa | grep Percona-Server-MongoDB | grep -c ${version})" == "${rpm_num_pkgs}" ]; then
+    if [ "$(rpm -qa | grep -i Percona-Server-MongoDB | grep -c ${version})" == "${rpm_num_pkgs}" ]; then
       echo "all packages are installed"
     elif [ ${SLES} -eq 1 ]; then
       for package in Percona-Server-MongoDB${extra_version}-debugsource Percona-Server-MongoDB${extra_version}-mongos-debuginfo Percona-Server-MongoDB${extra_version}-server-debuginfo Percona-Server-MongoDB${extra_version}-shell-debuginfo Percona-Server-MongoDB${extra_version}-tools-debuginfo Percona-Server-MongoDB${extra_version} Percona-Server-MongoDB${extra_version}-mongos Percona-Server-MongoDB${extra_version}-server Percona-Server-MongoDB${extra_version}-shell Percona-Server-MongoDB${extra_version}-tools; do
@@ -263,7 +271,12 @@ elif [ "${product}" = "psmdb30" -o "${product}" = "psmdb32" -o "${product}" = "p
       else
         psmdb_name=""
       fi
-      for package in ${psmdb_name}${extra_version}-debuginfo ${psmdb_name}${extra_version} ${psmdb_name}${extra_version}-mongos ${psmdb_name}${extra_version}-server ${psmdb_name}${extra_version}-shell ${psmdb_name}${extra_version}-tools; do
+      if [ "${centos_maj_version}" == "6" -o "${centos_maj_version}" == "7" ]; then
+        debuginfo_packages="${psmdb_name}${extra_version}-debuginfo"
+      else
+        debuginfo_packages="${psmdb_name}-mongos-debuginfo ${psmdb_name}-server-debuginfo ${psmdb_name}-shell-debuginfo ${psmdb_name}-tools-debuginfo ${psmdb_name}-debugsource"
+      fi
+      for package in ${debuginfo_packages} ${psmdb_name}${extra_version} ${psmdb_name}${extra_version}-mongos ${psmdb_name}${extra_version}-server ${psmdb_name}${extra_version}-shell ${psmdb_name}${extra_version}-tools; do
         if [ "$(rpm -qa | grep -c "${package}"-"${version}")" -gt 0 ]; then
           echo "$(date +%Y%m%d%H%M%S): '${package}' is installed" >> "${log}"
         else

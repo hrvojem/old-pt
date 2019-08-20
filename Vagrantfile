@@ -2,7 +2,7 @@
 # vi: set ft=ruby :
 
 playbook = "playbooks/clean.yml"
-deb_distro = "bento/debian-8"
+deb_distro = "bento/debian-9"
 deb1_playbook = "playbooks/pxc57.yml"
 deb_common_playbook = "playbooks/pxc57_common.yml"
 deb_garbd_playbook = "playbooks/pxc57_garbd.yml"
@@ -39,7 +39,7 @@ Vagrant.configure("2") do |config|
 
   config.vm.define :stretch do |stretch_config|
     stretch_config.vm.box = "bento/debian-9"
-    config.vm.provision "shell", path: "rhel8.sh"
+#   config.vm.provision "shell", path: "rhel8.sh"
     config.vm.provision "ansible" do |ansible|
       ansible.playbook = playbook
       ansible.host_key_checking = "false"
@@ -51,7 +51,7 @@ Vagrant.configure("2") do |config|
   end
 
   config.vm.define :buster do |buster_config|
-    buster_config.vm.box = "generic/debian10"
+    buster_config.vm.box = "bento/debian-10"
     config.vm.provision "ansible" do |ansible|
       ansible.playbook = playbook
       ansible.host_key_checking = "false"
@@ -104,7 +104,7 @@ Vagrant.configure("2") do |config|
   end
 
   config.vm.define :disco do |disco_config|
-    disco_config.vm.box = "generic/ubuntu1904"
+    disco_config.vm.box = "bento/ubuntu-19.04"
     config.vm.provision "shell", path: "zesty.sh"
     config.vm.provision "ansible" do |ansible|
       ansible.playbook = playbook
@@ -140,27 +140,42 @@ Vagrant.configure("2") do |config|
       ansible.playbook = playbook
       ansible.host_key_checking = "false"
     end
+    centos6_config.vm.provider :virtualbox do |vb|
+      vb.customize ["modifyvm", :id, "--memory", "4048", "--ioapic", "on", "--cpus", "2" ]
+    end
     centos6_config.vm.host_name = "centos6"
   end
 
   config.vm.define :centos7 do |centos7_config|
     centos7_config.vm.box = "bento/centos-7"
-    config.vm.provision "shell", path: "rhel8.sh"
+#   config.vm.provision "shell", path: "rhel8.sh"
     config.vm.provision "ansible" do |ansible|
       ansible.playbook = playbook
       ansible.host_key_checking = "false"
+    end
+    centos7_config.vm.provider :virtualbox do |vb|
+      vb.customize ["modifyvm", :id, "--memory", "4048", "--ioapic", "on", "--cpus", "2" ]
     end
     centos7_config.vm.host_name = "centos7"
   end
 
-  config.vm.define :rhel8 do |rhel8_config|
-    rhel8_config.vm.box = "generic/rhel8"
-    config.vm.provision "shell", path: "rhel8.sh"
+  config.vm.define :centos72 do |centos72_config|
+    centos72_config.vm.box = "bento/centos-7"
     config.vm.provision "ansible" do |ansible|
       ansible.playbook = playbook
       ansible.host_key_checking = "false"
     end
-    rhel8_config.vm.host_name = "rhel8"
+    centos72_config.vm.host_name = "centos7"
+  end
+
+  config.vm.define :rhel8 do |rhel8_config|
+    rhel8_config.vm.box = "generic/rhel8"
+#   config.vm.provision "shell", path: "rhel8.sh"
+    config.vm.provision "ansible" do |ansible|
+      ansible.playbook = playbook
+      ansible.host_key_checking = "false"
+    end
+    rhel8_config.vm.host_name = "rhel8-ps8testing"
   end
 
 

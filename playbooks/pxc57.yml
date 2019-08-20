@@ -1,8 +1,6 @@
 ---
 # This playbook sets up the first PXC node from percona repo
 
-- import_playbook: test_prep.yml
-
 - hosts: all
   name: install and set up the first PXC node from the main percona repo
   become: true
