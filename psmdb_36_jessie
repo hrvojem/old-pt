@@ -1,0 +1,102 @@
+nagios-plugins-contrib - Plugins for nagios compatible monitoring systems
+percona-xtrabackup-dbg - Debug symbols for Percona XtraBackup
+percona-xtrabackup-test - Test suite for Percona XtraBackup
+xtrabackup - Transitional package for percona-xtrabackup
+libperconaserverclient18 - Percona Server database client library
+libperconaserverclient18-dev - Percona Server database development files
+libperconaserverclient18.1 - Percona Server database client library
+libperconaserverclient18.1-dev - Percona Server database development files
+libperconaserverclient20 - Percona Server database client library
+libperconaserverclient20-dev - Percona Server database development files
+percona-cacti-templates - Percona Monitoring Plugins for Cacti
+percona-nagios-plugins - Percona Monitoring Plugins for Nagios
+percona-release - Package to install Percona gpg key and APT repos
+percona-server-5.5-dbg - Debugging package for Percona Server
+percona-server-5.6-dbg - Debugging package for Percona Server
+percona-server-5.7-dbg - Debugging package for Percona Server
+percona-server-client - Percona Server database client
+percona-server-client-5.5 - Percona Server database client binaries
+percona-server-client-5.6 - Percona Server database client binaries
+percona-server-client-5.7 - Percona Server database client binaries
+percona-server-common-5.5 - Percona Server database common files
+percona-server-common-5.6 - Percona Server database common files
+percona-server-common-5.7 - Percona Server database common files (e.g. /etc/mysql/my.cnf)
+percona-server-mongodb - This metapackage will install the mongo shell, import/export tools, other client utilities, server software, default configuration, and init.d scripts.
+percona-server-mongodb-32 - This metapackage will install the mongo shell, import/export tools, other client utilities, server software, default configuration, and init.d scripts.
+percona-server-mongodb-32-dbg - Debugging package for Percona Server for MongoDB
+percona-server-mongodb-32-mongos - This package contains mongos - the Percona Server for MongoDB sharded cluster query router
+percona-server-mongodb-32-server - This package contains the Percona Server for MongoDB server software, default configuration files and init.d scripts
+percona-server-mongodb-32-shell - This package contains the Percona Server for MongoDB shell
+percona-server-mongodb-32-tools - Mongo tools for high-performance MongoDB fork from Percona
+percona-server-mongodb-34 - This metapackage will install the mongo shell, import/export tools, other client utilities, server software, default configuration, and init.d scripts.
+percona-server-mongodb-34-dbg - Debugging package for Percona Server for MongoDB
+percona-server-mongodb-34-mongos - This package contains mongos - the Percona Server for MongoDB sharded cluster query router
+percona-server-mongodb-34-server - This package contains the Percona Server for MongoDB server software, default configuration files and init.d scripts
+percona-server-mongodb-34-shell - This package contains the Percona Server for MongoDB shell
+percona-server-mongodb-34-tools - Mongo tools for high-performance MongoDB fork from Percona
+percona-server-mongodb-36 - This metapackage will install the mongo shell, import/export tools, other client utilities, server software, default configuration, and init.d scripts.
+percona-server-mongodb-36-dbg - Debugging package for Percona Server for MongoDB
+percona-server-mongodb-36-mongos - This package contains mongos - the Percona Server for MongoDB sharded cluster query router
+percona-server-mongodb-36-server - This package contains the Percona Server for MongoDB server software, default configuration files and init.d scripts
+percona-server-mongodb-36-shell - This package contains the Percona Server for MongoDB shell
+percona-server-mongodb-36-tools - Mongo tools for high-performance MongoDB fork from Percona
+percona-server-mongodb-dbg - Debugging package for Percona Server for MongoDB
+percona-server-mongodb-mongos - This package contains mongos - the Percona Server for MongoDB sharded cluster query router
+percona-server-mongodb-server - This package contains the Percona Server for MongoDB server software, default configuration files and init.d scripts
+percona-server-mongodb-shell - This package contains the Percona Server for MongoDB shell
+percona-server-mongodb-tools - Mongo tools for high-performance MongoDB fork from Percona
+percona-server-rocksdb-5.7 - MyRocks storage engine plugin for Percona Server
+percona-server-server - Percona Server database server
+percona-server-server-5.5 - Percona Server database server binaries
+percona-server-server-5.6 - Percona Server database server binaries
+percona-server-server-5.7 - Percona Server database server binaries
+percona-server-source-5.5 - Percona Server 5.5 source
+percona-server-source-5.6 - Percona Server 5.6 source
+percona-server-source-5.7 - Percona Server 5.7 source
+percona-server-test-5.5 - Percona Server database test suite
+percona-server-test-5.6 - Percona Server database test suite
+percona-server-test-5.7 - Percona Server database test suite
+percona-server-tokudb-5.6 - TokuDB engine plugin for Percona Server
+percona-server-tokudb-5.7 - TokuDB engine plugin for Percona Server
+percona-toolkit - Advanced MySQL and system command-line tools
+percona-xtrabackup - Open source backup tool for InnoDB and XtraDB
+percona-xtrabackup-22 - Open source backup tool for InnoDB and XtraDB
+percona-xtrabackup-24 - Open source backup tool for InnoDB and XtraDB
+percona-xtrabackup-dbg-22 - Debug symbols for Percona XtraBackup
+percona-xtrabackup-dbg-24 - Debug symbols for Percona XtraBackup
+percona-xtrabackup-test-22 - Test suite for Percona XtraBackup
+percona-xtrabackup-test-24 - Test suite for Percona XtraBackup
+percona-xtradb-cluster-5.6-dbg - Debugging package for Percona XtraDB Cluster
+percona-xtradb-cluster-5.7-dbg - Debugging package for Percona XtraDB Cluster
+percona-xtradb-cluster-56 - Percona XtraDB Cluster with Galera
+percona-xtradb-cluster-57 - Percona XtraDB Cluster with Galera
+percona-xtradb-cluster-client-5.6 - Percona XtraDB Cluster database client binaries
+percona-xtradb-cluster-client-5.7 - Percona XtraDB Cluster database client binaries
+percona-xtradb-cluster-common-5.6 - Percona XtraDB Cluster database common files (e.g. /etc/mysql/my.cnf)
+percona-xtradb-cluster-common-5.7 - Percona XtraDB Cluster database common files (e.g. /etc/mysql/my.cnf)
+percona-xtradb-cluster-full-56 - Percona XtraDB Cluster with Galera
+percona-xtradb-cluster-full-57 - Percona XtraDB Cluster with Galera
+percona-xtradb-cluster-galera-3 - Metapackage for latest version of galera3.
+percona-xtradb-cluster-galera-3.x - Galera components of Percona XtraDB Cluster
+percona-xtradb-cluster-galera-3.x-dbg - Debugging package for Percona XtraDB Cluster Galera 3.
+percona-xtradb-cluster-galera3-dbg - Metapackage for latest version of debug packages.
+percona-xtradb-cluster-garbd-3 - Metapackage for latest version of garbd3.
+percona-xtradb-cluster-garbd-3.x - Garbd components of Percona XtraDB Cluster
+percona-xtradb-cluster-garbd-3.x-dbg - Debugging package for Percona XtraDB Cluster Garbd 3.
+percona-xtradb-cluster-garbd-5.7 - Garbd components of Percona XtraDB Cluster
+percona-xtradb-cluster-garbd-debug-5.7 - Debugging package for Percona XtraDB Cluster Garbd.
+percona-xtradb-cluster-server-5.6 - Percona XtraDB Cluster database server binaries
+percona-xtradb-cluster-server-5.7 - Percona XtraDB Cluster database server binaries
+percona-xtradb-cluster-server-debug-5.6 - Percona XtraDB Cluster database server UNIV_DEBUG binaries
+percona-xtradb-cluster-server-debug-5.7 - Percona XtraDB Cluster database server UNIV_DEBUG binaries
+percona-xtradb-cluster-source-5.6 - Percona XtraDB Cluster 5.6 source
+percona-xtradb-cluster-source-5.7 - Percona XtraDB Cluster 5.7 source
+percona-xtradb-cluster-test-5.6 - Percona XtraDB Cluster database test suite
+percona-xtradb-cluster-test-5.7 - Percona XtraDB Cluster database test suite
+percona-zabbix-templates - Percona Monitoring Plugins for Zabbix
+pmm-client - Percona Monitoring and Management Client
+pmm2-client - Percona Monitoring and Management Client
+percona-backup-mongodb - Percona Backup for MongoDB is a distributed, low-impact solution for achieving consistent backups of MongoDB Sharded Clusters and Replica Sets.
+percona-xtrabackup-80 - Open source backup tool for InnoDB and XtraDB
+percona-xtrabackup-dbg-80 - Debug symbols for Percona XtraBackup
+percona-xtrabackup-test-80 - Test suite for Percona XtraBackup

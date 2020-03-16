@@ -8,11 +8,11 @@
   tasks:
   - name: Install percona repository package
     apt:
-      deb: https://repo.percona.com/apt/percona-release_0.1-10.{{ansible_lsb.codename}}_all.deb
+      deb: https://repo.percona.com/apt/percona-release_latest.generic_all.deb
     when: ansible_os_family == "Debian"
 
   - name: add the yum percona repos 
-    yum: name=https://repo.percona.com/yum/percona-release-0.1-10.noarch.rpm
+    yum: name=https://repo.percona.com/yum/percona-release-latest.noarch.rpm
     when: ansible_os_family == "RedHat" 
 
   - name: epel 6 repo
@@ -43,10 +43,10 @@
     when: ansible_os_family == "RedHat"
 
   - name: enable ps-80 repos 
-    command: percona-release enable ps-80 #testing
+    command: percona-release enable-only ps-80 testing
 
   - name: enable tools repos 
-    command: percona-release enable tools #testing
+    command: percona-release enable tools testing
 
   - name: install deb packages 
     apt: 

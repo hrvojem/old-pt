@@ -1,0 +1,71 @@
+---
+# This playbook sets up the first PXC node from percona repo
+
+- hosts: all
+  name: install and set up the first PXC node from the main percona repo
+  become: true
+  become_method: sudo
+
+  tasks:
+
+  # find vm ip so that it can be used in templates
+# - debug: var=ansible_all_ipv4_addresses
+  - set_fact:
+      man_ip: "{{ item }}"
+    with_items: "{{ ansible_all_ipv4_addresses }}"
+    when: "item.startswith('192.168')"
+# - debug: var=man_ip
+
+  - name: Install percona repository package
+    apt:
+      deb: https://repo.percona.com/apt/percona-release_latest.generic_all.deb
+    when: ansible_os_family == "Debian"
+
+  - name: change the default repo to experimental
+    command: percona-release enable-only pxc-80 experimental
+
+  - name: add the experimental tools repo
+    command: percona-release enable tools experimental
+
+  - name: install vim, pv, python-mysqldb, and PXC-8.0
+    apt:
+      name: "{{ packages }}"
+      update_cache: yes
+    vars:
+      packages:
+      - vim
+      - pv
+      - percona-xtradb-cluster-full
+      - sysbench
+#     - sysbench-tpcc
+#     - python-mysqldb
+#     - percona-xtradb-cluster-57
+ 
+  - name: configure PXC
+    template: src=../templates/my_8.j2 
+              dest=/etc/mysql/mysql.conf.d/mysqld.cnf
+              mode=0640 owner=mysql group=root
+
+  - name: bootstrap the cluster
+    command: systemctl start mysql@bootstrap
+#   command: service mysql bootstrap-pxc
+
+# - name: install plugins
+#   command: /vagrant/pxc_plugins_57.sh 
+
+# - name: run sysbench tpcc prepare script
+#   command: /usr/share/sysbench/tpcc.lua --mysql-user=root --mysql-db=sbt --time=30 --threads=64 --report-interval=1 --tables=3 --scale=5 --db-driver=mysql prepare
+
+# - name: run sysbench tpcc benchmark
+#   command: /usr/share/sysbench/tpcc.lua --mysql-user=root --mysql-db=sbt --time=30 --threads=64 --report-interval=1 --tables=3 --scale=5 --db-driver=mysql run
+
+# - name: install 3rd party packages
+#   apt:
+#     name: "{{ packages }}"
+#   vars:
+#     packages:
+#     - cacti
+#     - rsyslog-mysql
+
+# - name: check PXC-5.7 version
+#   command: /vagrant/version_check.sh pxc57

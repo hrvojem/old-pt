@@ -3,7 +3,7 @@
 
   - name: Install percona repository package
     apt:
-      deb: https://repo.percona.com/apt/percona-release_0.1-8.{{ansible_lsb.codename}}_all.deb
+      deb: https://repo.percona.com/apt/percona-release_latest.generic_all.deb
     when: ansible_os_family == "Debian"
 
   - name: add the Percona testing yum repos for centos 6 and 7
@@ -13,5 +13,5 @@
   - name: change the default repo to experimental
     command: percona-release enable-only original experimental
 
-  - name: add the experimental tools repo
+  - name: add the experimental tools repo 
     command: percona-release enable tools experimental

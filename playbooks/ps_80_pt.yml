@@ -4,9 +4,6 @@
 #   installs latest version of PS 8.0, PT and PXB 8.0
 #   does some tests
 
-# Cosmic is still missing python 
-- import_playbook: test_prep.yml
-
 - hosts: all
   become: true
   become_method: sudo
@@ -25,7 +22,7 @@
 
   - name: include tasks for enabling PS 8 test repo
     include: ../tasks/enable_ps8_testing_repo.yml
-    when: lookup('env', 'install_repo') == "testing" #or lookup('env', 'install_repo') == ""
+    when: lookup('env', 'install_repo') == "testing" or lookup('env', 'install_repo') == ""
 
   - name: include tasks for enabling test repo
     include: ../tasks/enable_testing_repo.yml
@@ -33,7 +30,7 @@
 
   - name: include tasks for enabling PS 8 experimental repo
     include: ../tasks/enable_ps8_experimental_repo.yml
-    when: lookup('env', 'install_repo') == "experimental" or lookup('env', 'install_repo') == ""
+    when: lookup('env', 'install_repo') == "experimental" #or lookup('env', 'install_repo') == ""
 
 # - name: include tasks for enabling tools experimental repo
 #   include: ../tasks/enable_tools_experimental_repo.yml
@@ -71,6 +68,9 @@
   - name: disable selinux on centos7 for TokuDB to work
     command: setenforce 0
     when: ansible_os_family == "RedHat" and ansible_distribution_major_version|int >= 7
+
+  - name: run GR test
+    include_tasks: ../tasks/gr_test.yml
 
   - name: install tokudb and restart server
     command: /usr/bin/ps-admin --enable-tokudb 

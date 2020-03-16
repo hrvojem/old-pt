@@ -1,0 +1,74 @@
+---
+# This playbook sets up the first node for PXC on Centos
+
+- hosts: all
+  become: true
+  become_method: sudo
+
+  tasks:
+  - name: remove mysql-libs
+    yum: name=mysql-libs state=absent
+    when: ansible_os_family == "RedHat" and ansible_distribution_major_version == "6"
+
+    yum:
+      name: "{{ packages }}"
+      state: present 
+    vars:
+      packages:
+      - libselinux-python
+      - unzip
+    when: ansible_os_family == "RedHat" and ansible_distribution_major_version == "7"
+
+  - selinux: state=disabled
+
+  - name: add firewall rules
+    command: /sbin/iptables -I INPUT -s {{item}} -p tcp -j ACCEPT
+    with_items:
+    - 192.168.70.73
+    - 192.168.70.72
+    - 192.168.70.71
+
+  - name: add the percona repo
+    yum: name=https://repo.percona.com/yum/percona-release-latest.noarch.rpm
+
+  - name: add the epel repo for centos8 
+    yum: name=https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm state=present
+    when: ansible_os_family == "RedHat" and ansible_distribution_major_version == "8"
+
+  - name: add the epel repo for centos7 
+    yum: name=https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm state=present
+    when: ansible_os_family == "RedHat" and ansible_distribution_major_version == "7"
+
+  - name: enable pxc-80 experimental repo
+    command: percona-release enable-only pxc-80 experimental
+
+  - name: enable tools experimental repo
+    command: percona-release enable tools experimental
+
+  - name: disable the mysql module on RHEL/CentOS 8
+    command: /usr/bin/dnf module disable mysql -y
+    when: ansible_os_family == "RedHat" and ansible_distribution_major_version == "8"
+
+  - name: install PXC
+    yum: 
+      name: "{{ packages }}"
+      state: present
+    vars:
+      packages:
+      - percona-xtradb-cluster-full
+
+  - name: copy pxc config
+    template: src=../templates/my_rpm_80.j2 dest=/etc/my.cnf
+    when: ansible_os_family == "RedHat"
+
+  - command: systemctl start mysql
+    when: ansible_os_family == "RedHat" 
+
+  - name: copy .my.cnf
+    template: src=../templates/my_57.j2
+              dest=/root/.my.cnf
+              mode=0640 owner=root group=root
+    when: ansible_os_family == "RedHat"
+
+# - name: run init scripts test
+#   command: /usr/local/bin/bats /vagrant/bats/mysql-init-scripts.bats

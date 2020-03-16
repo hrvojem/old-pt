@@ -1,0 +1,86 @@
+---
+# This playbook sets up the first node for PXC on Centos
+
+- hosts: all
+  become: true
+  become_method: sudo
+
+  tasks:
+  - name: remove mysql-libs
+    yum: name=mysql-libs state=absent
+    when: ansible_os_family == "RedHat" and ansible_distribution_major_version == "6"
+
+  - name: install stuff
+    yum: 
+      name: "{{ packages }}"
+      state: present 
+    vars:
+      packages:
+      - libselinux-python
+    when: ansible_os_family == "RedHat" and ansible_distribution_major_version <= "7"
+
+  - name: install stuff
+    yum: 
+      name: "{{ packages }}"
+      state: present 
+    vars:
+      packages:
+      - python3-libselinux
+    when: ansible_os_family == "RedHat" and ansible_distribution_major_version == "8"
+
+  - name: disable selinux
+    selinux: state=disabled
+
+  - name: add firewall rules
+    command: /sbin/iptables -I INPUT -s {{item}} -p tcp -j ACCEPT
+    with_items:
+    - 192.168.70.73
+    - 192.168.70.72
+    - 192.168.70.71
+
+  - name: add the percona repo
+    yum: name=https://repo.percona.com/yum/percona-release-latest.noarch.rpm
+
+  - name: add the epel repo for centos7 
+    yum: name=https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm state=present
+    when: ansible_os_family == "RedHat" and ansible_distribution_major_version == "7"
+
+  - name: add the epel repo for centos6
+    yum: name=https://dl.fedoraproject.org/pub/epel/epel-release-latest-6.noarch.rpm state=present
+    when: ansible_os_family == "RedHat" and ansible_distribution_major_version == "6"
+
+  - name: change the default repo to experimental
+    command: percona-release enable-only pxc-80 experimental
+
+  - name: add the experimental tools repo
+    command: percona-release enable tools experimental
+
+  - name: disable the mysql module on RHEL/CentOS 8
+    command: /usr/bin/dnf module disable mysql -y
+    when: ansible_os_family == "RedHat" and ansible_distribution_major_version == "8"
+
+  - name: install PXC
+    yum: 
+      name: "{{ packages }}"
+      state: present 
+    vars:
+      packages:
+      - percona-xtradb-cluster-full 
+      - sysbench
+ 
+  - name: copy pxc config
+    template: src=../templates/my_rpm_80.j2 dest=/etc/my.cnf
+    when: ansible_os_family == "RedHat" 
+
+  - name: bootstrap cluster on CentOS 7/8
+    command: systemctl start mysql@bootstrap.service
+    when: ansible_os_family == "RedHat" 
+
+  - name: set root password
+    command: /vagrant/setpass_57.sh
+
+# - name: install plugins
+#   command: /vagrant/pxc_plugins_57.sh
+
+# - name: check PXC-5.7 version
+#   command: /vagrant/version_check.sh pxc57

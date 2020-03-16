@@ -1,8 +1,6 @@
 ---
 # This playbook sets up the first PXC node from percona repo
 
-- import_playbook: test_prep.yml
-
 - hosts: all
   name: install and set up the first PXC node from the main percona repo
   become: true
@@ -65,5 +63,5 @@
   - name: run sysbench tpcc benchmark
     command: /usr/share/sysbench/tpcc.lua --mysql-user=root --mysql-db=sbt --time=30 --threads=64 --report-interval=1 --tables=3 --scale=5 --db-driver=mysql run
 
-  - name: version check
-    command: /vagrant/version_check.sh pxc56
+# - name: version check
+#   command: /vagrant/version_check.sh pxc56

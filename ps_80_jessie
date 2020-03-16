@@ -1,0 +1,28 @@
+nagios-plugins-contrib - Plugins for nagios compatible monitoring systems
+percona-xtrabackup - Open source backup tool for InnoDB and XtraDB
+percona-xtrabackup-dbg - Debug symbols for Percona XtraBackup
+percona-xtrabackup-test - Test suite for Percona XtraBackup
+xtrabackup - Transitional package for percona-xtrabackup
+libperconaserverclient21 - Percona Server database client library
+libperconaserverclient21-dev - Percona Server database development files
+percona-mysql-router - Percona MySQL Router
+percona-mysql-router-dev - Percona MySQL Router development files
+percona-server-client - Percona Server database client binaries
+percona-server-common - Percona Server database common files (e.g. /etc/mysql/my.cnf)
+percona-server-dbg - Debugging package for Percona Server
+percona-server-rocksdb - MyRocks storage engine plugin for Percona Server
+percona-server-server - Percona Server database server binaries
+percona-server-source - Percona Server 8.0 source
+percona-server-test - Percona Server database test suite
+percona-server-tokudb - TokuDB engine plugin for Percona Server
+percona-backup-mongodb - Percona Backup for MongoDB is a distributed, low-impact solution for achieving consistent backups of MongoDB Sharded Clusters and Replica Sets.
+percona-toolkit - Advanced MySQL and system command-line tools
+percona-xtrabackup-24 - Open source backup tool for InnoDB and XtraDB
+percona-xtrabackup-80 - Open source backup tool for InnoDB and XtraDB
+percona-xtrabackup-dbg-24 - Debug symbols for Percona XtraBackup
+percona-xtrabackup-dbg-80 - Debug symbols for Percona XtraBackup
+percona-xtrabackup-test-24 - Test suite for Percona XtraBackup
+percona-xtrabackup-test-80 - Test suite for Percona XtraBackup
+pmm-client - Percona Monitoring and Management Client
+pmm2-client - Percona Monitoring and Management Client
+percona-release - Package to install Percona gpg key and APT repos

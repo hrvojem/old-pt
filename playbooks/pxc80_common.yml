@@ -1,0 +1,63 @@
+---
+# This playbook sets up the pxc
+
+- hosts: all
+  name: install and set up the other PXC nodes from the testing percona repo
+  become: true
+  become_method: sudo
+
+  tasks:
+
+  - name: Install percona repository package
+    apt:
+      deb: https://repo.percona.com/apt/percona-release_latest.generic_all.deb
+    when: ansible_os_family == "Debian"
+
+  - name: change the default repo to experimental
+    command: percona-release enable-only pxc-80 experimental
+
+  - name: add the experimental tools repo
+    command: percona-release enable tools 
+
+  - set_fact:
+      man_ip: "{{ item }}"
+    with_items: "{{ ansible_all_ipv4_addresses }}"
+    when: "item.startswith('192.168')"
+  - debug: var=man_ip
+
+  - name: install pxc-80, vim, pv, python-mysqldb
+    apt:
+     name: "{{ packages }}"
+     update_cache: yes
+    vars: 
+      packages:
+      - vim
+      - pv
+      - unzip
+      - sysbench
+      - python-mysqldb
+      - percona-xtradb-cluster
+
+  - name: configure PXC
+    template: src=../templates/my_8.j2
+              dest=/etc/mysql/mysql.conf.d/mysqld.cnf
+              mode=0640 owner=mysql group=root
+
+  - name: start mysql service
+    command: service mysql start
+
+# - name: check PXC-5.7 version
+#   command: /vagrant/version_check.sh pxc57
+
+  - name: install latest bats from github
+    command: "{{ item }}"
+    with_items:
+    - rm -f master.zip
+    - wget --no-check-certificate -O master.zip https://github.com/sstephenson/bats/archive/master.zip
+    - unzip master.zip
+    - rm -f master.zip
+    - bats-master/install.sh /usr/local
+    - rm -rf bats-master
+  
+# - name: run init scripts test
+#   command: /usr/local/bin/bats /vagrant/bats/mysql-init-scripts.bats

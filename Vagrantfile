@@ -1,29 +1,20 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-playbook = "playbooks/clean.yml"
-deb_distro = "bento/debian-9"
-deb1_playbook = "playbooks/pxc57.yml"
-deb_common_playbook = "playbooks/pxc57_common.yml"
-deb_garbd_playbook = "playbooks/pxc57_garbd.yml"
-rhel_distro = "bento/centos-6"
-rhel1_playbook = "playbooks/percona1_pxc57.yml"
-rhel_playbook = "playbooks/percona2_pxc57.yml"
+playbook = "playbooks/common_57.yml"
+deb_distro = "bento/debian-10"
+deb1_playbook = "playbooks/pxc80.yml"
+deb_common_playbook = "playbooks/pxc80_common.yml"
+deb_garbd_playbook = "playbooks/pxc80_garbd.yml"
+rhel_distro = "bento/centos-8"
+rhel1_playbook = "playbooks/percona1_pxc80.yml"
+rhel_playbook = "playbooks/percona2_pxc80.yml"
 rhel_garbd_playbook = "playbooks/percona4_pxc57.yml"
 
 Vagrant.configure("2") do |config|
   # All Vagrant configuration is done here. The most pxb configuration
   # options are documented and commented below. For a complete reference,
   # please see the online documentation at vagrantup.com.
-
-  config.vm.define :sles12 do |sles12_config|
-    sles12_config.vm.box = "wvera/sles12sp2"
-    config.vm.provision "ansible" do |ansible|
-      ansible.playbook = playbook
-      ansible.host_key_checking = "false"
-    end
-    sles12_config.vm.host_name = "sles12"
-  end
 
   config.vm.define :jessie do |jessie_config|
     jessie_config.vm.box = "bento/debian-8"
@@ -63,22 +54,8 @@ Vagrant.configure("2") do |config|
   end
 
 
-  config.vm.define :trusty do |trusty_config|
-    trusty_config.vm.box = "bento/ubuntu-14.04"
-#   trusty_config.vm.box = "bento/ubuntu-14.04-i386"
-    config.vm.provision "ansible" do |ansible|
-      ansible.playbook = playbook
-      ansible.host_key_checking = "false"
-    end
-    trusty_config.vm.host_name = "trusty"
-    trusty_config.vm.provider :virtualbox do |vb|
-      vb.customize ["modifyvm", :id, "--memory", "1024", "--ioapic", "on" ]
-    end
-  end
-
   config.vm.define :xenial do |xenial_config|
     xenial_config.vm.box = "bento/ubuntu-16.04"
-#   xenial_config.vm.box = "bento/ubuntu-16.04-i386"
     config.vm.provision "ansible" do |ansible|
       ansible.playbook = playbook
       ansible.host_key_checking = "false"
@@ -90,35 +67,7 @@ Vagrant.configure("2") do |config|
     xenial_config.vm.network :private_network, ip: "192.168.70.31"
   end
 
-  config.vm.define :cosmic do |cosmic_config|
-    cosmic_config.vm.box = "bento/ubuntu-18.10"
-    config.vm.provision "shell", path: "zesty.sh"
-    config.vm.provision "ansible" do |ansible|
-      ansible.playbook = playbook
-      ansible.host_key_checking = "false"
-    end
-    cosmic_config.vm.provider :virtualbox do |vb|
-      vb.customize ["modifyvm", :id, "--memory", "2048", "--ioapic", "on" ]
-    end
-    cosmic_config.vm.host_name = "cosmic"
-  end
-
-  config.vm.define :disco do |disco_config|
-    disco_config.vm.box = "bento/ubuntu-19.04"
-    config.vm.provision "shell", path: "zesty.sh"
-    config.vm.provision "ansible" do |ansible|
-      ansible.playbook = playbook
-      ansible.host_key_checking = "false"
-    end
-    disco_config.vm.provider :virtualbox do |vb|
-      vb.customize ["modifyvm", :id, "--memory", "2048", "--ioapic", "on" ]
-    end
-    disco_config.vm.host_name = "disco"
-  end
-
-
   config.vm.define :bionic do |bionic_config|
-#   bionic_config.vm.box = "ubuntu/bionic64"
     bionic_config.vm.box = "bento/ubuntu-18.04" 
     config.vm.provision "shell", path: "zesty.sh"
     config.vm.provision "ansible" do |ansible|
@@ -131,8 +80,6 @@ Vagrant.configure("2") do |config|
     bionic_config.vm.host_name = "bionic"
     bionic_config.vm.network :private_network, ip: "192.168.70.32"
   end
-
-
 
   config.vm.define :centos6 do |centos6_config|
     centos6_config.vm.box = "bento/centos-6"
@@ -148,7 +95,6 @@ Vagrant.configure("2") do |config|
 
   config.vm.define :centos7 do |centos7_config|
     centos7_config.vm.box = "bento/centos-7"
-#   config.vm.provision "shell", path: "rhel8.sh"
     config.vm.provision "ansible" do |ansible|
       ansible.playbook = playbook
       ansible.host_key_checking = "false"
@@ -159,13 +105,25 @@ Vagrant.configure("2") do |config|
     centos7_config.vm.host_name = "centos7"
   end
 
-  config.vm.define :centos72 do |centos72_config|
-    centos72_config.vm.box = "bento/centos-7"
+  config.vm.define :centos8 do |centos8_config|
+    centos8_config.vm.box = "bento/centos-8"
     config.vm.provision "ansible" do |ansible|
       ansible.playbook = playbook
       ansible.host_key_checking = "false"
     end
-    centos72_config.vm.host_name = "centos7"
+    centos8_config.vm.provider :virtualbox do |vb|
+      vb.customize ["modifyvm", :id, "--memory", "4048", "--ioapic", "on", "--cpus", "2" ]
+    end
+    centos8_config.vm.host_name = "centos8"
+  end
+
+  config.vm.define :amazon2 do |amazon2_config|
+    amazon2_config.vm.box = "bento/amazonlinux-2"
+    config.vm.provision "ansible" do |ansible|
+      ansible.playbook = playbook
+      ansible.host_key_checking = "false"
+    end
+    amazon2_config.vm.host_name = "amazon2"
   end
 
   config.vm.define :rhel8 do |rhel8_config|

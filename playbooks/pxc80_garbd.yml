@@ -1,0 +1,36 @@
+---
+# This playbook sets up the garbd 
+
+#- import_playbook: test_prep.yml
+
+- hosts: all
+  become: true
+  become_method: sudo
+
+  tasks:
+  - name: Install percona repository package
+    apt:
+      deb: https://repo.percona.com/apt/percona-release_latest.generic_all.deb
+    when: ansible_os_family == "Debian"
+
+  - name: enable testing repo
+    command: percona-release enable pxc-80 experimental
+
+  - name: install garbd
+    apt:
+      name: "{{ packages }}"
+      update_cache: yes 
+    vars: 
+      packages:
+      - vim
+      - pv
+      - python-mysqldb
+      - percona-xtradb-cluster-garbd
+
+  - name: configure garbd
+    template: src=../templates/garbd.j2 
+              dest=/etc/default/garbd
+              mode=0640 owner=root group=root
+  # start garbd service
+  - command: service garbd start
+  
