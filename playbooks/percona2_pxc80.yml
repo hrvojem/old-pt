@@ -17,7 +17,7 @@
       packages:
       - libselinux-python
       - unzip
-    when: ansible_os_family == "RedHat" and ansible_distribution_major_version == "7"
+    when: (ansible_distribution == "Amazon") or (ansible_os_family == "RedHat" and ansible_distribution_major_version == "7")
 
   - selinux: state=disabled
 

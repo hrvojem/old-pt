@@ -1,8 +1,8 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-playbook = "playbooks/common_57.yml"
-deb_distro = "bento/debian-10"
+playbook = "playbooks/clean.yml"
+deb_distro = "bento/ubuntu-18.04"
 deb1_playbook = "playbooks/pxc80.yml"
 deb_common_playbook = "playbooks/pxc80_common.yml"
 deb_garbd_playbook = "playbooks/pxc80_garbd.yml"

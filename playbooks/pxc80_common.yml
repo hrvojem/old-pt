@@ -13,11 +13,11 @@
       deb: https://repo.percona.com/apt/percona-release_latest.generic_all.deb
     when: ansible_os_family == "Debian"
 
-  - name: change the default repo to experimental
-    command: percona-release enable-only pxc-80 experimental
+  - name: change the default repo to testing
+    command: percona-release enable-only pxc-80 testing
 
   - name: add the experimental tools repo
-    command: percona-release enable tools 
+    command: percona-release enable tools testing
 
   - set_fact:
       man_ip: "{{ item }}"
@@ -35,7 +35,7 @@
       - pv
       - unzip
       - sysbench
-      - python-mysqldb
+#     - python-mysqldb
       - percona-xtradb-cluster
 
   - name: configure PXC
@@ -46,8 +46,8 @@
   - name: start mysql service
     command: service mysql start
 
-# - name: check PXC-5.7 version
-#   command: /vagrant/version_check.sh pxc57
+  - name: check PXC 8.0 version
+    command: /vagrant/version_check.sh pxc80
 
   - name: install latest bats from github
     command: "{{ item }}"
