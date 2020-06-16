@@ -20,8 +20,11 @@
     apt:
       deb: https://repo.percona.com/apt/percona-release_latest.generic_all.deb
 
-  - name: enable testing repo
-    command: percona-release enable original testing
+# - name: enable testing repo
+#   command: percona-release enable original testing
+
+  - name: enable pxc-56 repo
+    command: percona-release setup pxc-56
 
   - name: install vim, pv, python-mysqldb, and PXC-5.6
     apt: 
@@ -57,11 +60,11 @@
   - name: install plugins
     command: /vagrant/plugins_test_pxc_56.sh 
 
-  - name: run sysbench tpcc prepare script
-    command: /usr/share/sysbench/tpcc.lua --mysql-user=root --mysql-db=sbt --time=30 --threads=64 --report-interval=1 --tables=3 --scale=5 --db-driver=mysql prepare
+# - name: run sysbench tpcc prepare script
+#   command: /usr/share/sysbench/tpcc.lua --mysql-user=root --mysql-db=sbt --time=30 --threads=64 --report-interval=1 --tables=3 --scale=5 --db-driver=mysql prepare
 
-  - name: run sysbench tpcc benchmark
-    command: /usr/share/sysbench/tpcc.lua --mysql-user=root --mysql-db=sbt --time=30 --threads=64 --report-interval=1 --tables=3 --scale=5 --db-driver=mysql run
+# - name: run sysbench tpcc benchmark
+#   command: /usr/share/sysbench/tpcc.lua --mysql-user=root --mysql-db=sbt --time=30 --threads=64 --report-interval=1 --tables=3 --scale=5 --db-driver=mysql run
 
-# - name: version check
-#   command: /vagrant/version_check.sh pxc56
+  - name: version check
+    command: /vagrant/version_check.sh pxc56

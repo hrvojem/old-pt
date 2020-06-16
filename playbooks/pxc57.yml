@@ -21,8 +21,8 @@
       deb: https://repo.percona.com/apt/percona-release_latest.generic_all.deb
     when: ansible_os_family == "Debian"
 
-# - name: enable testing repo
-#   command: percona-release enable original testing
+  - name: enable testing repo
+    command: percona-release enable original release
 
   - name: install vim, pv, python-mysqldb, and PXC-5.7
     apt:
@@ -56,18 +56,18 @@
     command: /vagrant/pxc_plugins_57.sh 
 
 # - name: run sysbench tpcc prepare script
-#   command: /usr/share/sysbench/tpcc.lua --mysql-user=root --mysql-db=sbt --time=30 --threads=64 --report-interval=1 --tables=3 --scale=5 --db-driver=mysql prepare
+#   command: /usr/share/sysbench/tpcc.lua --mysql-user=sysbench --mysql-password=test --mysql-db=sbt --time=30 --threads=64 --report-interval=1 --tables=3 --scale=10 --db-driver=mysql --use_fk=0 --force_pk=1 --trx_level=RC prepare
 
 # - name: run sysbench tpcc benchmark
-#   command: /usr/share/sysbench/tpcc.lua --mysql-user=root --mysql-db=sbt --time=30 --threads=64 --report-interval=1 --tables=3 --scale=5 --db-driver=mysql run
+#   command: /usr/share/sysbench/tpcc.lua --mysql-user=sysbench --mysql-password=test --mysql-db=sbt --time=30 --threads=64 --report-interval=1 --tables=3 --scale=10 --db-driver=mysql --use_fk=0 --force_pk=1 --trx_level=RC run
 
-  - name: install 3rd party packages
-    apt:
-      name: "{{ packages }}"
-    vars:
-      packages:
+# - name: install 3rd party packages
+#   apt:
+#     name: "{{ packages }}"
+#   vars:
+#     packages:
 #     - cacti
-      - rsyslog-mysql
+#     - rsyslog-mysql
 
   - name: check PXC-5.7 version
     command: /vagrant/version_check.sh pxc57

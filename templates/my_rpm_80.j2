@@ -12,7 +12,7 @@ pid-file=/var/run/mysqld/mysqld.pid
 log_error_verbosity=3
 
 # Disable encryption
-pxc_encrypt_cluster_traffic=OFF
+# pxc_encrypt_cluster_traffic=OFF
 
 # Binary log expiration period is 604800 seconds, which equals 7 days
 binlog_expire_logs_seconds=604800
@@ -51,3 +51,15 @@ pxc_strict_mode=ENFORCING
 
 # SST method
 wsrep_sst_method=xtrabackup-v2
+
+#Certs
+
+[mysqld]
+ssl-ca = /vagrant/certs/ca.pem
+ssl-cert = /vagrant/certs/server-cert.pem
+ssl-key = /vagrant/certs/server-key.pem
+
+[client]
+ssl-ca = /vagrant/certs/ca.pem
+ssl-cert = /vagrant/certs/client-cert.pem
+ssl-key = /vagrant/certs/client-key.pem

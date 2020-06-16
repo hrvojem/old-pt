@@ -1,0 +1,673 @@
+ INFO: Skipping wsrep-recover for c413d628-894e-11ea-a7d9-7ae7715d4d7a:11829 pair
+ INFO: Assigning c413d628-894e-11ea-a7d9-7ae7715d4d7a:11829 to wsrep_start_position
+2020-04-28T13:50:29.732033Z 0 [Warning] [MY-011068] [Server] The syntax 'expire-logs-days' is deprecated and will be removed in a future release. Please use binlog_expire_logs_seconds instead.
+2020-04-28T13:50:29.732053Z 0 [Warning] [MY-011070] [Server] 'Disabling symbolic links using --skip-symbolic-links (or equivalent) is the default. Consider not using this option as it' is deprecated and will be removed in a future release.
+2020-04-28T13:50:29.735767Z 0 [Note] [MY-010949] [Server] Basedir set to /usr/.
+2020-04-28T13:50:29.735786Z 0 [System] [MY-010116] [Server] /usr/sbin/mysqld (mysqld 8.0.18-9) starting as process 19779
+2020-04-28T13:50:29.739102Z 0 [Note] [MY-000000] [Galera] Loading provider /usr/lib/galera4/libgalera_smm.so initial position: c413d628-894e-11ea-a7d9-7ae7715d4d7a:11829
+2020-04-28T13:50:29.739221Z 0 [Note] [MY-000000] [Galera] wsrep_load(): loading provider library '/usr/lib/galera4/libgalera_smm.so'
+2020-04-28T13:50:29.741778Z 0 [Note] [MY-000000] [Galera] wsrep_load(): Galera 4.3(r752664d) by Codership Oy <info@codership.com> loaded successfully.
+2020-04-28T13:50:29.741879Z 0 [Note] [MY-000000] [Galera] CRC-32C: using hardware acceleration.
+2020-04-28T13:50:29.742315Z 0 [Note] [MY-000000] [Galera] Found saved state: c413d628-894e-11ea-a7d9-7ae7715d4d7a:11829, safe_to_bootstrap: 0
+2020-04-28T13:50:29.744935Z 0 [Note] [MY-000000] [Galera] GCache DEBUG: opened preamble:
+Version: 2
+UUID: c413d628-894e-11ea-a7d9-7ae7715d4d7a
+Seqno: 11820 - 11829
+Offset: 1280
+Synced: 1
+2020-04-28T13:50:29.745016Z 0 [Note] [MY-000000] [Galera] Recovering GCache ring buffer: version: 2, UUID: c413d628-894e-11ea-a7d9-7ae7715d4d7a, offset: 1280
+2020-04-28T13:50:29.745176Z 0 [Note] [MY-000000] [Galera] GCache::RingBuffer initial scan...  0.0% (        0/134217752 bytes) complete.
+2020-04-28T13:50:29.745268Z 0 [Note] [MY-000000] [Galera] GCache::RingBuffer initial scan...100.0% (134217752/134217752 bytes) complete.
+2020-04-28T13:50:29.745345Z 0 [Note] [MY-000000] [Galera] Recovering GCache ring buffer: didn't recover any events.
+2020-04-28T13:50:29.756993Z 0 [Note] [MY-000000] [Galera] Complete reset of the galera cache
+2020-04-28T13:50:30.018459Z 0 [Note] [MY-000000] [Galera] Flushing memory map to disk...
+2020-04-28T13:50:30.542549Z 0 [Note] [MY-000000] [Galera] Passing config to GCS: base_dir = /var/lib/mysql/; base_host = 192.168.70.62; base_port = 4567; cert.log_conflicts = no; cert.optimistic_pa = no; debug = no; evs.auto_evict = 0; evs.delay_margin = PT1S; evs.delayed_keep_period = PT30S; evs.inactive_check_period = PT0.5S; evs.inactive_timeout = PT15S; evs.join_retrans_period = PT1S; evs.max_install_timeouts = 3; evs.send_window = 10; evs.stats_report_period = PT1M; evs.suspect_timeout = PT5S; evs.user_send_window = 4; evs.view_forget_timeout = PT24H; gcache.dir = /var/lib/mysql/; gcache.freeze_purge_at_seqno = -1; gcache.keep_pages_count = 0; gcache.keep_pages_size = 0; gcache.mem_size = 0; gcache.name = galera.cache; gcache.page_size = 128M; gcache.recover = yes; gcache.size = 128M; gcomm.thread_prio = ; gcs.fc_debug = 0; gcs.fc_factor = 1.0; gcs.fc_limit = 100; gcs.fc_master_slave = no; gcs.max_packet_size = 64500; gcs.max_throttle = 0.25; gcs.recv_q_hard_limit = 9223372036854775807; gcs.recv_q_soft_limit = 0.25; gcs.sync_donor = no; gmcast.segment = 0; gmcast.version = 0; pc.announce_timeout = PT3S; pc.checksum = false; pc.ignore_quorum = false; pc.ignore_sb = false; pc.npvo = false; pc.recovery = true; pc.version = 0; pc.wait_prim = true; pc.wait_prim_timeout = PT30S; pc.weight = 1; protonet.backend = asio; protonet.version = 0; repl.causal_read_timeout = PT30S; repl.commit_order = 3; repl.key_format = FLAT8; repl.max_ws_size = 2147483647; repl.proto_max = 10; socket.checksum = 2; socket.recv_buf_size = 212992; 
+2020-04-28T13:50:30.574523Z 0 [Note] [MY-000000] [Galera] Service thread queue flushed.
+2020-04-28T13:50:30.574745Z 0 [Note] [MY-000000] [Galera] ####### Assign initial position for certification: c413d628-894e-11ea-a7d9-7ae7715d4d7a:11829, protocol version: -1
+2020-04-28T13:50:30.574881Z 0 [Note] [MY-000000] [Galera] GCache history reset: old(c413d628-894e-11ea-a7d9-7ae7715d4d7a:0 -> c413d628-894e-11ea-a7d9-7ae7715d4d7a:11829
+2020-04-28T13:50:30.576023Z 0 [Note] [MY-000000] [WSREP] Starting replication
+2020-04-28T13:50:30.576134Z 0 [Note] [MY-000000] [Galera] Connecting with bootstrap option: 0
+2020-04-28T13:50:30.576253Z 0 [Note] [MY-000000] [Galera] Setting GCS initial position to c413d628-894e-11ea-a7d9-7ae7715d4d7a:11829
+2020-04-28T13:50:30.576457Z 0 [Note] [MY-000000] [Galera] protonet asio version 0
+2020-04-28T13:50:30.576759Z 0 [Note] [MY-000000] [Galera] Using CRC-32C for message checksums.
+2020-04-28T13:50:30.576904Z 0 [Note] [MY-000000] [Galera] backend: asio
+2020-04-28T13:50:30.577116Z 0 [Note] [MY-000000] [Galera] gcomm thread scheduling priority set to other:0 
+2020-04-28T13:50:30.577358Z 0 [Warning] [MY-000000] [Galera] Fail to access the file (/var/lib/mysql//gvwstate.dat) error (No such file or directory). It is possible if node is booting for first time or re-booting after a graceful shutdown
+2020-04-28T13:50:30.577499Z 0 [Note] [MY-000000] [Galera] Restoring primary-component from disk failed. Either node is booting for first time or re-booting after a graceful shutdown
+2020-04-28T13:50:30.577937Z 0 [Note] [MY-000000] [Galera] GMCast version 0
+2020-04-28T13:50:30.578286Z 0 [Note] [MY-000000] [Galera] (395cfb35, 'tcp://0.0.0.0:4567') listening at tcp://0.0.0.0:4567
+2020-04-28T13:50:30.578418Z 0 [Note] [MY-000000] [Galera] (395cfb35, 'tcp://0.0.0.0:4567') multicast: , ttl: 1
+2020-04-28T13:50:30.578933Z 0 [Note] [MY-000000] [Galera] EVS version 1
+2020-04-28T13:50:30.579174Z 0 [Note] [MY-000000] [Galera] gcomm: connecting to group 'my_ubuntu_cluster', peer '192.168.70.61:,192.168.70.62:,192.168.70.63:'
+2020-04-28T13:50:30.581067Z 0 [Note] [MY-000000] [Galera] (395cfb35, 'tcp://0.0.0.0:4567') Found matching local endpoint for a connection, blacklisting address tcp://192.168.70.62:4567
+2020-04-28T13:50:30.598986Z 0 [Note] [MY-000000] [Galera] (395cfb35, 'tcp://0.0.0.0:4567') connection established to 504c893c tcp://192.168.70.61:4567
+2020-04-28T13:50:30.599355Z 0 [Note] [MY-000000] [Galera] (395cfb35, 'tcp://0.0.0.0:4567') turning message relay requesting on, nonlive peers: tcp://192.168.70.64:4567 
+2020-04-28T13:50:30.648226Z 0 [Note] [MY-000000] [Galera] (395cfb35, 'tcp://0.0.0.0:4567') connection established to b7e93e5c tcp://192.168.70.64:4567
+2020-04-28T13:50:30.648952Z 0 [Note] [MY-000000] [Galera] (395cfb35, 'tcp://0.0.0.0:4567') connection established to 9fe9b5e1 tcp://192.168.70.63:4567
+2020-04-28T13:50:30.649700Z 0 [Note] [MY-000000] [Galera] (395cfb35, 'tcp://0.0.0.0:4567') connection established to 9fe9b5e1 tcp://192.168.70.63:4567
+2020-04-28T13:50:30.723600Z 0 [Note] [MY-000000] [Galera] declaring 504c893c at tcp://192.168.70.61:4567 stable
+2020-04-28T13:50:30.724048Z 0 [Note] [MY-000000] [Galera] declaring 9fe9b5e1 at tcp://192.168.70.63:4567 stable
+2020-04-28T13:50:30.724222Z 0 [Note] [MY-000000] [Galera] declaring b7e93e5c at tcp://192.168.70.64:4567 stable
+2020-04-28T13:50:30.726616Z 0 [Note] [MY-000000] [Galera] Node 504c893c state primary
+2020-04-28T13:50:30.728122Z 0 [Note] [MY-000000] [Galera] Current view of cluster as seen by this node
+view (view_id(PRIM,395cfb35,12)
+memb {
+	395cfb35,0
+	504c893c,0
+	9fe9b5e1,0
+	b7e93e5c,0
+	}
+joined {
+	}
+left {
+	}
+partitioned {
+	}
+)
+2020-04-28T13:50:30.728349Z 0 [Note] [MY-000000] [Galera] Save the discovered primary-component to disk
+2020-04-28T13:50:31.081341Z 0 [Note] [MY-000000] [Galera] gcomm: connected
+2020-04-28T13:50:31.082141Z 0 [Note] [MY-000000] [Galera] Changing maximum packet size to 64500, resulting msg size: 32636
+2020-04-28T13:50:31.082725Z 0 [Note] [MY-000000] [Galera] Shifting CLOSED -> OPEN (TO: 0)
+2020-04-28T13:50:31.083123Z 0 [Note] [MY-000000] [Galera] Opened channel 'my_ubuntu_cluster'
+2020-04-28T13:50:31.084573Z 1 [Note] [MY-000000] [WSREP] Starting applier thread 1
+2020-04-28T13:50:31.085111Z 0 [Note] [MY-000000] [Galera] New COMPONENT: primary = yes, bootstrap = no, my_idx = 0, memb_num = 4
+2020-04-28T13:50:31.086057Z 2 [Note] [MY-000000] [WSREP] Starting rollbacker thread 2
+2020-04-28T13:50:31.087371Z 0 [Note] [MY-000000] [Galera] STATE_EXCHANGE: sent state UUID: 39aa7c18-8957-11ea-8ba5-ff4bf778dc82
+2020-04-28T13:50:31.089198Z 0 [Note] [MY-000000] [Galera] STATE EXCHANGE: sent state msg: 39aa7c18-8957-11ea-8ba5-ff4bf778dc82
+2020-04-28T13:50:31.090467Z 0 [Note] [MY-000000] [Galera] STATE EXCHANGE: got state msg: 39aa7c18-8957-11ea-8ba5-ff4bf778dc82 from 0 (pxc2)
+2020-04-28T13:50:31.090769Z 0 [Note] [MY-000000] [Galera] STATE EXCHANGE: got state msg: 39aa7c18-8957-11ea-8ba5-ff4bf778dc82 from 1 (pxc1)
+2020-04-28T13:50:31.091078Z 0 [Note] [MY-000000] [Galera] STATE EXCHANGE: got state msg: 39aa7c18-8957-11ea-8ba5-ff4bf778dc82 from 2 (pxc3)
+2020-04-28T13:50:31.091381Z 0 [Note] [MY-000000] [Galera] STATE EXCHANGE: got state msg: 39aa7c18-8957-11ea-8ba5-ff4bf778dc82 from 3 (garb)
+2020-04-28T13:50:31.091677Z 0 [Note] [MY-000000] [Galera] Quorum results:
+	version    = 6,
+	component  = PRIMARY,
+	conf_id    = 11,
+	members    = 3/4 (primary/total),
+	act_id     = 12201,
+	last_appl. = 0,
+	protocols  = 0/9/3 (gcs/repl/appl),
+	vote policy= 1,
+	group UUID = c413d628-894e-11ea-a7d9-7ae7715d4d7a
+2020-04-28T13:50:31.092103Z 0 [Note] [MY-000000] [Galera] Flow-control interval: [173, 173]
+2020-04-28T13:50:31.092415Z 0 [Note] [MY-000000] [Galera] Shifting OPEN -> PRIMARY (TO: 12201)
+2020-04-28T13:50:31.092816Z 1 [Note] [MY-000000] [Galera] ####### processing CC 12201, local, unordered
+2020-04-28T13:50:31.093157Z 1 [Note] [MY-000000] [Galera] Drain monitors from 11829 upto 11829
+2020-04-28T13:50:31.093481Z 1 [Note] [MY-000000] [Galera] REPL Protocols: 9 (4, 2)
+2020-04-28T13:50:31.093946Z 1 [Note] [MY-000000] [Galera] ####### My UUID: 395cfb35-8957-11ea-908c-a39ec46be1f4
+2020-04-28T13:50:31.094284Z 1 [Note] [MY-000000] [Galera] Server pxc2 connected to cluster at position c413d628-894e-11ea-a7d9-7ae7715d4d7a:12201 with ID 395cfb35-8957-11ea-908c-a39ec46be1f4
+2020-04-28T13:50:31.094624Z 1 [Note] [MY-000000] [WSREP] Server status change disconnected -> connected
+2020-04-28T13:50:31.094986Z 1 [Note] [MY-000000] [WSREP] wsrep_notify_cmd is not defined, skipping notification.
+2020-04-28T13:50:31.095385Z 1 [Note] [MY-000000] [Galera] State transfer required: 
+	Group state: c413d628-894e-11ea-a7d9-7ae7715d4d7a:12201
+	Local state: c413d628-894e-11ea-a7d9-7ae7715d4d7a:11829
+2020-04-28T13:50:31.095721Z 1 [Note] [MY-000000] [WSREP] Server status change connected -> joiner
+2020-04-28T13:50:31.096068Z 1 [Note] [MY-000000] [WSREP] wsrep_notify_cmd is not defined, skipping notification.
+2020-04-28T13:50:31.096682Z 0 [Note] [MY-000000] [WSREP] Initiating SST/IST transfer on JOINER side (wsrep_sst_xtrabackup-v2 --role 'joiner' --address '192.168.70.62' --datadir '/var/lib/mysql/' --basedir '/usr/' --plugindir '/usr/lib/mysql/plugin/' --defaults-file '/etc/mysql/my.cnf' --defaults-group-suffix '' --parent '19779' --mysqld-version '8.0.18-9'   '' )
+2020-04-28T13:50:32.033242Z 1 [Note] [MY-000000] [WSREP] Prepared SST request: xtrabackup-v2|192.168.70.62:4444/xtrabackup_sst//1
+2020-04-28T13:50:32.033682Z 1 [Note] [MY-000000] [Galera] Cert index reset to c413d628-894e-11ea-a7d9-7ae7715d4d7a:12201 (proto: 9), state transfer needed: yes
+2020-04-28T13:50:32.033999Z 0 [Note] [MY-000000] [Galera] Service thread queue flushed.
+2020-04-28T13:50:32.034310Z 1 [Note] [MY-000000] [Galera] ####### Assign initial position for certification: c413d628-894e-11ea-a7d9-7ae7715d4d7a:12201, protocol version: 4
+2020-04-28T13:50:32.034594Z 1 [Note] [MY-000000] [Galera] Check if state gap can be serviced using IST
+2020-04-28T13:50:32.034885Z 1 [Note] [MY-000000] [Galera] ####### IST uuid:c413d628-894e-11ea-a7d9-7ae7715d4d7a f: 11830, l: 12201, STRv: 2
+2020-04-28T13:50:32.035285Z 1 [Note] [MY-000000] [Galera] IST receiver addr using tcp://192.168.70.62:4568
+2020-04-28T13:50:32.035780Z 1 [Note] [MY-000000] [Galera] Prepared IST receiver for 11830-12201, listening at: tcp://192.168.70.62:4568
+2020-04-28T13:50:32.049405Z 0 [Note] [MY-000000] [Galera] may fallback to sst. ist_seqno [11829] < safe_ist_seqno [12034]
+2020-04-28T13:50:32.049790Z 0 [Note] [MY-000000] [Galera] Member 0.0 (pxc2) requested state transfer from '*any*'. Selected 1.0 (pxc1)(SYNCED) as donor.
+2020-04-28T13:50:32.050116Z 0 [Note] [MY-000000] [Galera] Shifting PRIMARY -> JOINER (TO: 12202)
+2020-04-28T13:50:32.050467Z 1 [Note] [MY-000000] [Galera] Requesting state transfer: success, donor: 1
+2020-04-28T13:50:34.090275Z 0 [Note] [MY-000000] [Galera] (395cfb35, 'tcp://0.0.0.0:4567') turning message relay requesting off
+2020-04-28T13:50:34.098224Z 0 [Note] [MY-000000] [WSREP-SST] Proceeding with SST.........
+2020-04-28T13:50:34.197682Z 0 [Note] [MY-000000] [WSREP-SST] ............Waiting for SST streaming to complete!
+2020-04-28T13:52:10.226457Z 0 [Note] [MY-000000] [Galera] Created page /var/lib/mysql/gcache.page.000000 of size 134217728 bytes
+2020-04-28T13:52:43.274615Z 0 [Note] [MY-000000] [WSREP-SST] Preparing the backup at /var/lib/mysql//sst-xb-tmpdir
+2020-04-28T13:52:43.280083Z 0 [Note] [MY-000000] [Galera] 1.0 (pxc1): State transfer to 0.0 (pxc2) complete.
+2020-04-28T13:52:43.283189Z 0 [Note] [MY-000000] [Galera] Member 1.0 (pxc1) synced with group.
+2020-04-28T13:53:12.302200Z 0 [Note] [MY-000000] [WSREP-SST] Moving the backup to /var/lib/mysql/
+2020-04-28T13:53:12.486859Z 0 [Note] [MY-000000] [WSREP-SST] Running post-processing...........
+2020-04-28T13:53:12.508765Z 0 [Note] [MY-000000] [WSREP-SST] Skipping mysql_upgrade (sst): local version (8.0.18) == donor version (8.0.18)
+2020-04-28T13:53:12.727716Z 0 [Note] [MY-000000] [WSREP-SST] Waiting for server instance to start.....  This may take some time
+2020-04-28T13:53:17.942529Z 0 [Note] [MY-000000] [WSREP-SST] ...........post-processing done
+2020-04-28T13:53:17.944584Z 0 [Note] [MY-000000] [WSREP-SST] Galera co-ords from recovery: c413d628-894e-11ea-a7d9-7ae7715d4d7a:12325
+2020-04-28T13:53:17.959801Z 3 [Note] [MY-000000] [Galera] Processing SST received
+2020-04-28T13:53:17.960161Z 3 [Note] [MY-000000] [WSREP] Server status change joiner -> initializing
+2020-04-28T13:53:17.960500Z 3 [Note] [MY-000000] [WSREP] wsrep_notify_cmd is not defined, skipping notification.
+2020-04-28T13:53:17.962407Z 0 [Warning] [MY-013245] [Server] The SSL library function CRYPTO_set_mem_functions failed. This is typically caused by the SSL library already being used. As a result the SSL memory allocation will not be instrumented.
+2020-04-28T13:53:17.964067Z 0 [Note] [MY-012366] [InnoDB] Using Linux native AIO
+2020-04-28T13:53:17.964606Z 0 [Note] [MY-010747] [Server] Plugin 'FEDERATED' is disabled.
+2020-04-28T13:53:17.967008Z 4 [Note] [MY-012932] [InnoDB] PUNCH HOLE support available
+2020-04-28T13:53:17.967400Z 4 [Note] [MY-012943] [InnoDB] Mutexes and rw_locks use GCC atomic builtins
+2020-04-28T13:53:17.967767Z 4 [Note] [MY-012944] [InnoDB] Uses event mutexes
+2020-04-28T13:53:17.968151Z 4 [Note] [MY-012945] [InnoDB] GCC builtin __atomic_thread_fence() is used for memory barrier
+2020-04-28T13:53:17.968580Z 4 [Note] [MY-012948] [InnoDB] Compressed tables use zlib 1.2.11
+2020-04-28T13:53:17.969455Z 4 [Note] [MY-013251] [InnoDB] Number of pools: 1
+2020-04-28T13:53:17.970077Z 4 [Note] [MY-012951] [InnoDB] Using CPU crc32 instructions
+2020-04-28T13:53:17.971581Z 4 [Note] [MY-012203] [InnoDB] Directories to scan './;./;./'
+2020-04-28T13:53:17.972028Z 4 [Note] [MY-012204] [InnoDB] Scanning './'
+2020-04-28T13:53:17.975573Z 4 [Note] [MY-012208] [InnoDB] Completed space ID check of 42 files.
+2020-04-28T13:53:17.977345Z 4 [Note] [MY-012955] [InnoDB] Initializing buffer pool, total size = 128.000000M, instances = 1, chunk size =128.000000M 
+2020-04-28T13:53:17.989886Z 4 [Note] [MY-012957] [InnoDB] Completed initialization of buffer pool
+2020-04-28T13:53:18.103634Z 0 [Note] [MY-011952] [InnoDB] If the mysqld execution user is authorized, page cleaner and LRU manager thread priority can be changed. See the man page of setpriority().
+2020-04-28T13:53:18.115186Z 4 [Note] [MY-011825] [InnoDB] Crash recovery did not find the parallel doublewrite buffer at /var/lib/mysql/xb_doublewrite
+2020-04-28T13:53:18.221579Z 4 [Note] [MY-013086] [InnoDB] Starting to parse redo log at lsn = 4867715120, whereas checkpoint_lsn = 4867715361
+2020-04-28T13:53:18.226615Z 4 [Note] [MY-013083] [InnoDB] Log background threads are being started...
+2020-04-28T13:53:18.442309Z 4 [Note] [MY-011825] [InnoDB] Created parallel doublewrite buffer at /var/lib/mysql/xb_doublewrite, size 3932160 bytes
+2020-04-28T13:53:18.442870Z 4 [Note] [MY-012532] [InnoDB] Applying a batch of 0 redo log records ...
+2020-04-28T13:53:18.443291Z 4 [Note] [MY-012535] [InnoDB] Apply batch completed!
+2020-04-28T13:53:18.443906Z 4 [Note] [MY-013252] [InnoDB] Using undo tablespace './undo_001'.
+2020-04-28T13:53:18.444576Z 4 [Note] [MY-013252] [InnoDB] Using undo tablespace './undo_002'.
+2020-04-28T13:53:18.448353Z 4 [Note] [MY-012910] [InnoDB] Opened 2 existing undo tablespaces.
+2020-04-28T13:53:18.448794Z 4 [Note] [MY-011980] [InnoDB] GTID recovery trx_no: 21011
+2020-04-28T13:53:18.476384Z 4 [Note] [MY-012923] [InnoDB] Creating shared tablespace for temporary tables
+2020-04-28T13:53:18.477037Z 4 [Note] [MY-012265] [InnoDB] Setting file './ibtmp1' size to 12 MB. Physically writing the file full; Please wait ...
+2020-04-28T13:53:18.507629Z 4 [Note] [MY-012266] [InnoDB] File './ibtmp1' size is now 12 MB.
+2020-04-28T13:53:18.508330Z 4 [Note] [MY-011825] [InnoDB] Scanning temp tablespace dir:'./#innodb_temp/'
+2020-04-28T13:53:18.633617Z 4 [Note] [MY-013018] [InnoDB] Created 128 and tracked 128 new rollback segment(s) in the temporary tablespace. 128 are now active.
+2020-04-28T13:53:18.647976Z 4 [Note] [MY-012976] [InnoDB] Percona XtraDB (http://www.percona.com) 8.0.18-9 started; log sequence number 4867715361
+2020-04-28T13:53:18.657330Z 4 [Note] [MY-011089] [Server] Data dictionary restarting version '80017'.
+2020-04-28T13:53:18.783910Z 4 [Note] [MY-012357] [InnoDB] Reading DD tablespace files
+2020-04-28T13:53:18.789806Z 4 [Note] [MY-012356] [InnoDB] Validated 44/44  tablespaces
+2020-04-28T13:53:18.849254Z 4 [Note] [MY-000000] [WSREP] wsrep_init_schema_and_SR (nil)
+2020-04-28T13:53:18.861186Z 4 [System] [MY-000000] [WSREP] PXC upgrade completed successfully
+2020-04-28T13:53:18.862298Z 4 [Note] [MY-010006] [Server] Using data dictionary with version '80017'.
+2020-04-28T13:53:18.867392Z 0 [ERROR] [MY-010901] [Server] Can't open shared library '/usr/lib/mysql/plugin/query_response_time.so' (errno: 0 /usr/lib/mysql/plugin/query_response_time.so: cannot open shared object file: No such file or directory).
+2020-04-28T13:53:18.867910Z 0 [Warning] [MY-010736] [Server] Couldn't load plugin named 'QUERY_RESPONSE_TIME' with soname 'query_response_time.so'.
+2020-04-28T13:53:18.868430Z 0 [ERROR] [MY-010901] [Server] Can't open shared library '/usr/lib/mysql/plugin/query_response_time.so' (errno: 0 /usr/lib/mysql/plugin/query_response_time.so: cannot open shared object file: No such file or directory).
+2020-04-28T13:53:18.868914Z 0 [Warning] [MY-010736] [Server] Couldn't load plugin named 'QUERY_RESPONSE_TIME_AUDIT' with soname 'query_response_time.so'.
+2020-04-28T13:53:18.869431Z 0 [ERROR] [MY-010901] [Server] Can't open shared library '/usr/lib/mysql/plugin/query_response_time.so' (errno: 0 /usr/lib/mysql/plugin/query_response_time.so: cannot open shared object file: No such file or directory).
+2020-04-28T13:53:18.869961Z 0 [Warning] [MY-010736] [Server] Couldn't load plugin named 'QUERY_RESPONSE_TIME_READ' with soname 'query_response_time.so'.
+2020-04-28T13:53:18.870478Z 0 [ERROR] [MY-010901] [Server] Can't open shared library '/usr/lib/mysql/plugin/query_response_time.so' (errno: 0 /usr/lib/mysql/plugin/query_response_time.so: cannot open shared object file: No such file or directory).
+2020-04-28T13:53:18.870981Z 0 [Warning] [MY-010736] [Server] Couldn't load plugin named 'QUERY_RESPONSE_TIME_WRITE' with soname 'query_response_time.so'.
+2020-04-28T13:53:18.900594Z 0 [Note] [MY-010902] [Server] Thread priority attribute setting in Resource Group SQL shall be ignored due to unsupported platform or insufficient privilege.
+2020-04-28T13:53:18.925401Z 0 [Note] [MY-012487] [InnoDB] DDL log recovery : begin
+2020-04-28T13:53:18.926136Z 0 [Note] [MY-012488] [InnoDB] DDL log recovery : end
+2020-04-28T13:53:18.931939Z 0 [Note] [MY-011946] [InnoDB] Loading buffer pool(s) from /var/lib/mysql/ib_buffer_pool
+2020-04-28T13:53:18.932924Z 0 [Note] [MY-011946] [InnoDB] Buffer pool(s) load completed at 200428 13:53:18
+2020-04-28T13:53:19.051799Z 0 [Note] [MY-010182] [Server] Found ca.pem, server-cert.pem and server-key.pem in data directory. Trying to enable SSL support using them.
+2020-04-28T13:53:19.052525Z 0 [Note] [MY-010304] [Server] Skipping generation of SSL certificates as certificate files are present in data directory.
+2020-04-28T13:53:19.053957Z 0 [Warning] [MY-010068] [Server] CA certificate ca.pem is self signed.
+2020-04-28T13:53:19.054516Z 0 [Note] [MY-010308] [Server] Skipping generation of RSA key pair through --sha256_password_auto_generate_rsa_keys as key files are present in data directory.
+2020-04-28T13:53:19.055053Z 0 [Note] [MY-010308] [Server] Skipping generation of RSA key pair through --caching_sha2_password_auto_generate_rsa_keys as key files are present in data directory.
+2020-04-28T13:53:19.055786Z 0 [Note] [MY-010252] [Server] Server hostname (bind-address): '*'; port: 3306
+2020-04-28T13:53:19.056353Z 0 [Note] [MY-010253] [Server] IPv6 is available.
+2020-04-28T13:53:19.056887Z 0 [Note] [MY-010264] [Server]   - '::' resolves to '::';
+2020-04-28T13:53:19.057475Z 0 [Note] [MY-010251] [Server] Server socket created on IP: '::'.
+2020-04-28T13:53:19.086709Z 0 [Note] [MY-011025] [Repl] Failed to start slave threads for channel ''.
+2020-04-28T13:53:19.091202Z 0 [Note] [MY-000000] [WSREP] Initialized wsrep sidno 3
+2020-04-28T13:53:19.091265Z 0 [Note] [MY-000000] [Galera] Server initialized
+2020-04-28T13:53:19.091287Z 0 [Note] [MY-000000] [WSREP] Server status change initializing -> initialized
+2020-04-28T13:53:19.091314Z 0 [Note] [MY-000000] [WSREP] wsrep_notify_cmd is not defined, skipping notification.
+2020-04-28T13:53:19.091370Z 3 [Note] [MY-000000] [WSREP] Server status change initialized -> joined
+2020-04-28T13:53:19.091389Z 3 [Note] [MY-000000] [WSREP] wsrep_notify_cmd is not defined, skipping notification.
+2020-04-28T13:53:19.091430Z 3 [Note] [MY-000000] [Galera] Recovered position from storage: c413d628-894e-11ea-a7d9-7ae7715d4d7a:12325
+2020-04-28T13:53:19.094333Z 0 [System] [MY-010931] [Server] /usr/sbin/mysqld: ready for connections. Version: '8.0.18-9'  socket: '/var/run/mysqld/mysqld.sock'  port: 3306  Percona XtraDB Cluster (GPL), Release rel9, Revision 6490e00, WSREP version 26.4.3.
+2020-04-28T13:53:19.102090Z 10 [Note] [MY-000000] [WSREP] Starting applier thread 10
+2020-04-28T13:53:19.102276Z 11 [Note] [MY-000000] [WSREP] Starting applier thread 11
+2020-04-28T13:53:19.102515Z 12 [Note] [MY-000000] [WSREP] Starting applier thread 12
+2020-04-28T13:53:19.102657Z 13 [Note] [MY-000000] [WSREP] Starting applier thread 13
+2020-04-28T13:53:19.102844Z 14 [Note] [MY-000000] [WSREP] Starting applier thread 14
+2020-04-28T13:53:19.102922Z 7 [Note] [MY-010051] [Server] Event Scheduler: scheduler thread started with id 7
+2020-04-28T13:53:19.103063Z 15 [Note] [MY-000000] [WSREP] Starting applier thread 15
+2020-04-28T13:53:19.103212Z 16 [Note] [MY-000000] [WSREP] Starting applier thread 16
+2020-04-28T13:53:19.103623Z 3 [Note] [MY-000000] [Galera] Recovered view from SST:
+  id: c413d628-894e-11ea-a7d9-7ae7715d4d7a:12201
+  status: primary
+  protocol_version: 3
+  capabilities: MULTI-MASTER, CERTIFICATION, PARALLEL_APPLYING, REPLAY, ISOLATION, PAUSE, CAUSAL_READ, INCREMENTAL_WS, UNORDERED, PREORDERED, STREAMING, NBO
+  final: no
+  own_index: 0
+  members(4):
+	0: 395cfb35-8957-11ea-908c-a39ec46be1f4, pxc2
+	1: 504c893c-8955-11ea-ac61-4f3f08af61d2, pxc1
+	2: 9fe9b5e1-8951-11ea-b7c8-0741a6a194a6, pxc3
+	3: b7e93e5c-8953-11ea-b771-3e4727a3e43c, garb
+
+2020-04-28T13:53:19.103655Z 3 [Note] [MY-000000] [WSREP] wsrep_notify_cmd is not defined, skipping notification.
+2020-04-28T13:53:19.103884Z 17 [Note] [MY-000000] [WSREP] Recovered cluster id c413d628-894e-11ea-a7d9-7ae7715d4d7a
+2020-04-28T13:53:19.106617Z 3 [Note] [MY-000000] [Galera] SST received: c413d628-894e-11ea-a7d9-7ae7715d4d7a:12325
+2020-04-28T13:53:19.106672Z 1 [Note] [MY-000000] [Galera]  str_proto_ver_: 2 sst_seqno_: 12325 cc_seqno: 12201 req->ist_len(): 74
+2020-04-28T13:53:19.106698Z 1 [Note] [MY-000000] [Galera] Resetting GCache seqno map due to seqno gap: 11829..12325
+2020-04-28T13:53:19.106722Z 1 [Note] [MY-000000] [Galera] GCache history reset: old(c413d628-894e-11ea-a7d9-7ae7715d4d7a:0 -> c413d628-894e-11ea-a7d9-7ae7715d4d7a:12325
+2020-04-28T13:53:19.106791Z 3 [System] [MY-000000] [WSREP] SST completed
+2020-04-28T13:53:19.121599Z 1 [Note] [MY-000000] [Galera] Installed new state from SST: c413d628-894e-11ea-a7d9-7ae7715d4d7a:12325
+2020-04-28T13:53:19.123896Z 10 [Note] [MY-000000] [Galera] IST loop interrupted. Likely cause: DONOR is running galera-3 or earlier protocol and has decided to skip IST in favor of complete SST
+2020-04-28T13:53:19.142027Z 1 [Note] [MY-000000] [Galera] Recording CC from group: 12201
+2020-04-28T13:53:19.142070Z 1 [Note] [MY-000000] [Galera] Lowest cert index boundary for CC from group: 12201
+2020-04-28T13:53:19.142091Z 1 [Note] [MY-000000] [Galera] Min available from gcache for CC from group: -1
+2020-04-28T13:53:19.154249Z 0 [Note] [MY-000000] [Galera] 0.0 (pxc2): State transfer from 1.0 (pxc1) complete.
+2020-04-28T13:53:19.154311Z 0 [Note] [MY-000000] [Galera] SST leaving flow control
+2020-04-28T13:53:19.154331Z 0 [Note] [MY-000000] [Galera] Shifting JOINER -> JOINED (TO: 12508)
+2020-04-28T13:54:01.406206Z 0 [Note] [MY-000000] [Galera] (395cfb35, 'tcp://0.0.0.0:4567') turning message relay requesting on, nonlive peers: tcp://192.168.70.64:4567 
+2020-04-28T13:54:01.768987Z 0 [Note] [MY-000000] [Galera] declaring 504c893c at tcp://192.168.70.61:4567 stable
+2020-04-28T13:54:01.769210Z 0 [Note] [MY-000000] [Galera] declaring 9fe9b5e1 at tcp://192.168.70.63:4567 stable
+2020-04-28T13:54:01.769234Z 0 [Note] [MY-000000] [Galera] forgetting b7e93e5c (tcp://192.168.70.64:4567)
+2020-04-28T13:54:01.769281Z 0 [Note] [MY-000000] [Galera] (395cfb35, 'tcp://0.0.0.0:4567') turning message relay requesting off
+2020-04-28T13:54:01.770886Z 0 [Note] [MY-000000] [Galera] Node 395cfb35 state primary
+2020-04-28T13:54:01.772327Z 0 [Note] [MY-000000] [Galera] Current view of cluster as seen by this node
+view (view_id(PRIM,395cfb35,13)
+memb {
+	395cfb35,0
+	504c893c,0
+	9fe9b5e1,0
+	}
+joined {
+	}
+left {
+	}
+partitioned {
+	b7e93e5c,0
+	}
+)
+2020-04-28T13:54:01.772364Z 0 [Note] [MY-000000] [Galera] Save the discovered primary-component to disk
+2020-04-28T13:54:01.782604Z 0 [Note] [MY-000000] [Galera] forgetting b7e93e5c (tcp://192.168.70.64:4567)
+2020-04-28T13:54:01.782796Z 0 [Note] [MY-000000] [Galera] New COMPONENT: primary = yes, bootstrap = no, my_idx = 0, memb_num = 3
+2020-04-28T13:54:01.783466Z 0 [Note] [MY-000000] [Galera] STATE_EXCHANGE: sent state UUID: b7406455-8957-11ea-abab-ef9319a8c902
+2020-04-28T13:54:01.810513Z 0 [Note] [MY-000000] [Galera] STATE EXCHANGE: sent state msg: b7406455-8957-11ea-abab-ef9319a8c902
+2020-04-28T13:54:01.812064Z 0 [Note] [MY-000000] [Galera] STATE EXCHANGE: got state msg: b7406455-8957-11ea-abab-ef9319a8c902 from 0 (pxc2)
+2020-04-28T13:54:01.812106Z 0 [Note] [MY-000000] [Galera] STATE EXCHANGE: got state msg: b7406455-8957-11ea-abab-ef9319a8c902 from 2 (pxc3)
+2020-04-28T13:54:01.814178Z 0 [Note] [MY-000000] [Galera] STATE EXCHANGE: got state msg: b7406455-8957-11ea-abab-ef9319a8c902 from 1 (pxc1)
+2020-04-28T13:54:01.814218Z 0 [Note] [MY-000000] [Galera] Quorum results:
+	version    = 6,
+	component  = PRIMARY,
+	conf_id    = 12,
+	members    = 3/3 (primary/total),
+	act_id     = 12598,
+	last_appl. = 0,
+	protocols  = 0/9/3 (gcs/repl/appl),
+	vote policy= 1,
+	group UUID = c413d628-894e-11ea-a7d9-7ae7715d4d7a
+2020-04-28T13:54:01.814293Z 0 [Note] [MY-000000] [Galera] Flow-control interval: [173, 173]
+2020-04-28T13:54:01.842659Z 0 [Warning] [MY-000000] [Galera] Received bogus LAST message: 12418 from node 395cfb35-8957-11ea-908c-a39ec46be1f4, expected > 12536. Ignoring.
+2020-04-28T13:54:02.044209Z 0 [Warning] [MY-000000] [Galera] Received bogus LAST message: 12419 from node 395cfb35-8957-11ea-908c-a39ec46be1f4, expected > 12536. Ignoring.
+2020-04-28T13:54:02.437215Z 0 [Warning] [MY-000000] [Galera] Received bogus LAST message: 12420 from node 395cfb35-8957-11ea-908c-a39ec46be1f4, expected > 12536. Ignoring.
+2020-04-28T13:54:02.813477Z 0 [Warning] [MY-000000] [Galera] Received bogus LAST message: 12421 from node 395cfb35-8957-11ea-908c-a39ec46be1f4, expected > 12536. Ignoring.
+2020-04-28T13:54:03.153753Z 0 [Warning] [MY-000000] [Galera] Received bogus LAST message: 12422 from node 395cfb35-8957-11ea-908c-a39ec46be1f4, expected > 12536. Ignoring.
+2020-04-28T13:54:03.564289Z 0 [Warning] [MY-000000] [Galera] Received bogus LAST message: 12423 from node 395cfb35-8957-11ea-908c-a39ec46be1f4, expected > 12536. Ignoring.
+2020-04-28T13:54:03.963851Z 0 [Warning] [MY-000000] [Galera] Received bogus LAST message: 12424 from node 395cfb35-8957-11ea-908c-a39ec46be1f4, expected > 12536. Ignoring.
+2020-04-28T13:54:04.405615Z 0 [Warning] [MY-000000] [Galera] Received bogus LAST message: 12425 from node 395cfb35-8957-11ea-908c-a39ec46be1f4, expected > 12536. Ignoring.
+2020-04-28T13:54:04.793539Z 0 [Warning] [MY-000000] [Galera] Received bogus LAST message: 12426 from node 395cfb35-8957-11ea-908c-a39ec46be1f4, expected > 12536. Ignoring.
+2020-04-28T13:54:05.164394Z 0 [Warning] [MY-000000] [Galera] Received bogus LAST message: 12427 from node 395cfb35-8957-11ea-908c-a39ec46be1f4, expected > 12536. Ignoring.
+2020-04-28T13:54:05.641591Z 0 [Warning] [MY-000000] [Galera] Received bogus LAST message: 12428 from node 395cfb35-8957-11ea-908c-a39ec46be1f4, expected > 12536. Ignoring.
+2020-04-28T13:54:05.993760Z 0 [Warning] [MY-000000] [Galera] Received bogus LAST message: 12429 from node 395cfb35-8957-11ea-908c-a39ec46be1f4, expected > 12536. Ignoring.
+2020-04-28T13:54:06.433574Z 0 [Warning] [MY-000000] [Galera] Received bogus LAST message: 12430 from node 395cfb35-8957-11ea-908c-a39ec46be1f4, expected > 12536. Ignoring.
+2020-04-28T13:54:06.823602Z 0 [Warning] [MY-000000] [Galera] Received bogus LAST message: 12431 from node 395cfb35-8957-11ea-908c-a39ec46be1f4, expected > 12536. Ignoring.
+2020-04-28T13:54:06.982043Z 0 [Note] [MY-000000] [Galera]  cleaning up b7e93e5c (tcp://192.168.70.64:4567)
+2020-04-28T13:54:07.266225Z 0 [Warning] [MY-000000] [Galera] Received bogus LAST message: 12432 from node 395cfb35-8957-11ea-908c-a39ec46be1f4, expected > 12536. Ignoring.
+2020-04-28T13:54:07.700891Z 0 [Warning] [MY-000000] [Galera] Received bogus LAST message: 12433 from node 395cfb35-8957-11ea-908c-a39ec46be1f4, expected > 12536. Ignoring.
+2020-04-28T13:54:08.074137Z 0 [Warning] [MY-000000] [Galera] Received bogus LAST message: 12434 from node 395cfb35-8957-11ea-908c-a39ec46be1f4, expected > 12536. Ignoring.
+2020-04-28T13:54:08.533286Z 0 [Warning] [MY-000000] [Galera] Received bogus LAST message: 12435 from node 395cfb35-8957-11ea-908c-a39ec46be1f4, expected > 12536. Ignoring.
+2020-04-28T13:54:08.973233Z 0 [Warning] [MY-000000] [Galera] Received bogus LAST message: 12436 from node 395cfb35-8957-11ea-908c-a39ec46be1f4, expected > 12536. Ignoring.
+2020-04-28T13:54:09.353944Z 0 [Warning] [MY-000000] [Galera] Received bogus LAST message: 12437 from node 395cfb35-8957-11ea-908c-a39ec46be1f4, expected > 12536. Ignoring.
+2020-04-28T13:54:09.713706Z 0 [Warning] [MY-000000] [Galera] Received bogus LAST message: 12438 from node 395cfb35-8957-11ea-908c-a39ec46be1f4, expected > 12536. Ignoring.
+2020-04-28T13:54:10.089348Z 0 [Warning] [MY-000000] [Galera] Received bogus LAST message: 12439 from node 395cfb35-8957-11ea-908c-a39ec46be1f4, expected > 12536. Ignoring.
+2020-04-28T13:54:10.523355Z 0 [Warning] [MY-000000] [Galera] Received bogus LAST message: 12440 from node 395cfb35-8957-11ea-908c-a39ec46be1f4, expected > 12536. Ignoring.
+2020-04-28T13:54:10.893300Z 0 [Warning] [MY-000000] [Galera] Received bogus LAST message: 12441 from node 395cfb35-8957-11ea-908c-a39ec46be1f4, expected > 12536. Ignoring.
+2020-04-28T13:54:11.244305Z 0 [Warning] [MY-000000] [Galera] Received bogus LAST message: 12442 from node 395cfb35-8957-11ea-908c-a39ec46be1f4, expected > 12536. Ignoring.
+2020-04-28T13:54:11.623715Z 0 [Warning] [MY-000000] [Galera] Received bogus LAST message: 12443 from node 395cfb35-8957-11ea-908c-a39ec46be1f4, expected > 12536. Ignoring.
+2020-04-28T13:54:11.973573Z 0 [Warning] [MY-000000] [Galera] Received bogus LAST message: 12444 from node 395cfb35-8957-11ea-908c-a39ec46be1f4, expected > 12536. Ignoring.
+2020-04-28T13:54:12.334866Z 0 [Warning] [MY-000000] [Galera] Received bogus LAST message: 12445 from node 395cfb35-8957-11ea-908c-a39ec46be1f4, expected > 12536. Ignoring.
+2020-04-28T13:54:12.714196Z 0 [Warning] [MY-000000] [Galera] Received bogus LAST message: 12446 from node 395cfb35-8957-11ea-908c-a39ec46be1f4, expected > 12536. Ignoring.
+2020-04-28T13:54:13.082360Z 0 [Warning] [MY-000000] [Galera] Received bogus LAST message: 12447 from node 395cfb35-8957-11ea-908c-a39ec46be1f4, expected > 12536. Ignoring.
+2020-04-28T13:54:13.523103Z 0 [Warning] [MY-000000] [Galera] Received bogus LAST message: 12448 from node 395cfb35-8957-11ea-908c-a39ec46be1f4, expected > 12536. Ignoring.
+2020-04-28T13:54:13.903586Z 0 [Warning] [MY-000000] [Galera] Received bogus LAST message: 12449 from node 395cfb35-8957-11ea-908c-a39ec46be1f4, expected > 12536. Ignoring.
+2020-04-28T13:54:14.262110Z 0 [Warning] [MY-000000] [Galera] Received bogus LAST message: 12450 from node 395cfb35-8957-11ea-908c-a39ec46be1f4, expected > 12536. Ignoring.
+2020-04-28T13:54:14.713923Z 0 [Warning] [MY-000000] [Galera] Received bogus LAST message: 12451 from node 395cfb35-8957-11ea-908c-a39ec46be1f4, expected > 12536. Ignoring.
+2020-04-28T13:54:15.101755Z 0 [Warning] [MY-000000] [Galera] Received bogus LAST message: 12452 from node 395cfb35-8957-11ea-908c-a39ec46be1f4, expected > 12536. Ignoring.
+2020-04-28T13:54:15.588369Z 0 [Warning] [MY-000000] [Galera] Received bogus LAST message: 12453 from node 395cfb35-8957-11ea-908c-a39ec46be1f4, expected > 12536. Ignoring.
+2020-04-28T13:54:15.922997Z 0 [Warning] [MY-000000] [Galera] Received bogus LAST message: 12454 from node 395cfb35-8957-11ea-908c-a39ec46be1f4, expected > 12536. Ignoring.
+2020-04-28T13:54:16.354105Z 0 [Warning] [MY-000000] [Galera] Received bogus LAST message: 12455 from node 395cfb35-8957-11ea-908c-a39ec46be1f4, expected > 12536. Ignoring.
+2020-04-28T13:54:16.783793Z 0 [Warning] [MY-000000] [Galera] Received bogus LAST message: 12456 from node 395cfb35-8957-11ea-908c-a39ec46be1f4, expected > 12536. Ignoring.
+2020-04-28T13:54:17.164370Z 0 [Warning] [MY-000000] [Galera] Received bogus LAST message: 12457 from node 395cfb35-8957-11ea-908c-a39ec46be1f4, expected > 12536. Ignoring.
+2020-04-28T13:54:17.533696Z 0 [Warning] [MY-000000] [Galera] Received bogus LAST message: 12458 from node 395cfb35-8957-11ea-908c-a39ec46be1f4, expected > 12536. Ignoring.
+2020-04-28T13:54:17.913199Z 0 [Warning] [MY-000000] [Galera] Received bogus LAST message: 12459 from node 395cfb35-8957-11ea-908c-a39ec46be1f4, expected > 12536. Ignoring.
+2020-04-28T13:54:18.293773Z 0 [Warning] [MY-000000] [Galera] Received bogus LAST message: 12460 from node 395cfb35-8957-11ea-908c-a39ec46be1f4, expected > 12536. Ignoring.
+2020-04-28T13:54:18.654302Z 0 [Warning] [MY-000000] [Galera] Received bogus LAST message: 12461 from node 395cfb35-8957-11ea-908c-a39ec46be1f4, expected > 12536. Ignoring.
+2020-04-28T13:54:19.014004Z 0 [Warning] [MY-000000] [Galera] Received bogus LAST message: 12462 from node 395cfb35-8957-11ea-908c-a39ec46be1f4, expected > 12536. Ignoring.
+2020-04-28T13:54:19.389271Z 0 [Warning] [MY-000000] [Galera] Received bogus LAST message: 12463 from node 395cfb35-8957-11ea-908c-a39ec46be1f4, expected > 12536. Ignoring.
+2020-04-28T13:54:19.744113Z 0 [Warning] [MY-000000] [Galera] Received bogus LAST message: 12464 from node 395cfb35-8957-11ea-908c-a39ec46be1f4, expected > 12536. Ignoring.
+2020-04-28T13:54:20.093488Z 0 [Warning] [MY-000000] [Galera] Received bogus LAST message: 12465 from node 395cfb35-8957-11ea-908c-a39ec46be1f4, expected > 12536. Ignoring.
+2020-04-28T13:54:20.494896Z 0 [Warning] [MY-000000] [Galera] Received bogus LAST message: 12466 from node 395cfb35-8957-11ea-908c-a39ec46be1f4, expected > 12536. Ignoring.
+2020-04-28T13:54:20.814125Z 0 [Warning] [MY-000000] [Galera] Received bogus LAST message: 12467 from node 395cfb35-8957-11ea-908c-a39ec46be1f4, expected > 12536. Ignoring.
+2020-04-28T13:54:21.090730Z 0 [Warning] [MY-000000] [Galera] Received bogus LAST message: 12468 from node 395cfb35-8957-11ea-908c-a39ec46be1f4, expected > 12536. Ignoring.
+2020-04-28T13:54:21.474256Z 0 [Warning] [MY-000000] [Galera] Received bogus LAST message: 12469 from node 395cfb35-8957-11ea-908c-a39ec46be1f4, expected > 12536. Ignoring.
+2020-04-28T13:54:21.874268Z 0 [Warning] [MY-000000] [Galera] Received bogus LAST message: 12470 from node 395cfb35-8957-11ea-908c-a39ec46be1f4, expected > 12536. Ignoring.
+2020-04-28T13:54:22.205054Z 0 [Warning] [MY-000000] [Galera] Received bogus LAST message: 12471 from node 395cfb35-8957-11ea-908c-a39ec46be1f4, expected > 12536. Ignoring.
+2020-04-28T13:54:22.543859Z 0 [Warning] [MY-000000] [Galera] Received bogus LAST message: 12472 from node 395cfb35-8957-11ea-908c-a39ec46be1f4, expected > 12536. Ignoring.
+2020-04-28T13:54:22.923564Z 0 [Warning] [MY-000000] [Galera] Received bogus LAST message: 12473 from node 395cfb35-8957-11ea-908c-a39ec46be1f4, expected > 12536. Ignoring.
+2020-04-28T13:54:23.233290Z 0 [Warning] [MY-000000] [Galera] Received bogus LAST message: 12474 from node 395cfb35-8957-11ea-908c-a39ec46be1f4, expected > 12536. Ignoring.
+2020-04-28T13:54:23.553782Z 0 [Warning] [MY-000000] [Galera] Received bogus LAST message: 12475 from node 395cfb35-8957-11ea-908c-a39ec46be1f4, expected > 12536. Ignoring.
+2020-04-28T13:54:23.902785Z 0 [Warning] [MY-000000] [Galera] Received bogus LAST message: 12476 from node 395cfb35-8957-11ea-908c-a39ec46be1f4, expected > 12536. Ignoring.
+2020-04-28T13:54:24.234577Z 0 [Warning] [MY-000000] [Galera] Received bogus LAST message: 12477 from node 395cfb35-8957-11ea-908c-a39ec46be1f4, expected > 12536. Ignoring.
+2020-04-28T13:54:24.584793Z 0 [Warning] [MY-000000] [Galera] Received bogus LAST message: 12478 from node 395cfb35-8957-11ea-908c-a39ec46be1f4, expected > 12536. Ignoring.
+2020-04-28T13:54:24.883611Z 0 [Warning] [MY-000000] [Galera] Received bogus LAST message: 12479 from node 395cfb35-8957-11ea-908c-a39ec46be1f4, expected > 12536. Ignoring.
+2020-04-28T13:54:25.213626Z 0 [Warning] [MY-000000] [Galera] Received bogus LAST message: 12480 from node 395cfb35-8957-11ea-908c-a39ec46be1f4, expected > 12536. Ignoring.
+2020-04-28T13:54:25.562654Z 0 [Warning] [MY-000000] [Galera] Received bogus LAST message: 12481 from node 395cfb35-8957-11ea-908c-a39ec46be1f4, expected > 12536. Ignoring.
+2020-04-28T13:54:25.871662Z 0 [Warning] [MY-000000] [Galera] Received bogus LAST message: 12482 from node 395cfb35-8957-11ea-908c-a39ec46be1f4, expected > 12536. Ignoring.
+2020-04-28T13:54:26.183511Z 0 [Warning] [MY-000000] [Galera] Received bogus LAST message: 12483 from node 395cfb35-8957-11ea-908c-a39ec46be1f4, expected > 12536. Ignoring.
+2020-04-28T13:54:26.563569Z 0 [Warning] [MY-000000] [Galera] Received bogus LAST message: 12484 from node 395cfb35-8957-11ea-908c-a39ec46be1f4, expected > 12536. Ignoring.
+2020-04-28T13:54:26.863386Z 0 [Warning] [MY-000000] [Galera] Received bogus LAST message: 12485 from node 395cfb35-8957-11ea-908c-a39ec46be1f4, expected > 12536. Ignoring.
+2020-04-28T13:54:27.173605Z 0 [Warning] [MY-000000] [Galera] Received bogus LAST message: 12486 from node 395cfb35-8957-11ea-908c-a39ec46be1f4, expected > 12536. Ignoring.
+2020-04-28T13:54:27.493119Z 0 [Warning] [MY-000000] [Galera] Received bogus LAST message: 12487 from node 395cfb35-8957-11ea-908c-a39ec46be1f4, expected > 12536. Ignoring.
+2020-04-28T13:54:27.833655Z 0 [Warning] [MY-000000] [Galera] Received bogus LAST message: 12488 from node 395cfb35-8957-11ea-908c-a39ec46be1f4, expected > 12536. Ignoring.
+2020-04-28T13:54:28.174803Z 0 [Warning] [MY-000000] [Galera] Received bogus LAST message: 12489 from node 395cfb35-8957-11ea-908c-a39ec46be1f4, expected > 12536. Ignoring.
+2020-04-28T13:54:28.501026Z 0 [Warning] [MY-000000] [Galera] Received bogus LAST message: 12490 from node 395cfb35-8957-11ea-908c-a39ec46be1f4, expected > 12536. Ignoring.
+2020-04-28T13:54:28.793643Z 0 [Warning] [MY-000000] [Galera] Received bogus LAST message: 12491 from node 395cfb35-8957-11ea-908c-a39ec46be1f4, expected > 12536. Ignoring.
+2020-04-28T13:54:29.134103Z 0 [Warning] [MY-000000] [Galera] Received bogus LAST message: 12492 from node 395cfb35-8957-11ea-908c-a39ec46be1f4, expected > 12536. Ignoring.
+2020-04-28T13:54:29.463590Z 0 [Warning] [MY-000000] [Galera] Received bogus LAST message: 12493 from node 395cfb35-8957-11ea-908c-a39ec46be1f4, expected > 12536. Ignoring.
+2020-04-28T13:54:29.834817Z 0 [Warning] [MY-000000] [Galera] Received bogus LAST message: 12494 from node 395cfb35-8957-11ea-908c-a39ec46be1f4, expected > 12536. Ignoring.
+2020-04-28T13:54:30.143935Z 0 [Warning] [MY-000000] [Galera] Received bogus LAST message: 12495 from node 395cfb35-8957-11ea-908c-a39ec46be1f4, expected > 12536. Ignoring.
+2020-04-28T13:54:30.423938Z 0 [Warning] [MY-000000] [Galera] Received bogus LAST message: 12496 from node 395cfb35-8957-11ea-908c-a39ec46be1f4, expected > 12536. Ignoring.
+2020-04-28T13:54:30.743878Z 0 [Warning] [MY-000000] [Galera] Received bogus LAST message: 12497 from node 395cfb35-8957-11ea-908c-a39ec46be1f4, expected > 12536. Ignoring.
+2020-04-28T13:54:31.008218Z 0 [Warning] [MY-000000] [Galera] Received bogus LAST message: 12498 from node 395cfb35-8957-11ea-908c-a39ec46be1f4, expected > 12536. Ignoring.
+2020-04-28T13:54:31.303596Z 0 [Warning] [MY-000000] [Galera] Received bogus LAST message: 12499 from node 395cfb35-8957-11ea-908c-a39ec46be1f4, expected > 12536. Ignoring.
+2020-04-28T13:54:31.624774Z 0 [Warning] [MY-000000] [Galera] Received bogus LAST message: 12500 from node 395cfb35-8957-11ea-908c-a39ec46be1f4, expected > 12536. Ignoring.
+2020-04-28T13:54:33.969720Z 0 [Warning] [MY-000000] [Galera] Received bogus LAST message: 12508 from node 395cfb35-8957-11ea-908c-a39ec46be1f4, expected > 12536. Ignoring.
+2020-04-28T13:54:34.243391Z 0 [Warning] [MY-000000] [Galera] Received bogus LAST message: 12509 from node 395cfb35-8957-11ea-908c-a39ec46be1f4, expected > 12536. Ignoring.
+2020-04-28T13:54:34.663389Z 0 [Warning] [MY-000000] [Galera] Received bogus LAST message: 12510 from node 395cfb35-8957-11ea-908c-a39ec46be1f4, expected > 12536. Ignoring.
+2020-04-28T13:54:34.993627Z 0 [Warning] [MY-000000] [Galera] Received bogus LAST message: 12511 from node 395cfb35-8957-11ea-908c-a39ec46be1f4, expected > 12536. Ignoring.
+2020-04-28T13:54:35.343987Z 0 [Warning] [MY-000000] [Galera] Received bogus LAST message: 12512 from node 395cfb35-8957-11ea-908c-a39ec46be1f4, expected > 12536. Ignoring.
+2020-04-28T13:54:35.683338Z 0 [Warning] [MY-000000] [Galera] Received bogus LAST message: 12513 from node 395cfb35-8957-11ea-908c-a39ec46be1f4, expected > 12536. Ignoring.
+2020-04-28T13:54:35.973918Z 0 [Warning] [MY-000000] [Galera] Received bogus LAST message: 12514 from node 395cfb35-8957-11ea-908c-a39ec46be1f4, expected > 12536. Ignoring.
+2020-04-28T13:54:36.293904Z 0 [Warning] [MY-000000] [Galera] Received bogus LAST message: 12515 from node 395cfb35-8957-11ea-908c-a39ec46be1f4, expected > 12536. Ignoring.
+2020-04-28T13:54:36.624303Z 0 [Warning] [MY-000000] [Galera] Received bogus LAST message: 12516 from node 395cfb35-8957-11ea-908c-a39ec46be1f4, expected > 12536. Ignoring.
+2020-04-28T13:54:36.941379Z 0 [Warning] [MY-000000] [Galera] Received bogus LAST message: 12517 from node 395cfb35-8957-11ea-908c-a39ec46be1f4, expected > 12536. Ignoring.
+2020-04-28T13:54:37.254258Z 0 [Warning] [MY-000000] [Galera] Received bogus LAST message: 12518 from node 395cfb35-8957-11ea-908c-a39ec46be1f4, expected > 12536. Ignoring.
+2020-04-28T13:54:37.455363Z 0 [Note] [MY-000000] [Galera] (395cfb35, 'tcp://0.0.0.0:4567') connection established to cc80b11d tcp://192.168.70.64:4567
+2020-04-28T13:54:37.455580Z 0 [Note] [MY-000000] [Galera] (395cfb35, 'tcp://0.0.0.0:4567') turning message relay requesting on, nonlive peers: 
+2020-04-28T13:54:37.487592Z 0 [Note] [MY-000000] [Galera] declaring 504c893c at tcp://192.168.70.61:4567 stable
+2020-04-28T13:54:37.487627Z 0 [Note] [MY-000000] [Galera] declaring 9fe9b5e1 at tcp://192.168.70.63:4567 stable
+2020-04-28T13:54:37.487647Z 0 [Note] [MY-000000] [Galera] declaring cc80b11d at tcp://192.168.70.64:4567 stable
+2020-04-28T13:54:37.493296Z 0 [Note] [MY-000000] [Galera] Node 395cfb35 state primary
+2020-04-28T13:54:37.496746Z 0 [Note] [MY-000000] [Galera] Current view of cluster as seen by this node
+view (view_id(PRIM,395cfb35,14)
+memb {
+	395cfb35,0
+	504c893c,0
+	9fe9b5e1,0
+	cc80b11d,0
+	}
+joined {
+	}
+left {
+	}
+partitioned {
+	}
+)
+2020-04-28T13:54:37.496779Z 0 [Note] [MY-000000] [Galera] Save the discovered primary-component to disk
+2020-04-28T13:54:37.502968Z 0 [Note] [MY-000000] [Galera] New COMPONENT: primary = yes, bootstrap = no, my_idx = 0, memb_num = 4
+2020-04-28T13:54:37.503077Z 0 [Note] [MY-000000] [Galera] STATE_EXCHANGE: sent state UUID: cc8accf0-8957-11ea-9256-c614fe008d63
+2020-04-28T13:54:37.509258Z 0 [Note] [MY-000000] [Galera] STATE EXCHANGE: sent state msg: cc8accf0-8957-11ea-9256-c614fe008d63
+2020-04-28T13:54:37.510236Z 0 [Note] [MY-000000] [Galera] STATE EXCHANGE: got state msg: cc8accf0-8957-11ea-9256-c614fe008d63 from 0 (pxc2)
+2020-04-28T13:54:37.510273Z 0 [Note] [MY-000000] [Galera] STATE EXCHANGE: got state msg: cc8accf0-8957-11ea-9256-c614fe008d63 from 1 (pxc1)
+2020-04-28T13:54:37.510299Z 0 [Note] [MY-000000] [Galera] STATE EXCHANGE: got state msg: cc8accf0-8957-11ea-9256-c614fe008d63 from 2 (pxc3)
+2020-04-28T13:54:37.959327Z 0 [Note] [MY-000000] [Galera] STATE EXCHANGE: got state msg: cc8accf0-8957-11ea-9256-c614fe008d63 from 3 (garb)
+2020-04-28T13:54:37.959456Z 0 [Note] [MY-000000] [Galera] Quorum results:
+	version    = 6,
+	component  = PRIMARY,
+	conf_id    = 13,
+	members    = 3/4 (primary/total),
+	act_id     = 12671,
+	last_appl. = 0,
+	protocols  = 0/9/3 (gcs/repl/appl),
+	vote policy= 1,
+	group UUID = c413d628-894e-11ea-a7d9-7ae7715d4d7a
+2020-04-28T13:54:37.960049Z 0 [Note] [MY-000000] [Galera] Flow-control interval: [173, 173]
+2020-04-28T13:54:37.984107Z 0 [Note] [MY-000000] [Galera] Member 3.0 (garb) requested state transfer from '*any*'. Selected 1.0 (pxc1)(SYNCED) as donor.
+2020-04-28T13:54:37.984741Z 0 [Warning] [MY-000000] [Galera] Received bogus LAST message: 12519 from node 395cfb35-8957-11ea-908c-a39ec46be1f4, expected > 12639. Ignoring.
+2020-04-28T13:54:37.988442Z 0 [Warning] [MY-000000] [Galera] Received bogus LAST message: 12520 from node 395cfb35-8957-11ea-908c-a39ec46be1f4, expected > 12639. Ignoring.
+2020-04-28T13:54:38.019504Z 0 [Note] [MY-000000] [Galera] 3.0 (garb): State transfer from 1.0 (pxc1) complete.
+2020-04-28T13:54:38.042210Z 0 [Note] [MY-000000] [Galera] Member 3.0 (garb) synced with group.
+2020-04-28T13:54:38.328586Z 0 [Warning] [MY-000000] [Galera] Received bogus LAST message: 12521 from node 395cfb35-8957-11ea-908c-a39ec46be1f4, expected > 12639. Ignoring.
+2020-04-28T13:54:38.654484Z 0 [Warning] [MY-000000] [Galera] Received bogus LAST message: 12522 from node 395cfb35-8957-11ea-908c-a39ec46be1f4, expected > 12639. Ignoring.
+2020-04-28T13:54:38.934049Z 0 [Warning] [MY-000000] [Galera] Received bogus LAST message: 12523 from node 395cfb35-8957-11ea-908c-a39ec46be1f4, expected > 12639. Ignoring.
+2020-04-28T13:54:39.264246Z 0 [Warning] [MY-000000] [Galera] Received bogus LAST message: 12524 from node 395cfb35-8957-11ea-908c-a39ec46be1f4, expected > 12639. Ignoring.
+2020-04-28T13:54:39.624646Z 0 [Warning] [MY-000000] [Galera] Received bogus LAST message: 12525 from node 395cfb35-8957-11ea-908c-a39ec46be1f4, expected > 12639. Ignoring.
+2020-04-28T13:54:39.908284Z 0 [Warning] [MY-000000] [Galera] Received bogus LAST message: 12526 from node 395cfb35-8957-11ea-908c-a39ec46be1f4, expected > 12639. Ignoring.
+2020-04-28T13:54:40.231352Z 0 [Warning] [MY-000000] [Galera] Received bogus LAST message: 12527 from node 395cfb35-8957-11ea-908c-a39ec46be1f4, expected > 12639. Ignoring.
+2020-04-28T13:54:40.556224Z 0 [Warning] [MY-000000] [Galera] Received bogus LAST message: 12528 from node 395cfb35-8957-11ea-908c-a39ec46be1f4, expected > 12639. Ignoring.
+2020-04-28T13:54:40.864104Z 0 [Warning] [MY-000000] [Galera] Received bogus LAST message: 12529 from node 395cfb35-8957-11ea-908c-a39ec46be1f4, expected > 12639. Ignoring.
+2020-04-28T13:54:40.928697Z 0 [Note] [MY-000000] [Galera] (395cfb35, 'tcp://0.0.0.0:4567') turning message relay requesting off
+2020-04-28T13:54:41.194431Z 0 [Warning] [MY-000000] [Galera] Received bogus LAST message: 12530 from node 395cfb35-8957-11ea-908c-a39ec46be1f4, expected > 12639. Ignoring.
+2020-04-28T13:54:41.515277Z 0 [Warning] [MY-000000] [Galera] Received bogus LAST message: 12531 from node 395cfb35-8957-11ea-908c-a39ec46be1f4, expected > 12639. Ignoring.
+2020-04-28T13:54:41.814052Z 0 [Warning] [MY-000000] [Galera] Received bogus LAST message: 12532 from node 395cfb35-8957-11ea-908c-a39ec46be1f4, expected > 12639. Ignoring.
+2020-04-28T13:54:42.144308Z 0 [Warning] [MY-000000] [Galera] Received bogus LAST message: 12533 from node 395cfb35-8957-11ea-908c-a39ec46be1f4, expected > 12639. Ignoring.
+2020-04-28T13:54:42.453651Z 0 [Warning] [MY-000000] [Galera] Received bogus LAST message: 12534 from node 395cfb35-8957-11ea-908c-a39ec46be1f4, expected > 12639. Ignoring.
+2020-04-28T13:54:42.753956Z 0 [Warning] [MY-000000] [Galera] Received bogus LAST message: 12535 from node 395cfb35-8957-11ea-908c-a39ec46be1f4, expected > 12639. Ignoring.
+2020-04-28T13:54:43.193634Z 0 [Warning] [MY-000000] [Galera] Received bogus LAST message: 12536 from node 395cfb35-8957-11ea-908c-a39ec46be1f4, expected > 12639. Ignoring.
+2020-04-28T13:54:44.584035Z 0 [Warning] [MY-000000] [Galera] Received bogus LAST message: 12538 from node 395cfb35-8957-11ea-908c-a39ec46be1f4, expected > 12639. Ignoring.
+2020-04-28T13:54:44.965501Z 0 [Warning] [MY-000000] [Galera] Received bogus LAST message: 12539 from node 395cfb35-8957-11ea-908c-a39ec46be1f4, expected > 12639. Ignoring.
+2020-04-28T13:54:45.294446Z 0 [Warning] [MY-000000] [Galera] Received bogus LAST message: 12540 from node 395cfb35-8957-11ea-908c-a39ec46be1f4, expected > 12639. Ignoring.
+2020-04-28T13:54:45.597311Z 0 [Warning] [MY-000000] [Galera] Received bogus LAST message: 12541 from node 395cfb35-8957-11ea-908c-a39ec46be1f4, expected > 12639. Ignoring.
+2020-04-28T13:54:45.964743Z 0 [Warning] [MY-000000] [Galera] Received bogus LAST message: 12542 from node 395cfb35-8957-11ea-908c-a39ec46be1f4, expected > 12639. Ignoring.
+2020-04-28T13:54:46.316247Z 0 [Warning] [MY-000000] [Galera] Received bogus LAST message: 12543 from node 395cfb35-8957-11ea-908c-a39ec46be1f4, expected > 12639. Ignoring.
+2020-04-28T13:54:46.662819Z 0 [Warning] [MY-000000] [Galera] Received bogus LAST message: 12544 from node 395cfb35-8957-11ea-908c-a39ec46be1f4, expected > 12639. Ignoring.
+2020-04-28T13:54:46.971616Z 0 [Warning] [MY-000000] [Galera] Received bogus LAST message: 12545 from node 395cfb35-8957-11ea-908c-a39ec46be1f4, expected > 12639. Ignoring.
+2020-04-28T13:54:47.274356Z 0 [Warning] [MY-000000] [Galera] Received bogus LAST message: 12546 from node 395cfb35-8957-11ea-908c-a39ec46be1f4, expected > 12639. Ignoring.
+2020-04-28T13:54:47.627710Z 0 [Warning] [MY-000000] [Galera] Received bogus LAST message: 12547 from node 395cfb35-8957-11ea-908c-a39ec46be1f4, expected > 12639. Ignoring.
+2020-04-28T13:54:47.919378Z 0 [Warning] [MY-000000] [Galera] Received bogus LAST message: 12548 from node 395cfb35-8957-11ea-908c-a39ec46be1f4, expected > 12639. Ignoring.
+2020-04-28T13:54:48.274355Z 0 [Warning] [MY-000000] [Galera] Received bogus LAST message: 12549 from node 395cfb35-8957-11ea-908c-a39ec46be1f4, expected > 12639. Ignoring.
+2020-04-28T13:54:48.586056Z 0 [Warning] [MY-000000] [Galera] Received bogus LAST message: 12550 from node 395cfb35-8957-11ea-908c-a39ec46be1f4, expected > 12639. Ignoring.
+2020-04-28T13:54:48.933863Z 0 [Warning] [MY-000000] [Galera] Received bogus LAST message: 12551 from node 395cfb35-8957-11ea-908c-a39ec46be1f4, expected > 12639. Ignoring.
+2020-04-28T13:54:49.110805Z 0 [Note] [MY-000000] [Galera] 1.0 (pxc1): State transfer to 3.0 (garb) complete.
+2020-04-28T13:54:49.135486Z 0 [Note] [MY-000000] [Galera] Member 1.0 (pxc1) synced with group.
+2020-04-28T13:54:49.274728Z 0 [Warning] [MY-000000] [Galera] Received bogus LAST message: 12552 from node 395cfb35-8957-11ea-908c-a39ec46be1f4, expected > 12639. Ignoring.
+2020-04-28T13:54:49.667452Z 0 [Warning] [MY-000000] [Galera] Received bogus LAST message: 12553 from node 395cfb35-8957-11ea-908c-a39ec46be1f4, expected > 12639. Ignoring.
+2020-04-28T13:54:49.973921Z 0 [Warning] [MY-000000] [Galera] Received bogus LAST message: 12554 from node 395cfb35-8957-11ea-908c-a39ec46be1f4, expected > 12639. Ignoring.
+2020-04-28T13:54:50.324235Z 0 [Warning] [MY-000000] [Galera] Received bogus LAST message: 12555 from node 395cfb35-8957-11ea-908c-a39ec46be1f4, expected > 12639. Ignoring.
+2020-04-28T13:54:50.678953Z 0 [Warning] [MY-000000] [Galera] Received bogus LAST message: 12556 from node 395cfb35-8957-11ea-908c-a39ec46be1f4, expected > 12639. Ignoring.
+2020-04-28T13:54:50.985034Z 0 [Warning] [MY-000000] [Galera] Received bogus LAST message: 12557 from node 395cfb35-8957-11ea-908c-a39ec46be1f4, expected > 12639. Ignoring.
+2020-04-28T13:54:51.373666Z 0 [Warning] [MY-000000] [Galera] Received bogus LAST message: 12558 from node 395cfb35-8957-11ea-908c-a39ec46be1f4, expected > 12639. Ignoring.
+2020-04-28T13:54:51.716169Z 0 [Warning] [MY-000000] [Galera] Received bogus LAST message: 12559 from node 395cfb35-8957-11ea-908c-a39ec46be1f4, expected > 12639. Ignoring.
+2020-04-28T13:54:52.023804Z 0 [Warning] [MY-000000] [Galera] Received bogus LAST message: 12560 from node 395cfb35-8957-11ea-908c-a39ec46be1f4, expected > 12639. Ignoring.
+2020-04-28T13:54:52.348831Z 0 [Warning] [MY-000000] [Galera] Received bogus LAST message: 12561 from node 395cfb35-8957-11ea-908c-a39ec46be1f4, expected > 12639. Ignoring.
+2020-04-28T13:54:52.673949Z 0 [Warning] [MY-000000] [Galera] Received bogus LAST message: 12562 from node 395cfb35-8957-11ea-908c-a39ec46be1f4, expected > 12639. Ignoring.
+2020-04-28T13:54:53.003710Z 0 [Warning] [MY-000000] [Galera] Received bogus LAST message: 12563 from node 395cfb35-8957-11ea-908c-a39ec46be1f4, expected > 12639. Ignoring.
+2020-04-28T13:54:53.320307Z 0 [Warning] [MY-000000] [Galera] Received bogus LAST message: 12564 from node 395cfb35-8957-11ea-908c-a39ec46be1f4, expected > 12639. Ignoring.
+2020-04-28T13:54:53.713121Z 0 [Warning] [MY-000000] [Galera] Received bogus LAST message: 12565 from node 395cfb35-8957-11ea-908c-a39ec46be1f4, expected > 12639. Ignoring.
+2020-04-28T13:54:54.070155Z 0 [Warning] [MY-000000] [Galera] Received bogus LAST message: 12566 from node 395cfb35-8957-11ea-908c-a39ec46be1f4, expected > 12639. Ignoring.
+2020-04-28T13:54:54.364161Z 0 [Warning] [MY-000000] [Galera] Received bogus LAST message: 12567 from node 395cfb35-8957-11ea-908c-a39ec46be1f4, expected > 12639. Ignoring.
+2020-04-28T13:54:54.703693Z 0 [Warning] [MY-000000] [Galera] Received bogus LAST message: 12568 from node 395cfb35-8957-11ea-908c-a39ec46be1f4, expected > 12639. Ignoring.
+2020-04-28T13:54:55.034146Z 0 [Warning] [MY-000000] [Galera] Received bogus LAST message: 12569 from node 395cfb35-8957-11ea-908c-a39ec46be1f4, expected > 12639. Ignoring.
+2020-04-28T13:54:55.314152Z 0 [Warning] [MY-000000] [Galera] Received bogus LAST message: 12570 from node 395cfb35-8957-11ea-908c-a39ec46be1f4, expected > 12639. Ignoring.
+2020-04-28T13:54:55.643616Z 0 [Warning] [MY-000000] [Galera] Received bogus LAST message: 12571 from node 395cfb35-8957-11ea-908c-a39ec46be1f4, expected > 12639. Ignoring.
+2020-04-28T13:54:56.013894Z 0 [Warning] [MY-000000] [Galera] Received bogus LAST message: 12572 from node 395cfb35-8957-11ea-908c-a39ec46be1f4, expected > 12639. Ignoring.
+2020-04-28T13:54:56.358507Z 0 [Warning] [MY-000000] [Galera] Received bogus LAST message: 12573 from node 395cfb35-8957-11ea-908c-a39ec46be1f4, expected > 12639. Ignoring.
+2020-04-28T13:54:56.683709Z 0 [Warning] [MY-000000] [Galera] Received bogus LAST message: 12574 from node 395cfb35-8957-11ea-908c-a39ec46be1f4, expected > 12639. Ignoring.
+2020-04-28T13:54:57.004080Z 0 [Warning] [MY-000000] [Galera] Received bogus LAST message: 12575 from node 395cfb35-8957-11ea-908c-a39ec46be1f4, expected > 12639. Ignoring.
+2020-04-28T13:54:57.344926Z 0 [Warning] [MY-000000] [Galera] Received bogus LAST message: 12576 from node 395cfb35-8957-11ea-908c-a39ec46be1f4, expected > 12639. Ignoring.
+2020-04-28T13:54:57.654787Z 0 [Warning] [MY-000000] [Galera] Received bogus LAST message: 12577 from node 395cfb35-8957-11ea-908c-a39ec46be1f4, expected > 12639. Ignoring.
+2020-04-28T13:54:57.964408Z 0 [Warning] [MY-000000] [Galera] Received bogus LAST message: 12578 from node 395cfb35-8957-11ea-908c-a39ec46be1f4, expected > 12639. Ignoring.
+2020-04-28T13:54:58.284099Z 0 [Warning] [MY-000000] [Galera] Received bogus LAST message: 12579 from node 395cfb35-8957-11ea-908c-a39ec46be1f4, expected > 12639. Ignoring.
+2020-04-28T13:54:58.643060Z 0 [Warning] [MY-000000] [Galera] Received bogus LAST message: 12580 from node 395cfb35-8957-11ea-908c-a39ec46be1f4, expected > 12639. Ignoring.
+2020-04-28T13:54:59.093958Z 0 [Warning] [MY-000000] [Galera] Received bogus LAST message: 12581 from node 395cfb35-8957-11ea-908c-a39ec46be1f4, expected > 12639. Ignoring.
+2020-04-28T13:54:59.495265Z 0 [Warning] [MY-000000] [Galera] Received bogus LAST message: 12582 from node 395cfb35-8957-11ea-908c-a39ec46be1f4, expected > 12639. Ignoring.
+2020-04-28T13:54:59.924618Z 0 [Warning] [MY-000000] [Galera] Received bogus LAST message: 12583 from node 395cfb35-8957-11ea-908c-a39ec46be1f4, expected > 12639. Ignoring.
+2020-04-28T13:55:00.275451Z 0 [Warning] [MY-000000] [Galera] Received bogus LAST message: 12584 from node 395cfb35-8957-11ea-908c-a39ec46be1f4, expected > 12639. Ignoring.
+2020-04-28T13:55:00.636807Z 0 [Warning] [MY-000000] [Galera] Received bogus LAST message: 12585 from node 395cfb35-8957-11ea-908c-a39ec46be1f4, expected > 12639. Ignoring.
+2020-04-28T13:55:01.063775Z 0 [Warning] [MY-000000] [Galera] Received bogus LAST message: 12586 from node 395cfb35-8957-11ea-908c-a39ec46be1f4, expected > 12639. Ignoring.
+2020-04-28T13:55:01.473828Z 0 [Warning] [MY-000000] [Galera] Received bogus LAST message: 12587 from node 395cfb35-8957-11ea-908c-a39ec46be1f4, expected > 12639. Ignoring.
+2020-04-28T13:55:01.874283Z 0 [Warning] [MY-000000] [Galera] Received bogus LAST message: 12588 from node 395cfb35-8957-11ea-908c-a39ec46be1f4, expected > 12639. Ignoring.
+2020-04-28T13:55:02.255632Z 0 [Warning] [MY-000000] [Galera] Received bogus LAST message: 12589 from node 395cfb35-8957-11ea-908c-a39ec46be1f4, expected > 12639. Ignoring.
+2020-04-28T13:55:02.582937Z 13 [Note] [MY-000000] [Galera] ####### processing CC 12598, local, unordered
+2020-04-28T13:55:02.583586Z 0 [Warning] [MY-000000] [Galera] Received bogus LAST message: 12590 from node 395cfb35-8957-11ea-908c-a39ec46be1f4, expected > 12639. Ignoring.
+2020-04-28T13:55:02.583626Z 13 [Note] [MY-000000] [Galera] Drain monitors from 12591 upto 12598
+2020-04-28T13:55:05.028243Z 13 [Note] [MY-000000] [Galera] REPL Protocols: 9 (4, 2)
+2020-04-28T13:55:05.028319Z 13 [Note] [MY-000000] [Galera] ####### My UUID: 395cfb35-8957-11ea-908c-a39ec46be1f4
+2020-04-28T13:55:05.028344Z 13 [Note] [MY-000000] [Galera] ####### ST not required
+2020-04-28T13:55:05.028365Z 13 [Note] [MY-000000] [Galera] Cert index reset to c413d628-894e-11ea-a7d9-7ae7715d4d7a:12598 (proto: 9), state transfer needed: no
+2020-04-28T13:55:05.605767Z 0 [Note] [MY-000000] [Galera] Service thread queue flushed.
+2020-04-28T13:55:05.611684Z 13 [Note] [MY-000000] [Galera] ####### Assign initial position for certification: c413d628-894e-11ea-a7d9-7ae7715d4d7a:12598, protocol version: 4
+2020-04-28T13:55:05.611776Z 13 [Note] [MY-000000] [Galera] Recording CC from group: 12598
+2020-04-28T13:55:05.611797Z 13 [Note] [MY-000000] [Galera] Lowest cert index boundary for CC from group: 12598
+2020-04-28T13:55:05.611816Z 13 [Note] [MY-000000] [Galera] Min available from gcache for CC from group: 12531
+2020-04-28T13:55:05.611861Z 13 [Note] [MY-000000] [Galera] ================================================
+View:
+  id: c413d628-894e-11ea-a7d9-7ae7715d4d7a:12598
+  status: primary
+  protocol_version: 3
+  capabilities: MULTI-MASTER, CERTIFICATION, PARALLEL_APPLYING, REPLAY, ISOLATION, PAUSE, CAUSAL_READ, INCREMENTAL_WS, UNORDERED, PREORDERED, STREAMING, NBO
+  final: no
+  own_index: 0
+  members(3):
+	0: 395cfb35-8957-11ea-908c-a39ec46be1f4, pxc2
+	1: 504c893c-8955-11ea-ac61-4f3f08af61d2, pxc1
+	2: 9fe9b5e1-8951-11ea-b7c8-0741a6a194a6, pxc3
+=================================================
+2020-04-28T13:55:05.611949Z 13 [Note] [MY-000000] [WSREP] wsrep_notify_cmd is not defined, skipping notification.
+2020-04-28T13:55:06.143693Z 0 [Warning] [MY-000000] [Galera] Received bogus LAST message: 12598 from node 395cfb35-8957-11ea-908c-a39ec46be1f4, expected > 12639. Ignoring.
+2020-04-28T13:55:06.491604Z 0 [Warning] [MY-000000] [Galera] Received bogus LAST message: 12599 from node 395cfb35-8957-11ea-908c-a39ec46be1f4, expected > 12639. Ignoring.
+2020-04-28T13:55:06.879393Z 0 [Warning] [MY-000000] [Galera] Received bogus LAST message: 12600 from node 395cfb35-8957-11ea-908c-a39ec46be1f4, expected > 12639. Ignoring.
+2020-04-28T13:55:07.288510Z 0 [Warning] [MY-000000] [Galera] Received bogus LAST message: 12601 from node 395cfb35-8957-11ea-908c-a39ec46be1f4, expected > 12639. Ignoring.
+2020-04-28T13:55:07.591861Z 0 [Warning] [MY-000000] [Galera] Received bogus LAST message: 12602 from node 395cfb35-8957-11ea-908c-a39ec46be1f4, expected > 12639. Ignoring.
+2020-04-28T13:55:07.934051Z 0 [Warning] [MY-000000] [Galera] Received bogus LAST message: 12603 from node 395cfb35-8957-11ea-908c-a39ec46be1f4, expected > 12639. Ignoring.
+2020-04-28T13:55:08.264059Z 0 [Warning] [MY-000000] [Galera] Received bogus LAST message: 12604 from node 395cfb35-8957-11ea-908c-a39ec46be1f4, expected > 12639. Ignoring.
+2020-04-28T13:55:08.573555Z 0 [Warning] [MY-000000] [Galera] Received bogus LAST message: 12605 from node 395cfb35-8957-11ea-908c-a39ec46be1f4, expected > 12639. Ignoring.
+2020-04-28T13:55:08.994258Z 0 [Warning] [MY-000000] [Galera] Received bogus LAST message: 12606 from node 395cfb35-8957-11ea-908c-a39ec46be1f4, expected > 12639. Ignoring.
+2020-04-28T13:55:09.308375Z 0 [Warning] [MY-000000] [Galera] Received bogus LAST message: 12607 from node 395cfb35-8957-11ea-908c-a39ec46be1f4, expected > 12639. Ignoring.
+2020-04-28T13:55:09.684525Z 0 [Warning] [MY-000000] [Galera] Received bogus LAST message: 12608 from node 395cfb35-8957-11ea-908c-a39ec46be1f4, expected > 12639. Ignoring.
+2020-04-28T13:55:10.090212Z 0 [Warning] [MY-000000] [Galera] Received bogus LAST message: 12609 from node 395cfb35-8957-11ea-908c-a39ec46be1f4, expected > 12639. Ignoring.
+2020-04-28T13:55:10.524194Z 0 [Warning] [MY-000000] [Galera] Received bogus LAST message: 12610 from node 395cfb35-8957-11ea-908c-a39ec46be1f4, expected > 12639. Ignoring.
+2020-04-28T13:55:10.916157Z 0 [Warning] [MY-000000] [Galera] Received bogus LAST message: 12611 from node 395cfb35-8957-11ea-908c-a39ec46be1f4, expected > 12639. Ignoring.
+2020-04-28T13:55:11.254217Z 0 [Warning] [MY-000000] [Galera] Received bogus LAST message: 12612 from node 395cfb35-8957-11ea-908c-a39ec46be1f4, expected > 12639. Ignoring.
+2020-04-28T13:55:11.673913Z 0 [Warning] [MY-000000] [Galera] Received bogus LAST message: 12613 from node 395cfb35-8957-11ea-908c-a39ec46be1f4, expected > 12639. Ignoring.
+2020-04-28T13:55:12.044623Z 0 [Warning] [MY-000000] [Galera] Received bogus LAST message: 12614 from node 395cfb35-8957-11ea-908c-a39ec46be1f4, expected > 12639. Ignoring.
+2020-04-28T13:55:12.454132Z 0 [Warning] [MY-000000] [Galera] Received bogus LAST message: 12615 from node 395cfb35-8957-11ea-908c-a39ec46be1f4, expected > 12639. Ignoring.
+2020-04-28T13:55:12.843344Z 0 [Warning] [MY-000000] [Galera] Received bogus LAST message: 12616 from node 395cfb35-8957-11ea-908c-a39ec46be1f4, expected > 12639. Ignoring.
+2020-04-28T13:55:13.163639Z 0 [Warning] [MY-000000] [Galera] Received bogus LAST message: 12617 from node 395cfb35-8957-11ea-908c-a39ec46be1f4, expected > 12639. Ignoring.
+2020-04-28T13:55:13.559662Z 0 [Warning] [MY-000000] [Galera] Received bogus LAST message: 12618 from node 395cfb35-8957-11ea-908c-a39ec46be1f4, expected > 12639. Ignoring.
+2020-04-28T13:55:13.953665Z 0 [Warning] [MY-000000] [Galera] Received bogus LAST message: 12619 from node 395cfb35-8957-11ea-908c-a39ec46be1f4, expected > 12639. Ignoring.
+2020-04-28T13:55:14.253833Z 0 [Warning] [MY-000000] [Galera] Received bogus LAST message: 12620 from node 395cfb35-8957-11ea-908c-a39ec46be1f4, expected > 12639. Ignoring.
+2020-04-28T13:55:14.603314Z 0 [Warning] [MY-000000] [Galera] Received bogus LAST message: 12621 from node 395cfb35-8957-11ea-908c-a39ec46be1f4, expected > 12639. Ignoring.
+2020-04-28T13:55:15.014615Z 0 [Warning] [MY-000000] [Galera] Received bogus LAST message: 12622 from node 395cfb35-8957-11ea-908c-a39ec46be1f4, expected > 12639. Ignoring.
+2020-04-28T13:55:15.379348Z 0 [Warning] [MY-000000] [Galera] Received bogus LAST message: 12623 from node 395cfb35-8957-11ea-908c-a39ec46be1f4, expected > 12639. Ignoring.
+2020-04-28T13:55:15.783742Z 0 [Warning] [MY-000000] [Galera] Received bogus LAST message: 12624 from node 395cfb35-8957-11ea-908c-a39ec46be1f4, expected > 12639. Ignoring.
+2020-04-28T13:55:16.113662Z 0 [Warning] [MY-000000] [Galera] Received bogus LAST message: 12625 from node 395cfb35-8957-11ea-908c-a39ec46be1f4, expected > 12639. Ignoring.
+2020-04-28T13:55:16.521602Z 0 [Warning] [MY-000000] [Galera] Received bogus LAST message: 12626 from node 395cfb35-8957-11ea-908c-a39ec46be1f4, expected > 12639. Ignoring.
+2020-04-28T13:55:16.933952Z 0 [Warning] [MY-000000] [Galera] Received bogus LAST message: 12627 from node 395cfb35-8957-11ea-908c-a39ec46be1f4, expected > 12639. Ignoring.
+2020-04-28T13:55:17.224734Z 0 [Warning] [MY-000000] [Galera] Received bogus LAST message: 12628 from node 395cfb35-8957-11ea-908c-a39ec46be1f4, expected > 12639. Ignoring.
+2020-04-28T13:55:17.583633Z 0 [Warning] [MY-000000] [Galera] Received bogus LAST message: 12629 from node 395cfb35-8957-11ea-908c-a39ec46be1f4, expected > 12639. Ignoring.
+2020-04-28T13:55:17.984727Z 0 [Warning] [MY-000000] [Galera] Received bogus LAST message: 12630 from node 395cfb35-8957-11ea-908c-a39ec46be1f4, expected > 12639. Ignoring.
+2020-04-28T13:55:18.313316Z 0 [Warning] [MY-000000] [Galera] Received bogus LAST message: 12631 from node 395cfb35-8957-11ea-908c-a39ec46be1f4, expected > 12639. Ignoring.
+2020-04-28T13:55:18.686680Z 0 [Warning] [MY-000000] [Galera] Received bogus LAST message: 12632 from node 395cfb35-8957-11ea-908c-a39ec46be1f4, expected > 12639. Ignoring.
+2020-04-28T13:55:19.074420Z 0 [Warning] [MY-000000] [Galera] Received bogus LAST message: 12633 from node 395cfb35-8957-11ea-908c-a39ec46be1f4, expected > 12639. Ignoring.
+2020-04-28T13:55:19.433799Z 0 [Warning] [MY-000000] [Galera] Received bogus LAST message: 12634 from node 395cfb35-8957-11ea-908c-a39ec46be1f4, expected > 12639. Ignoring.
+2020-04-28T13:55:19.803787Z 0 [Warning] [MY-000000] [Galera] Received bogus LAST message: 12635 from node 395cfb35-8957-11ea-908c-a39ec46be1f4, expected > 12639. Ignoring.
+2020-04-28T13:55:20.174030Z 0 [Warning] [MY-000000] [Galera] Received bogus LAST message: 12636 from node 395cfb35-8957-11ea-908c-a39ec46be1f4, expected > 12639. Ignoring.
+2020-04-28T13:55:20.499734Z 0 [Note] [MY-000000] [Galera] Member 0.0 (pxc2) synced with group.
+2020-04-28T13:55:20.499796Z 0 [Note] [MY-000000] [Galera] Shifting JOINED -> SYNCED (TO: 12755)
+2020-04-28T13:55:20.499845Z 0 [Warning] [MY-000000] [Galera] Received bogus LAST message: 12637 from node 395cfb35-8957-11ea-908c-a39ec46be1f4, expected > 12639. Ignoring.
+2020-04-28T13:55:20.858951Z 0 [Warning] [MY-000000] [Galera] Received bogus LAST message: 12638 from node 395cfb35-8957-11ea-908c-a39ec46be1f4, expected > 12639. Ignoring.
+2020-04-28T13:55:21.234591Z 0 [Warning] [MY-000000] [Galera] Received bogus LAST message: 12639 from node 395cfb35-8957-11ea-908c-a39ec46be1f4, expected > 12639. Ignoring.
+2020-04-28T13:55:30.531984Z 16 [Note] [MY-000000] [Galera] ####### processing CC 12671, local, unordered
+2020-04-28T13:55:30.532040Z 16 [Note] [MY-000000] [Galera] Drain monitors from 12664 upto 12671
+2020-04-28T13:55:32.977396Z 16 [Note] [MY-000000] [Galera] REPL Protocols: 9 (4, 2)
+2020-04-28T13:55:32.977456Z 16 [Note] [MY-000000] [Galera] ####### My UUID: 395cfb35-8957-11ea-908c-a39ec46be1f4
+2020-04-28T13:55:32.977481Z 16 [Note] [MY-000000] [Galera] ####### ST not required
+2020-04-28T13:55:32.977503Z 16 [Note] [MY-000000] [Galera] Cert index reset to c413d628-894e-11ea-a7d9-7ae7715d4d7a:12671 (proto: 9), state transfer needed: no
+2020-04-28T13:55:33.165649Z 0 [Note] [MY-000000] [Galera] Service thread queue flushed.
+2020-04-28T13:55:33.165730Z 16 [Note] [MY-000000] [Galera] ####### Assign initial position for certification: c413d628-894e-11ea-a7d9-7ae7715d4d7a:12671, protocol version: 4
+2020-04-28T13:55:33.165755Z 16 [Note] [MY-000000] [Galera] Recording CC from group: 12671
+2020-04-28T13:55:33.165773Z 16 [Note] [MY-000000] [Galera] Lowest cert index boundary for CC from group: 12671
+2020-04-28T13:55:33.165791Z 16 [Note] [MY-000000] [Galera] Min available from gcache for CC from group: 12574
+2020-04-28T13:55:33.165861Z 16 [Note] [MY-000000] [Galera] ================================================
+View:
+  id: c413d628-894e-11ea-a7d9-7ae7715d4d7a:12671
+  status: primary
+  protocol_version: 3
+  capabilities: MULTI-MASTER, CERTIFICATION, PARALLEL_APPLYING, REPLAY, ISOLATION, PAUSE, CAUSAL_READ, INCREMENTAL_WS, UNORDERED, PREORDERED, STREAMING, NBO
+  final: no
+  own_index: 0
+  members(4):
+	0: 395cfb35-8957-11ea-908c-a39ec46be1f4, pxc2
+	1: 504c893c-8955-11ea-ac61-4f3f08af61d2, pxc1
+	2: 9fe9b5e1-8951-11ea-b7c8-0741a6a194a6, pxc3
+	3: cc80b11d-8957-11ea-b216-561554ebf552, garb
+=================================================
+2020-04-28T13:55:33.165928Z 16 [Note] [MY-000000] [WSREP] wsrep_notify_cmd is not defined, skipping notification.
+2020-04-28T13:55:56.064515Z 0 [Note] [MY-000000] [Galera] Created page /var/lib/mysql/gcache.page.000001 of size 134217728 bytes
+2020-04-28T13:56:06.532790Z 12 [Note] [MY-000000] [Galera] Server pxc2 synced with group
+2020-04-28T13:56:06.532850Z 12 [Note] [MY-000000] [WSREP] Server status change joined -> synced
+2020-04-28T13:56:06.532868Z 12 [Note] [MY-000000] [WSREP] Synchronized with group, ready for connections
+2020-04-28T13:56:06.532900Z 12 [Note] [MY-000000] [WSREP] wsrep_notify_cmd is not defined, skipping notification.
+2020-04-28T13:56:06.772354Z 0 [Note] [MY-011240] [Server] Plugin mysqlx reported: 'Using SSL configuration from MySQL Server'
+2020-04-28T13:56:06.773717Z 0 [Note] [MY-011243] [Server] Plugin mysqlx reported: 'Using OpenSSL for TLS connections'
+2020-04-28T13:56:06.774441Z 0 [Note] [MY-011332] [Server] Plugin mysqlx reported: 'IPv6 is available'
+2020-04-28T13:56:06.774655Z 0 [Note] [MY-011323] [Server] Plugin mysqlx reported: 'X Plugin ready for connections. bind-address: '::' port: 33060'
+2020-04-28T13:56:06.774680Z 0 [Note] [MY-011323] [Server] Plugin mysqlx reported: 'X Plugin ready for connections. socket: '/var/run/mysqld/mysqlx.sock''
+2020-04-28T13:56:06.774704Z 0 [System] [MY-011323] [Server] X Plugin ready for connections. Socket: '/var/run/mysqld/mysqlx.sock' bind-address: '::' port: 33060
+2020-04-28T14:17:01.669888Z 0 [Note] [MY-000000] [Galera] (395cfb35, 'tcp://0.0.0.0:4567') turning message relay requesting on, nonlive peers: tcp://192.168.70.63:4567 
+2020-04-28T14:17:02.692373Z 0 [Note] [MY-000000] [Galera] (395cfb35, 'tcp://0.0.0.0:4567') reconnecting to 9fe9b5e1 (tcp://192.168.70.63:4567), attempt 0
+2020-04-28T14:17:06.713219Z 0 [Note] [MY-000000] [Galera] declaring node with index 2 suspected, timeout PT5S (evs.suspect_timeout)
+2020-04-28T14:17:06.713368Z 0 [Note] [MY-000000] [Galera] evs::proto(395cfb35, OPERATIONAL, view_id(REG,395cfb35,14)) suspecting node: 9fe9b5e1
+2020-04-28T14:17:06.713420Z 0 [Note] [MY-000000] [Galera] evs::proto(395cfb35, OPERATIONAL, view_id(REG,395cfb35,14)) suspected node without join message, declaring inactive
+2020-04-28T14:17:07.213781Z 0 [Note] [MY-000000] [Galera] declaring node with index 2 inactive (evs.inactive_timeout) 
+2020-04-28T14:17:07.721562Z 0 [Note] [MY-000000] [Galera] EVS version upgrade 0 -> 1
+2020-04-28T14:17:07.721847Z 0 [Note] [MY-000000] [Galera] declaring 504c893c at tcp://192.168.70.61:4567 stable
+2020-04-28T14:17:07.721898Z 0 [Note] [MY-000000] [Galera] declaring cc80b11d at tcp://192.168.70.64:4567 stable
+2020-04-28T14:17:07.721950Z 0 [Note] [MY-000000] [Galera] PC protocol upgrade 0 -> 1
+2020-04-28T14:17:07.726488Z 0 [Note] [MY-000000] [Galera] Node 395cfb35 state primary
+2020-04-28T14:17:07.729512Z 0 [Note] [MY-000000] [Galera] Current view of cluster as seen by this node
+view (view_id(PRIM,395cfb35,15)
+memb {
+	395cfb35,0
+	504c893c,0
+	cc80b11d,0
+	}
+joined {
+	}
+left {
+	}
+partitioned {
+	9fe9b5e1,0
+	}
+)
+2020-04-28T14:17:07.729588Z 0 [Note] [MY-000000] [Galera] Save the discovered primary-component to disk
+2020-04-28T14:17:07.733620Z 0 [Note] [MY-000000] [Galera] New COMPONENT: primary = yes, bootstrap = no, my_idx = 0, memb_num = 3
+2020-04-28T14:17:07.733840Z 0 [Note] [MY-000000] [Galera] forgetting 9fe9b5e1 (tcp://192.168.70.63:4567)
+2020-04-28T14:17:07.733930Z 0 [Note] [MY-000000] [Galera] (395cfb35, 'tcp://0.0.0.0:4567') turning message relay requesting off
+2020-04-28T14:17:07.734245Z 0 [Note] [MY-000000] [Galera] STATE_EXCHANGE: sent state UUID: f157a759-895a-11ea-9368-ab18bac0dcc5
+2020-04-28T14:17:07.740553Z 0 [Note] [MY-000000] [Galera] STATE EXCHANGE: sent state msg: f157a759-895a-11ea-9368-ab18bac0dcc5
+2020-04-28T14:17:07.743448Z 0 [Note] [MY-000000] [Galera] STATE EXCHANGE: got state msg: f157a759-895a-11ea-9368-ab18bac0dcc5 from 0 (pxc2)
+2020-04-28T14:17:07.743574Z 0 [Note] [MY-000000] [Galera] STATE EXCHANGE: got state msg: f157a759-895a-11ea-9368-ab18bac0dcc5 from 1 (pxc1)
+2020-04-28T14:17:07.743734Z 0 [Note] [MY-000000] [Galera] STATE EXCHANGE: got state msg: f157a759-895a-11ea-9368-ab18bac0dcc5 from 2 (garb)
+2020-04-28T14:17:07.743786Z 0 [Note] [MY-000000] [Galera] Quorum results:
+	version    = 6,
+	component  = PRIMARY,
+	conf_id    = 14,
+	members    = 3/3 (primary/total),
+	act_id     = 12917,
+	last_appl. = 12800,
+	protocols  = 2/10/4 (gcs/repl/appl),
+	vote policy= 0,
+	group UUID = c413d628-894e-11ea-a7d9-7ae7715d4d7a
+2020-04-28T14:17:07.743911Z 0 [Note] [MY-000000] [Galera] Flow-control interval: [141, 141]
+2020-04-28T14:17:07.744097Z 1 [Note] [MY-000000] [Galera] ####### processing CC 12918, local, ordered
+2020-04-28T14:17:07.744151Z 1 [Note] [MY-000000] [Galera] Drain monitors from 12917 upto 12917
+2020-04-28T14:17:07.744191Z 1 [Note] [MY-000000] [Galera] REPL Protocols: 10 (5, 3)
+2020-04-28T14:17:07.744233Z 1 [Note] [MY-000000] [Galera] ####### My UUID: 395cfb35-8957-11ea-908c-a39ec46be1f4
+2020-04-28T14:17:07.744267Z 1 [Note] [MY-000000] [Galera] ####### ST not required
+2020-04-28T14:17:07.744305Z 1 [Note] [MY-000000] [Galera] Cert index reset to 00000000-0000-0000-0000-000000000000:-1 (proto: 10), state transfer needed: no
+2020-04-28T14:17:08.559521Z 0 [Note] [MY-000000] [Galera] Deleted page /var/lib/mysql/gcache.page.000000
+2020-04-28T14:17:08.583284Z 0 [Note] [MY-000000] [Galera] Service thread queue flushed.
+2020-04-28T14:17:08.606002Z 1 [Note] [MY-000000] [Galera] ####### Assign initial position for certification: 00000000-0000-0000-0000-000000000000:-1, protocol version: 5
+2020-04-28T14:17:08.606157Z 1 [Note] [MY-000000] [Galera] ####### Adjusting cert position: -1 -> 12918
+2020-04-28T14:17:08.606268Z 0 [Note] [MY-000000] [Galera] Service thread queue flushed.
+2020-04-28T14:17:08.606316Z 1 [Note] [MY-000000] [Galera] ####### Setting monitor position to 12918
+2020-04-28T14:17:08.609940Z 1 [Note] [MY-000000] [Galera] Recording CC from group: 12918
+2020-04-28T14:17:08.609970Z 1 [Note] [MY-000000] [Galera] Lowest cert index boundary for CC from group: 12918
+2020-04-28T14:17:08.609988Z 1 [Note] [MY-000000] [Galera] Min available from gcache for CC from group: 12916
+2020-04-28T14:17:08.610034Z 1 [Note] [MY-000000] [Galera] ================================================
+View:
+  id: c413d628-894e-11ea-a7d9-7ae7715d4d7a:12918
+  status: primary
+  protocol_version: 4
+  capabilities: MULTI-MASTER, CERTIFICATION, PARALLEL_APPLYING, REPLAY, ISOLATION, PAUSE, CAUSAL_READ, INCREMENTAL_WS, UNORDERED, PREORDERED, STREAMING, NBO
+  final: no
+  own_index: 0
+  members(3):
+	0: 395cfb35-8957-11ea-908c-a39ec46be1f4, pxc2
+	1: 504c893c-8955-11ea-ac61-4f3f08af61d2, pxc1
+	2: cc80b11d-8957-11ea-b216-561554ebf552, garb
+=================================================
+2020-04-28T14:17:08.610082Z 1 [Note] [MY-000000] [WSREP] wsrep_notify_cmd is not defined, skipping notification.
+2020-04-28T14:17:08.624681Z 0 [Note] [MY-000000] [Galera] Deleted page /var/lib/mysql/gcache.page.000001
+2020-04-28T14:17:10.739825Z 0 [Note] [MY-000000] [Galera]  cleaning up 9fe9b5e1 (tcp://192.168.70.63:4567)

@@ -6,10 +6,6 @@
   become_method: sudo
 
   tasks:
-  - name: remove mysql-libs
-    yum: name=mysql-libs state=absent
-    when: ansible_os_family == "RedHat" and ansible_distribution_major_version == "6"
-
   - name: install stuff
     yum:
       name: "{{ packages }}"
@@ -17,7 +13,7 @@
     vars:
       packages:
       - libselinux-python
-    when: ansible_os_family == "RedHat" and ansible_distribution_major_version != "8"
+    when: ansible_os_family == "RedHat" and ansible_distribution_major_version == "7"
 
 # - selinux: state=disabled
 
@@ -35,16 +31,12 @@
     yum: name=https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm state=present
     when: ansible_os_family == "RedHat" and ansible_distribution_major_version == "7"
 
-  - name: add the epel repo for centos6
-    yum: name=https://dl.fedoraproject.org/pub/epel/epel-release-latest-6.noarch.rpm state=present
-    when: ansible_os_family == "RedHat" and ansible_distribution_major_version == "6"
+  - name: add the epel repo for centos8
+    yum: name=https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm state=present
+    when: ansible_os_family == "RedHat" and ansible_distribution_major_version == "8"
 
   - name: enable testing repo
-    command:  percona-release enable original testing
-
-  - name: disable the mysql module on RHEL/CentOS 8
-    command: /usr/bin/dnf module disable mysql -y
-    when: ansible_os_family == "RedHat" and ansible_distribution_major_version == "8"
+    command:  percona-release setup pxc-80
 
   - name: install garb
     yum:
@@ -52,12 +44,12 @@
       state: present
     vars:
       packages:
-      - Percona-XtraDB-Cluster-garbd-57
+      - percona-xtradb-cluster-garbd
 
   - name: configure garbd
-    template: src=../templates/garbd_rpm.j2
+    template: src=../templates/garbd_8_rpm.j2
               dest=/etc/sysconfig/garb
-              mode=0640 owner=root group=root
+              mode=0644 owner=root group=root
 
   - name: start garbd service
     command: service garb start

@@ -17,6 +17,7 @@
     vars:
       packages:
       - libselinux-python
+    when: ansible_os_family == "RedHat" and ansible_distribution_major_version != "8"
 
   - name: disable selinux
     selinux: state=disabled
@@ -29,7 +30,6 @@
     - 192.168.70.71
 
   - name: add the percona repo
-#   yum: name=http://www.percona.com/downloads/percona-release/redhat/0.1-6/percona-release-0.1-6.noarch.rpm
     yum: name=https://repo.percona.com/yum/percona-release-latest.noarch.rpm
 
   - name: add the epel repo for centos7 
@@ -40,6 +40,14 @@
     yum: name=https://dl.fedoraproject.org/pub/epel/epel-release-latest-6.noarch.rpm state=present
     when: ansible_os_family == "RedHat" and ansible_distribution_major_version == "6"
 
+  - name: add the epel repo for centos6
+    yum: name=https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm state=present
+    when: ansible_os_family == "RedHat" and ansible_distribution_major_version == "8"
+
+  - name: disable the mysql module on RHEL/CentOS 8
+    command: /usr/bin/dnf module disable mysql -y
+    when: ansible_os_family == "RedHat" and ansible_distribution_major_version == "8"
+
   - name: install PXC
     yum: 
       name: "{{ packages }}"
@@ -48,16 +56,34 @@
       packages:
       - Percona-XtraDB-Cluster-full-57.x86_64 
       - pv 
-      - MySQL-python 
       - sysbench
+    when: ansible_os_family == "RedHat"
  
+  - name: install python mysql rpm packages for CentOS 6 and 7
+    yum:
+      name: "{{ packages }}"
+      state: latest
+    vars:
+      packages:
+      - MySQL-python
+    when: ansible_os_family == "RedHat" and ansible_distribution_major_version != "8"
+
+  - name: install python mysql rpm packages for CentOS 8
+    yum:
+      name: "{{ packages }}"
+      state: latest
+    vars:
+      packages:
+      - python3-PyMySQL
+    when: ansible_os_family == "RedHat" and ansible_distribution_major_version == "8"
+
   - name: copy pxc config
     template: src=../templates/my_rpm.j2 dest=/etc/my.cnf
     when: ansible_os_family == "RedHat" and ansible_distribution_major_version == "6"
 
   - name: copy pxc config
     template: src=../templates/my_rpm_7.j2 dest=/etc/my.cnf
-    when: ansible_os_family == "RedHat" and ansible_distribution_major_version == "7"
+    when: ansible_os_family == "RedHat" and ansible_distribution_major_version >= "7"
 
   - name: bootstrap cluster on RHEL6
     command: /etc/init.d/mysql bootstrap-pxc
@@ -65,7 +91,7 @@
 
   - name: bootstrap cluster on RHEL7
     command: systemctl start mysql@bootstrap.service
-    when: ansible_os_family == "RedHat" and ansible_distribution_major_version == "7"
+    when: ansible_os_family == "RedHat" and ansible_distribution_major_version >= "7"
 
   - name: set root password
     command: /vagrant/setpass_57.sh
@@ -81,10 +107,10 @@
 
   - name: create backup used RHEL 7
     command: /vagrant/backup_user.sh
-    when: ansible_os_family == "RedHat" and ansible_distribution_major_version == "7"
+    when: ansible_os_family == "RedHat" and ansible_distribution_major_version >= "7"
 
   - name: install plugins
     command: /vagrant/pxc_plugins_57.sh
 
-  - name: check PXC-5.7 version
-    command: /vagrant/version_check.sh pxc57
+# - name: check PXC-5.7 version
+#   command: /vagrant/version_check.sh pxc57

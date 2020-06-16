@@ -18,6 +18,7 @@
       packages:
       - libselinux-python
       - unzip
+    when: ansible_os_family == "RedHat" and ansible_distribution_major_version != "8"
 
   - selinux: state=disabled
 
@@ -32,6 +33,10 @@
     yum: name=https://repo.percona.com/yum/percona-release-latest.noarch.rpm
 
   - name: add the epel repo for centos7 
+    yum: name=https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm state=present
+    when: ansible_os_family == "RedHat" and ansible_distribution_major_version == "8"
+
+  - name: add the epel repo for centos7 
     yum: name=https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm state=present
     when: ansible_os_family == "RedHat" and ansible_distribution_major_version == "7"
 
@@ -41,6 +46,10 @@
 
   - name: enable testing repo
     command: percona-release enable original testing
+
+  - name: disable the mysql module on RHEL/CentOS 8
+    command: /usr/bin/dnf module disable mysql -y
+    when: ansible_os_family == "RedHat" and ansible_distribution_major_version == "8"
 
   - name: install PXC
     yum: 
@@ -56,13 +65,13 @@
 
   - name: copy pxc config
     template: src=../templates/my_rpm_7.j2 dest=/etc/my.cnf
-    when: ansible_os_family == "RedHat" and ansible_distribution_major_version == "7"
+    when: ansible_os_family == "RedHat" and ansible_distribution_major_version >= "7"
 
   - command: service mysql start
     when: ansible_os_family == "RedHat" and ansible_distribution_major_version == "6"
 
   - command: systemctl start mysql
-    when: ansible_os_family == "RedHat" and ansible_distribution_major_version == "7"
+    when: ansible_os_family == "RedHat" and ansible_distribution_major_version >= "7"
 
   - name: copy .my.cnf
     template: src=../templates/my_57.j2

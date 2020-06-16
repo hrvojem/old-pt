@@ -22,11 +22,11 @@
       deb: https://repo.percona.com/apt/percona-release_latest.generic_all.deb
     when: ansible_os_family == "Debian"
 
-  - name: change the default repo to testing
-    command: percona-release enable pxc-80 testing
+  - name: change the default repo to main
+    command: percona-release setup pxc-80
 
-  - name: add the experimental tools repo
-    command: percona-release enable tools testing
+# - name: add the experimental tools repo
+#   command: percona-release enable tools release
 
   - name: install vim, pv, python-mysqldb, and PXC-8.0
     apt:
@@ -44,8 +44,8 @@
   - name: start the service to see if it works with default config
     command: systemctl start mysql
 
-  - name: check version
-    command: /vagrant/version_check.sh pxc80
+# - name: check version
+#   command: /vagrant/version_check.sh pxc80
 
   - name: stop the service to see if it works with default config
     command: systemctl stop mysql
@@ -61,11 +61,11 @@
   - name: install plugins
     command: /vagrant/plugins_test_pxc_80.sh
 
-  - name: run sysbench tpcc prepare script
-    command: /usr/share/sysbench/tpcc.lua --mysql-user=root --mysql-db=sbt --time=30 --threads=64 --report-interval=1 --tables=3 --scale=10 --db-driver=mysql --use_fk=0 --force_pk=1 --trx_level=RC prepare
+# - name: run sysbench tpcc prepare script
+#   command: /usr/share/sysbench/tpcc.lua --mysql-user=sysbench --mysql-db=sbt --time=30 --threads=64 --report-interval=1 --tables=3 --scale=10 --db-driver=mysql --use_fk=0 --force_pk=1 --trx_level=RC prepare
 
-  - name: run sysbench tpcc benchmark
-    command: /usr/share/sysbench/tpcc.lua --mysql-user=root --mysql-db=sbt --time=30 --threads=64 --report-interval=1 --tables=3 --scale=10 --db-driver=mysql --use_fk=0 --force_pk=1 --trx_level=RC run
+# - name: run sysbench tpcc benchmark
+#   command: /usr/share/sysbench/tpcc.lua --mysql-user=sysbench --mysql-db=sbt --time=30 --threads=64 --report-interval=1 --tables=3 --scale=10 --db-driver=mysql --use_fk=0 --force_pk=1 --trx_level=RC run
 
 # - name: install 3rd party packages
 #   apt:

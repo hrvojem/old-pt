@@ -14,7 +14,7 @@
     when: ansible_os_family == "Debian"
 
   - name: enable testing repo
-    command: percona-release enable pxc-80 experimental
+    command: percona-release setup pxc-80
 
   - name: install garbd
     apt:
@@ -24,7 +24,7 @@
       packages:
       - vim
       - pv
-      - python-mysqldb
+#     - python-mysqldb
       - percona-xtradb-cluster-garbd
 
   - name: configure garbd

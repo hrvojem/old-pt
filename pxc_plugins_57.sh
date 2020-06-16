@@ -13,3 +13,5 @@ mysql -e "SHOW PLUGINS;"
 mysql -e "CREATE DATABASE world;"
 mysql -e "CREATE DATABASE sbt;"
 pv /vagrant/world_innodb.sql | mysql -D world
+mysql  -e "CREATE USER sysbench@'%' IDENTIFIED WITH mysql_native_password BY 'test';"
+mysql  -e "GRANT ALL ON *.* TO sysbench@'%';"

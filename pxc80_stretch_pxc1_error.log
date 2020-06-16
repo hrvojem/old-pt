@@ -1,0 +1,752 @@
+2020-04-10T16:08:18.130037Z 0 [Warning] [MY-000000] [WSREP] Node is running in bootstrap/initialize mode. Disabling pxc_strict_mode checks
+2020-04-10T16:08:18.132339Z 0 [System] [MY-013169] [Server] /usr/sbin/mysqld (mysqld 8.0.18-9) initializing of server in progress as process 3559
+2020-04-10T16:08:18.155832Z 0 [Note] [MY-000000] [Galera] Loading provider none initial position: 00000000-0000-0000-0000-000000000000:-1
+2020-04-10T16:08:18.157247Z 0 [Note] [MY-000000] [Galera] wsrep_load(): loading provider library 'none'
+2020-04-10T16:08:20.750982Z 0 [Warning] [MY-010161] [Server] You need to use --log-bin to make --binlog-expire-logs-seconds work.
+2020-04-10T16:08:21.434690Z 5 [Warning] [MY-010453] [Server] root@localhost is created with an empty password ! Please consider switching off the --initialize-insecure option.
+2020-04-10T16:08:24.901834Z 0 [System] [MY-010116] [Server] /usr/sbin/mysqld (mysqld 8.0.18-9) starting as process 3609
+2020-04-10T16:08:24.908065Z 0 [Note] [MY-000000] [Galera] Loading provider /usr/lib/galera4/libgalera_smm.so initial position: 00000000-0000-0000-0000-000000000000:-1
+2020-04-10T16:08:24.908126Z 0 [Note] [MY-000000] [Galera] wsrep_load(): loading provider library '/usr/lib/galera4/libgalera_smm.so'
+2020-04-10T16:08:24.925453Z 0 [Note] [MY-000000] [Galera] wsrep_load(): Galera 4.3(r752664d) by Codership Oy <info@codership.com> loaded successfully.
+2020-04-10T16:08:24.925541Z 0 [Note] [MY-000000] [Galera] CRC-32C: using hardware acceleration.
+2020-04-10T16:08:24.927233Z 0 [Warning] [MY-000000] [Galera] Could not open state file for reading: '/var/lib/mysql//grastate.dat'
+2020-04-10T16:08:24.927309Z 0 [Warning] [MY-000000] [Galera] No persistent state found. Bootstraping with default state
+2020-04-10T16:08:24.927408Z 0 [Note] [MY-000000] [Galera] Found saved state: 00000000-0000-0000-0000-000000000000:-1, safe_to_bootstrap: 1
+2020-04-10T16:08:24.928140Z 0 [Note] [MY-000000] [Galera] GCache DEBUG: opened preamble:
+Version: 0
+UUID: 00000000-0000-0000-0000-000000000000
+Seqno: -1 - -1
+Offset: -1
+Synced: 0
+2020-04-10T16:08:24.928223Z 0 [Note] [MY-000000] [Galera] Skipped GCache ring buffer recovery: could not determine history UUID.
+2020-04-10T16:08:24.940004Z 0 [Note] [MY-000000] [Galera] Passing config to GCS: base_dir = /var/lib/mysql/; base_host = 10.0.2.15; base_port = 4567; cert.log_conflicts = no; cert.optimistic_pa = yes; debug = no; evs.auto_evict = 0; evs.delay_margin = PT1S; evs.delayed_keep_period = PT30S; evs.inactive_check_period = PT0.5S; evs.inactive_timeout = PT15S; evs.join_retrans_period = PT1S; evs.max_install_timeouts = 3; evs.send_window = 10; evs.stats_report_period = PT1M; evs.suspect_timeout = PT5S; evs.user_send_window = 4; evs.view_forget_timeout = PT24H; gcache.dir = /var/lib/mysql/; gcache.freeze_purge_at_seqno = -1; gcache.keep_pages_count = 0; gcache.keep_pages_size = 0; gcache.mem_size = 0; gcache.name = galera.cache; gcache.page_size = 128M; gcache.recover = yes; gcache.size = 128M; gcomm.thread_prio = ; gcs.fc_debug = 0; gcs.fc_factor = 1.0; gcs.fc_limit = 100; gcs.fc_master_slave = no; gcs.max_packet_size = 64500; gcs.max_throttle = 0.25; gcs.recv_q_hard_limit = 9223372036854775807; gcs.recv_q_soft_limit = 0.25; gcs.sync_donor = no; gmcast.segment = 0; gmcast.version = 0; pc.announce_timeout = PT3S; pc.checksum = false; pc.ignore_quorum = false; pc.ignore_sb = false; pc.npvo = false; pc.recovery = true; pc.version = 0; pc.wait_prim = true; pc.wait_prim_timeout = PT30S; pc.weight = 1; protonet.backend = asio; protonet.version = 0; repl.causal_read_timeout = PT30S; repl.commit_order = 3; repl.key_format = FLAT8; repl.max_ws_size = 2147483647; repl.proto_max = 10; socket.checksum = 2; socket.recv_buf_size = 212992; socket.ssl_ca = ca.pem; socket.ssl_cert = server-cert.pem; socket.ssl_cipher = ; socket.ssl_compression = YES; socket.ssl_key = server-key.pem; 
+2020-04-10T16:08:24.982854Z 0 [Note] [MY-000000] [WSREP] Starting replication
+2020-04-10T16:08:24.983057Z 0 [Note] [MY-000000] [Galera] Connecting with bootstrap option: 1
+2020-04-10T16:08:24.983215Z 0 [Note] [MY-000000] [Galera] Setting GCS initial position to 00000000-0000-0000-0000-000000000000:-1
+2020-04-10T16:08:24.984785Z 0 [Note] [MY-000000] [Galera] protonet asio version 0
+2020-04-10T16:08:24.985264Z 0 [Note] [MY-000000] [Galera] Using CRC-32C for message checksums.
+2020-04-10T16:08:24.985527Z 0 [Note] [MY-000000] [Galera] initializing ssl context
+2020-04-10T16:08:24.986069Z 0 [Note] [MY-000000] [Galera] backend: asio
+2020-04-10T16:08:24.986340Z 0 [Note] [MY-000000] [Galera] gcomm thread scheduling priority set to other:0 
+2020-04-10T16:08:24.988586Z 0 [Warning] [MY-000000] [Galera] Fail to access the file (/var/lib/mysql//gvwstate.dat) error (No such file or directory). It is possible if node is booting for first time or re-booting after a graceful shutdown
+2020-04-10T16:08:24.988765Z 0 [Note] [MY-000000] [Galera] Restoring primary-component from disk failed. Either node is booting for first time or re-booting after a graceful shutdown
+2020-04-10T16:08:24.989340Z 0 [Note] [MY-000000] [Galera] GMCast version 0
+2020-04-10T16:08:24.989671Z 0 [Note] [MY-000000] [Galera] (81dc751c, 'ssl://0.0.0.0:4567') listening at ssl://0.0.0.0:4567
+2020-04-10T16:08:24.989863Z 0 [Note] [MY-000000] [Galera] (81dc751c, 'ssl://0.0.0.0:4567') multicast: , ttl: 1
+2020-04-10T16:08:24.990740Z 0 [Note] [MY-000000] [Galera] EVS version 1
+2020-04-10T16:08:24.991169Z 0 [Note] [MY-000000] [Galera] gcomm: bootstrapping new group 'pxc-cluster'
+2020-04-10T16:08:24.991403Z 0 [Note] [MY-000000] [Galera] start_prim is enabled, turn off pc_recovery
+2020-04-10T16:08:24.992010Z 0 [Note] [MY-000000] [Galera] EVS version upgrade 0 -> 1
+2020-04-10T16:08:24.992234Z 0 [Note] [MY-000000] [Galera] PC protocol upgrade 0 -> 1
+2020-04-10T16:08:24.992474Z 0 [Note] [MY-000000] [Galera] Node 81dc751c state primary
+2020-04-10T16:08:24.992710Z 0 [Note] [MY-000000] [Galera] Current view of cluster as seen by this node
+view (view_id(PRIM,81dc751c,1)
+memb {
+	81dc751c,0
+	}
+joined {
+	}
+left {
+	}
+partitioned {
+	}
+)
+2020-04-10T16:08:24.992924Z 0 [Note] [MY-000000] [Galera] Save the discovered primary-component to disk
+2020-04-10T16:08:24.995334Z 0 [Note] [MY-000000] [Galera] gcomm: connected
+2020-04-10T16:08:24.995659Z 0 [Note] [MY-000000] [Galera] Changing maximum packet size to 64500, resulting msg size: 32636
+2020-04-10T16:08:24.995961Z 0 [Note] [MY-000000] [Galera] Shifting CLOSED -> OPEN (TO: 0)
+2020-04-10T16:08:24.996183Z 0 [Note] [MY-000000] [Galera] Opened channel 'pxc-cluster'
+2020-04-10T16:08:24.997144Z 2 [Note] [MY-000000] [WSREP] Starting rollbacker thread 2
+2020-04-10T16:08:24.997533Z 0 [Note] [MY-000000] [Galera] New COMPONENT: primary = yes, bootstrap = no, my_idx = 0, memb_num = 1
+2020-04-10T16:08:24.997933Z 0 [Note] [MY-000000] [Galera] Starting new group from scratch: 81ddcec6-7b45-11ea-91f9-5657fbaa9e47
+2020-04-10T16:08:24.998350Z 0 [Note] [MY-000000] [Galera] STATE_EXCHANGE: sent state UUID: 81ddddd0-7b45-11ea-bca2-bef202e2b943
+2020-04-10T16:08:24.998625Z 0 [Note] [MY-000000] [Galera] STATE EXCHANGE: sent state msg: 81ddddd0-7b45-11ea-bca2-bef202e2b943
+2020-04-10T16:08:24.998892Z 0 [Note] [MY-000000] [Galera] STATE EXCHANGE: got state msg: 81ddddd0-7b45-11ea-bca2-bef202e2b943 from 0 (pxc-cluster-node-1)
+2020-04-10T16:08:24.999167Z 0 [Note] [MY-000000] [Galera] Quorum results:
+	version    = 6,
+	component  = PRIMARY,
+	conf_id    = 0,
+	members    = 1/1 (primary/total),
+	act_id     = 0,
+	last_appl. = 0,
+	protocols  = 2/10/4 (gcs/repl/appl),
+	vote policy= 0,
+	group UUID = 81ddcec6-7b45-11ea-91f9-5657fbaa9e47
+2020-04-10T16:08:24.999488Z 0 [Note] [MY-000000] [Galera] Flow-control interval: [100, 100]
+2020-04-10T16:08:24.999781Z 0 [Note] [MY-000000] [Galera] Restored state OPEN -> JOINED (1)
+2020-04-10T16:08:25.000135Z 0 [Note] [MY-000000] [Galera] Member 0.0 (pxc-cluster-node-1) synced with group.
+2020-04-10T16:08:25.000488Z 0 [Note] [MY-000000] [Galera] Shifting JOINED -> SYNCED (TO: 1)
+2020-04-10T16:08:25.002437Z 1 [Note] [MY-000000] [WSREP] Starting applier thread 1
+2020-04-10T16:08:25.002827Z 1 [Note] [MY-000000] [Galera] ####### processing CC 1, local, ordered
+2020-04-10T16:08:25.003150Z 1 [Note] [MY-000000] [Galera] Drain monitors from -1 upto -1
+2020-04-10T16:08:25.003467Z 1 [Note] [MY-000000] [Galera] REPL Protocols: 10 (5, 3)
+2020-04-10T16:08:25.003818Z 1 [Note] [MY-000000] [Galera] ####### My UUID: 81dc751c-7b45-11ea-bec5-c2961c4d9e66
+2020-04-10T16:08:25.004122Z 1 [Note] [MY-000000] [Galera] Server pxc-cluster-node-1 connected to cluster at position 81ddcec6-7b45-11ea-91f9-5657fbaa9e47:1 with ID 81dc751c-7b45-11ea-bec5-c2961c4d9e66
+2020-04-10T16:08:25.004430Z 1 [Note] [MY-000000] [WSREP] Server status change disconnected -> connected
+2020-04-10T16:08:25.004746Z 1 [Note] [MY-000000] [WSREP] wsrep_notify_cmd is not defined, skipping notification.
+2020-04-10T16:08:25.005104Z 1 [Note] [MY-000000] [Galera] ####### ST not required
+2020-04-10T16:08:25.005416Z 1 [Note] [MY-000000] [Galera] Cert index reset to 00000000-0000-0000-0000-000000000000:-1 (proto: 10), state transfer needed: no
+2020-04-10T16:08:25.005824Z 0 [Note] [MY-000000] [Galera] Service thread queue flushed.
+2020-04-10T16:08:25.006278Z 1 [Note] [MY-000000] [Galera] ####### Assign initial position for certification: 00000000-0000-0000-0000-000000000000:-1, protocol version: 5
+2020-04-10T16:08:25.006614Z 1 [Note] [MY-000000] [Galera] ####### Adjusting cert position: -1 -> 1
+2020-04-10T16:08:25.006954Z 0 [Note] [MY-000000] [Galera] Service thread queue flushed.
+2020-04-10T16:08:25.007322Z 1 [Note] [MY-000000] [Galera] ####### Setting monitor position to 1
+2020-04-10T16:08:25.018089Z 1 [Note] [MY-000000] [Galera] ####### Resetting gcache as cluster is being bootstrapped
+2020-04-10T16:08:25.018462Z 1 [Note] [MY-000000] [Galera] GCache history reset: old(00000000-0000-0000-0000-000000000000:0 -> 81ddcec6-7b45-11ea-91f9-5657fbaa9e47:0
+2020-04-10T16:08:25.020792Z 1 [Note] [MY-000000] [Galera] Recording CC from group: 1
+2020-04-10T16:08:25.021147Z 1 [Note] [MY-000000] [Galera] Lowest cert index boundary for CC from group: 1
+2020-04-10T16:08:25.021491Z 1 [Note] [MY-000000] [Galera] Min available from gcache for CC from group: 1
+2020-04-10T16:08:25.021889Z 1 [Note] [MY-000000] [Galera] ================================================
+View:
+  id: 81ddcec6-7b45-11ea-91f9-5657fbaa9e47:1
+  status: primary
+  protocol_version: 4
+  capabilities: MULTI-MASTER, CERTIFICATION, PARALLEL_APPLYING, REPLAY, ISOLATION, PAUSE, CAUSAL_READ, INCREMENTAL_WS, UNORDERED, PREORDERED, STREAMING, NBO
+  final: no
+  own_index: 0
+  members(1):
+	0: 81dc751c-7b45-11ea-bec5-c2961c4d9e66, pxc-cluster-node-1
+=================================================
+2020-04-10T16:08:25.022233Z 1 [Note] [MY-000000] [WSREP] Server status change connected -> joiner
+2020-04-10T16:08:25.022580Z 1 [Note] [MY-000000] [WSREP] wsrep_notify_cmd is not defined, skipping notification.
+2020-04-10T16:08:25.022938Z 1 [Note] [MY-000000] [WSREP] Server status change joiner -> initializing
+2020-04-10T16:08:25.023288Z 1 [Note] [MY-000000] [WSREP] wsrep_notify_cmd is not defined, skipping notification.
+2020-04-10T16:08:25.026492Z 0 [Warning] [MY-013245] [Server] The SSL library function CRYPTO_set_mem_functions failed. This is typically caused by the SSL library already being used. As a result the SSL memory allocation will not be instrumented.
+2020-04-10T16:08:25.887489Z 6 [System] [MY-000000] [WSREP] PXC upgrade completed successfully
+2020-04-10T16:08:26.039613Z 0 [Warning] [MY-010068] [Server] CA certificate ca.pem is self signed.
+2020-04-10T16:08:26.044095Z 0 [Warning] [MY-011810] [Server] Insecure configuration for --pid-file: Location '/tmp' in the path is accessible to all OS users. Consider choosing a different directory.
+2020-04-10T16:08:26.070293Z 0 [Note] [MY-000000] [WSREP] Initialized wsrep sidno 2
+2020-04-10T16:08:26.070316Z 0 [Note] [MY-000000] [WSREP] wsrep_init_schema_and_SR (nil)
+2020-04-10T16:08:26.109560Z 0 [Note] [MY-000000] [Galera] Server initialized
+2020-04-10T16:08:26.109590Z 0 [Note] [MY-000000] [WSREP] Server status change initializing -> initialized
+2020-04-10T16:08:26.109608Z 0 [Note] [MY-000000] [WSREP] wsrep_notify_cmd is not defined, skipping notification.
+2020-04-10T16:08:26.109673Z 1 [Note] [MY-000000] [Galera] Bootstrapping a new cluster, setting initial position to 00000000-0000-0000-0000-000000000000:-1
+2020-04-10T16:08:26.113184Z 10 [Note] [MY-000000] [WSREP] Cluster table is empty, not recovering transactions
+2020-04-10T16:08:26.113244Z 1 [Note] [MY-000000] [WSREP] Server status change initialized -> joined
+2020-04-10T16:08:26.113262Z 1 [Note] [MY-000000] [WSREP] wsrep_notify_cmd is not defined, skipping notification.
+2020-04-10T16:08:26.113288Z 1 [Note] [MY-000000] [WSREP] wsrep_notify_cmd is not defined, skipping notification.
+2020-04-10T16:08:26.115793Z 12 [Note] [MY-000000] [WSREP] Starting applier thread 12
+2020-04-10T16:08:26.115915Z 13 [Note] [MY-000000] [WSREP] Starting applier thread 13
+2020-04-10T16:08:26.116045Z 14 [Note] [MY-000000] [WSREP] Starting applier thread 14
+2020-04-10T16:08:26.118440Z 15 [Note] [MY-000000] [WSREP] Starting applier thread 15
+2020-04-10T16:08:26.118879Z 16 [Note] [MY-000000] [WSREP] Starting applier thread 16
+2020-04-10T16:08:26.119040Z 17 [Note] [MY-000000] [WSREP] Starting applier thread 17
+2020-04-10T16:08:26.119198Z 18 [Note] [MY-000000] [WSREP] Starting applier thread 18
+2020-04-10T16:08:26.132204Z 1 [Note] [MY-000000] [Galera] Server pxc-cluster-node-1 synced with group
+2020-04-10T16:08:26.132232Z 1 [Note] [MY-000000] [WSREP] Server status change joined -> synced
+2020-04-10T16:08:26.132244Z 1 [Note] [MY-000000] [WSREP] Synchronized with group, ready for connections
+2020-04-10T16:08:26.132258Z 1 [Note] [MY-000000] [WSREP] wsrep_notify_cmd is not defined, skipping notification.
+2020-04-10T16:08:26.134846Z 11 [System] [MY-013172] [Server] Received SHUTDOWN from user boot. Shutting down mysqld (Version: 8.0.18-9).
+2020-04-10T16:08:26.135069Z 0 [Note] [MY-000000] [WSREP] Initiating SST cancellation
+2020-04-10T16:08:28.141453Z 0 [Note] [MY-000000] [WSREP] Server status change synced -> disconnecting
+2020-04-10T16:08:28.141492Z 0 [Note] [MY-000000] [WSREP] wsrep_notify_cmd is not defined, skipping notification.
+2020-04-10T16:08:28.141523Z 0 [Note] [MY-000000] [Galera] Closing send monitor...
+2020-04-10T16:08:28.141539Z 0 [Note] [MY-000000] [Galera] Closed send monitor.
+2020-04-10T16:08:28.141555Z 0 [Note] [MY-000000] [Galera] gcomm: terminating thread
+2020-04-10T16:08:28.141575Z 0 [Note] [MY-000000] [Galera] gcomm: joining thread
+2020-04-10T16:08:28.141611Z 2 [Note] [MY-000000] [WSREP] rollbacker thread exiting 2
+2020-04-10T16:08:28.141880Z 0 [Note] [MY-000000] [Galera] gcomm: closing backend
+2020-04-10T16:08:28.141928Z 0 [Note] [MY-000000] [Galera] PC protocol downgrade 1 -> 0
+2020-04-10T16:08:28.141951Z 0 [Note] [MY-000000] [Galera] Current view of cluster as seen by this node
+view ((empty))
+2020-04-10T16:08:28.142112Z 0 [Note] [MY-000000] [Galera] gcomm: closed
+2020-04-10T16:08:28.142148Z 0 [Note] [MY-000000] [Galera] New SELF-LEAVE.
+2020-04-10T16:08:28.142199Z 0 [Note] [MY-000000] [Galera] Flow-control interval: [0, 0]
+2020-04-10T16:08:28.142215Z 0 [Note] [MY-000000] [Galera] Received SELF-LEAVE. Closing connection.
+2020-04-10T16:08:28.142228Z 0 [Note] [MY-000000] [Galera] Shifting SYNCED -> CLOSED (TO: 1)
+2020-04-10T16:08:28.142249Z 0 [Note] [MY-000000] [Galera] RECV thread exiting 0: Success
+2020-04-10T16:08:28.142316Z 1 [Note] [MY-000000] [Galera] ####### processing CC -1, local, ordered
+2020-04-10T16:08:28.142341Z 1 [Note] [MY-000000] [Galera] Drain monitors from 1 upto 1
+2020-04-10T16:08:28.142361Z 1 [Note] [MY-000000] [Galera] ####### My UUID: 81dc751c-7b45-11ea-bec5-c2961c4d9e66
+2020-04-10T16:08:28.142376Z 1 [Note] [MY-000000] [Galera] ####### ST not required
+2020-04-10T16:08:28.142441Z 0 [Note] [MY-000000] [Galera] recv_thread() joined.
+2020-04-10T16:08:28.142456Z 0 [Note] [MY-000000] [Galera] Closing replication queue.
+2020-04-10T16:08:28.142468Z 0 [Note] [MY-000000] [Galera] Closing slave action queue.
+2020-04-10T16:08:28.142502Z 1 [Note] [MY-000000] [Galera] ================================================
+View:
+  id: 81ddcec6-7b45-11ea-91f9-5657fbaa9e47:-1
+  status: non-primary
+  protocol_version: 4
+  capabilities: MULTI-MASTER, CERTIFICATION, PARALLEL_APPLYING, REPLAY, ISOLATION, PAUSE, CAUSAL_READ, INCREMENTAL_WS, UNORDERED, PREORDERED, STREAMING, NBO
+  final: yes
+  own_index: -1
+  members(0):
+=================================================
+2020-04-10T16:08:28.142527Z 1 [Note] [MY-000000] [Galera] Non-primary view
+2020-04-10T16:08:28.142541Z 1 [Note] [MY-000000] [WSREP] Server status change disconnecting -> disconnected
+2020-04-10T16:08:28.142552Z 1 [Note] [MY-000000] [WSREP] wsrep_notify_cmd is not defined, skipping notification.
+2020-04-10T16:08:28.142570Z 1 [Note] [MY-000000] [WSREP] wsrep_notify_cmd is not defined, skipping notification.
+2020-04-10T16:08:28.145451Z 1 [Note] [MY-000000] [WSREP] Applier thread exiting ret: 0 thd: 1
+2020-04-10T16:08:28.145589Z 0 [Note] [MY-000000] [WSREP] Waiting for active wsrep applier to exit
+2020-04-10T16:08:28.145609Z 0 [Note] [MY-000000] [WSREP] Waiting for (6) applier thread(s) to terminate
+2020-04-10T16:08:28.157387Z 12 [Note] [MY-000000] [WSREP] Applier thread exiting ret: 6 thd: 12
+2020-04-10T16:08:28.157509Z 13 [Note] [MY-000000] [WSREP] Applier thread exiting ret: 6 thd: 13
+2020-04-10T16:08:28.157613Z 14 [Note] [MY-000000] [WSREP] Applier thread exiting ret: 6 thd: 14
+2020-04-10T16:08:28.157711Z 15 [Note] [MY-000000] [WSREP] Applier thread exiting ret: 6 thd: 15
+2020-04-10T16:08:28.157826Z 16 [Note] [MY-000000] [WSREP] Applier thread exiting ret: 6 thd: 16
+2020-04-10T16:08:28.157936Z 17 [Note] [MY-000000] [WSREP] Applier thread exiting ret: 6 thd: 17
+2020-04-10T16:08:28.158047Z 18 [Note] [MY-000000] [WSREP] Applier thread exiting ret: 6 thd: 18
+2020-04-10T16:08:29.151947Z 0 [Note] [MY-000000] [WSREP] All applier thread terminated. Will now terminate rollback thread
+2020-04-10T16:08:29.151988Z 0 [Note] [MY-000000] [WSREP] Rollback thread terminated
+2020-04-10T16:08:29.151999Z 0 [Note] [MY-000000] [WSREP] Service disconnected.
+2020-04-10T16:08:29.152009Z 0 [Note] [MY-000000] [WSREP] Waiting to close threads......
+2020-04-10T16:08:34.152227Z 0 [Note] [MY-000000] [WSREP] Some threads may fail to exit.
+2020-04-10T16:08:34.296686Z 0 [Note] [MY-000000] [WSREP] Received shutdown signal. Will sleep for 10 secs before initiating shutdown. pxc_maint_mode switched to SHUTDOWN
+2020-04-10T16:08:44.297622Z 0 [Note] [MY-000000] [Galera] dtor state: CLOSED
+2020-04-10T16:08:44.297705Z 0 [Note] [MY-000000] [Galera] MemPool(TrxHandleSlave): hit ratio: 0, misses: 0, in use: 0, in pool: 0
+2020-04-10T16:08:44.302293Z 0 [Note] [MY-000000] [Galera] apply mon: entered 0
+2020-04-10T16:08:44.306840Z 0 [Note] [MY-000000] [Galera] apply mon: entered 0
+2020-04-10T16:08:44.311431Z 0 [Note] [MY-000000] [Galera] mon: entered 3 oooe fraction 0 oool fraction 0
+2020-04-10T16:08:44.311475Z 0 [Note] [MY-000000] [Galera] cert index usage at exit 0
+2020-04-10T16:08:44.311496Z 0 [Note] [MY-000000] [Galera] cert trx map usage at exit 0
+2020-04-10T16:08:44.311516Z 0 [Note] [MY-000000] [Galera] deps set usage at exit 0
+2020-04-10T16:08:44.311541Z 0 [Note] [MY-000000] [Galera] avg deps dist 0
+2020-04-10T16:08:44.311563Z 0 [Note] [MY-000000] [Galera] avg cert interval 0
+2020-04-10T16:08:44.311583Z 0 [Note] [MY-000000] [Galera] cert index size 0
+2020-04-10T16:08:44.311651Z 0 [Note] [MY-000000] [Galera] Service thread queue flushed.
+2020-04-10T16:08:44.311717Z 0 [Note] [MY-000000] [Galera] wsdb trx map usage 0 conn query map usage 0
+2020-04-10T16:08:44.311748Z 0 [Note] [MY-000000] [Galera] MemPool(LocalTrxHandle): hit ratio: 0, misses: 0, in use: 0, in pool: 0
+2020-04-10T16:08:44.311918Z 0 [Note] [MY-000000] [Galera] Shifting CLOSED -> DESTROYED (TO: 1)
+2020-04-10T16:08:44.314778Z 0 [Note] [MY-000000] [Galera] Flushing memory map to disk...
+2020-04-10T16:08:45.771467Z 0 [System] [MY-010910] [Server] /usr/sbin/mysqld: Shutdown complete (mysqld 8.0.18-9)  Percona XtraDB Cluster (GPL), Release rel9, Revision fdf3f68, WSREP version 26.4.3.
+ INFO: Skipping wsrep-recover for 81ddcec6-7b45-11ea-91f9-5657fbaa9e47:1 pair
+ INFO: Assigning 81ddcec6-7b45-11ea-91f9-5657fbaa9e47:1 to wsrep_start_position
+2020-04-10T16:08:47.967518Z 0 [System] [MY-010116] [Server] /usr/sbin/mysqld (mysqld 8.0.18-9) starting as process 3849
+2020-04-10T16:08:47.970873Z 0 [Note] [MY-000000] [Galera] Loading provider /usr/lib/galera4/libgalera_smm.so initial position: 81ddcec6-7b45-11ea-91f9-5657fbaa9e47:1
+2020-04-10T16:08:47.970929Z 0 [Note] [MY-000000] [Galera] wsrep_load(): loading provider library '/usr/lib/galera4/libgalera_smm.so'
+2020-04-10T16:08:47.973778Z 0 [Note] [MY-000000] [Galera] wsrep_load(): Galera 4.3(r752664d) by Codership Oy <info@codership.com> loaded successfully.
+2020-04-10T16:08:47.973862Z 0 [Note] [MY-000000] [Galera] CRC-32C: using hardware acceleration.
+2020-04-10T16:08:47.974849Z 0 [Note] [MY-000000] [Galera] Found saved state: 81ddcec6-7b45-11ea-91f9-5657fbaa9e47:1, safe_to_bootstrap: 1
+2020-04-10T16:08:47.975012Z 0 [Note] [MY-000000] [Galera] GCache DEBUG: opened preamble:
+Version: 2
+UUID: 81ddcec6-7b45-11ea-91f9-5657fbaa9e47
+Seqno: 1 - 1
+Offset: 1280
+Synced: 1
+2020-04-10T16:08:47.975078Z 0 [Note] [MY-000000] [Galera] Recovering GCache ring buffer: version: 2, UUID: 81ddcec6-7b45-11ea-91f9-5657fbaa9e47, offset: 1280
+2020-04-10T16:08:47.975231Z 0 [Note] [MY-000000] [Galera] GCache::RingBuffer initial scan...  0.0% (        0/134217752 bytes) complete.
+2020-04-10T16:08:47.975354Z 0 [Note] [MY-000000] [Galera] GCache::RingBuffer initial scan...100.0% (134217752/134217752 bytes) complete.
+2020-04-10T16:08:47.975427Z 0 [Note] [MY-000000] [Galera] Recovering GCache ring buffer: found gapless sequence 1-1
+2020-04-10T16:08:47.975523Z 0 [Note] [MY-000000] [Galera] GCache::RingBuffer unused buffers scan...  0.0% (  0/168 bytes) complete.
+2020-04-10T16:08:47.975606Z 0 [Note] [MY-000000] [Galera] GCache::RingBuffer unused buffers scan...100.0% (168/168 bytes) complete.
+2020-04-10T16:08:47.975687Z 0 [Note] [MY-000000] [Galera] GCache DEBUG: RingBuffer::recover(): found 0/1 locked buffers
+2020-04-10T16:08:47.975769Z 0 [Note] [MY-000000] [Galera] GCache DEBUG: RingBuffer::recover(): used space: 168/134217728
+2020-04-10T16:08:47.979014Z 0 [Note] [MY-000000] [Galera] Passing config to GCS: base_dir = /var/lib/mysql/; base_host = 10.0.2.15; base_port = 4567; cert.log_conflicts = no; cert.optimistic_pa = yes; debug = no; evs.auto_evict = 0; evs.delay_margin = PT1S; evs.delayed_keep_period = PT30S; evs.inactive_check_period = PT0.5S; evs.inactive_timeout = PT15S; evs.join_retrans_period = PT1S; evs.max_install_timeouts = 3; evs.send_window = 10; evs.stats_report_period = PT1M; evs.suspect_timeout = PT5S; evs.user_send_window = 4; evs.view_forget_timeout = PT24H; gcache.dir = /var/lib/mysql/; gcache.freeze_purge_at_seqno = -1; gcache.keep_pages_count = 0; gcache.keep_pages_size = 0; gcache.mem_size = 0; gcache.name = galera.cache; gcache.page_size = 128M; gcache.recover = yes; gcache.size = 128M; gcomm.thread_prio = ; gcs.fc_debug = 0; gcs.fc_factor = 1.0; gcs.fc_limit = 100; gcs.fc_master_slave = no; gcs.max_packet_size = 64500; gcs.max_throttle = 0.25; gcs.recv_q_hard_limit = 9223372036854775807; gcs.recv_q_soft_limit = 0.25; gcs.sync_donor = no; gmcast.segment = 0; gmcast.version = 0; pc.announce_timeout = PT3S; pc.checksum = false; pc.ignore_quorum = false; pc.ignore_sb = false; pc.npvo = false; pc.recovery = true; pc.version = 0; pc.wait_prim = true; pc.wait_prim_timeout = PT30S; pc.weight = 1; protonet.backend = asio; protonet.version = 0; repl.causal_read_timeout = PT30S; repl.commit_order = 3; repl.key_format = FLAT8; repl.max_ws_size = 2147483647; repl.proto_max = 10; socket.checksum = 2; socket.recv_buf_size = 212992; socket.ssl_ca = ca.pem; socket.ssl_cert = server-cert.pem; socket.ssl_cipher = ; socket.ssl_compression = YES; socket.ssl_key = server-key.pem; 
+2020-04-10T16:08:48.001085Z 0 [Note] [MY-000000] [Galera] Service thread queue flushed.
+2020-04-10T16:08:48.001290Z 0 [Note] [MY-000000] [Galera] ####### Assign initial position for certification: 81ddcec6-7b45-11ea-91f9-5657fbaa9e47:1, protocol version: -1
+2020-04-10T16:08:48.001498Z 0 [Note] [MY-000000] [WSREP] Starting replication
+2020-04-10T16:08:48.001609Z 0 [Note] [MY-000000] [Galera] Connecting with bootstrap option: 1
+2020-04-10T16:08:48.001733Z 0 [Note] [MY-000000] [Galera] Setting GCS initial position to 81ddcec6-7b45-11ea-91f9-5657fbaa9e47:1
+2020-04-10T16:08:48.001901Z 0 [Note] [MY-000000] [Galera] protonet asio version 0
+2020-04-10T16:08:48.002142Z 0 [Note] [MY-000000] [Galera] Using CRC-32C for message checksums.
+2020-04-10T16:08:48.002275Z 0 [Note] [MY-000000] [Galera] initializing ssl context
+2020-04-10T16:08:48.002649Z 0 [Note] [MY-000000] [Galera] backend: asio
+2020-04-10T16:08:48.002824Z 0 [Note] [MY-000000] [Galera] gcomm thread scheduling priority set to other:0 
+2020-04-10T16:08:48.003056Z 0 [Warning] [MY-000000] [Galera] Fail to access the file (/var/lib/mysql//gvwstate.dat) error (No such file or directory). It is possible if node is booting for first time or re-booting after a graceful shutdown
+2020-04-10T16:08:48.003186Z 0 [Note] [MY-000000] [Galera] Restoring primary-component from disk failed. Either node is booting for first time or re-booting after a graceful shutdown
+2020-04-10T16:08:48.003567Z 0 [Note] [MY-000000] [Galera] GMCast version 0
+2020-04-10T16:08:48.003804Z 0 [Note] [MY-000000] [Galera] (8f942c30, 'ssl://0.0.0.0:4567') listening at ssl://0.0.0.0:4567
+2020-04-10T16:08:48.003941Z 0 [Note] [MY-000000] [Galera] (8f942c30, 'ssl://0.0.0.0:4567') multicast: , ttl: 1
+2020-04-10T16:08:48.004431Z 0 [Note] [MY-000000] [Galera] EVS version 1
+2020-04-10T16:08:48.004662Z 0 [Note] [MY-000000] [Galera] gcomm: bootstrapping new group 'pxc-cluster'
+2020-04-10T16:08:48.004833Z 0 [Note] [MY-000000] [Galera] start_prim is enabled, turn off pc_recovery
+2020-04-10T16:08:48.005240Z 0 [Note] [MY-000000] [Galera] EVS version upgrade 0 -> 1
+2020-04-10T16:08:48.005411Z 0 [Note] [MY-000000] [Galera] PC protocol upgrade 0 -> 1
+2020-04-10T16:08:48.005596Z 0 [Note] [MY-000000] [Galera] Node 8f942c30 state primary
+2020-04-10T16:08:48.005792Z 0 [Note] [MY-000000] [Galera] Current view of cluster as seen by this node
+view (view_id(PRIM,8f942c30,1)
+memb {
+	8f942c30,0
+	}
+joined {
+	}
+left {
+	}
+partitioned {
+	}
+)
+2020-04-10T16:08:48.005954Z 0 [Note] [MY-000000] [Galera] Save the discovered primary-component to disk
+2020-04-10T16:08:48.009189Z 0 [Note] [MY-000000] [Galera] gcomm: connected
+2020-04-10T16:08:48.009381Z 0 [Note] [MY-000000] [Galera] Changing maximum packet size to 64500, resulting msg size: 32636
+2020-04-10T16:08:48.009631Z 0 [Note] [MY-000000] [Galera] Shifting CLOSED -> OPEN (TO: 0)
+2020-04-10T16:08:48.009809Z 0 [Note] [MY-000000] [Galera] Opened channel 'pxc-cluster'
+2020-04-10T16:08:48.010436Z 1 [Note] [MY-000000] [WSREP] Starting applier thread 1
+2020-04-10T16:08:48.010745Z 2 [Note] [MY-000000] [WSREP] Starting rollbacker thread 2
+2020-04-10T16:08:48.011022Z 0 [Note] [MY-000000] [Galera] New COMPONENT: primary = yes, bootstrap = no, my_idx = 0, memb_num = 1
+2020-04-10T16:08:48.011426Z 0 [Note] [MY-000000] [Galera] STATE_EXCHANGE: sent state UUID: 8f95612a-7b45-11ea-8fc2-b606a3e64ee9
+2020-04-10T16:08:48.011635Z 0 [Note] [MY-000000] [Galera] STATE EXCHANGE: sent state msg: 8f95612a-7b45-11ea-8fc2-b606a3e64ee9
+2020-04-10T16:08:48.011836Z 0 [Note] [MY-000000] [Galera] STATE EXCHANGE: got state msg: 8f95612a-7b45-11ea-8fc2-b606a3e64ee9 from 0 (pxc-cluster-node-1)
+2020-04-10T16:08:48.012044Z 0 [Note] [MY-000000] [Galera] Quorum results:
+	version    = 6,
+	component  = PRIMARY,
+	conf_id    = 0,
+	members    = 1/1 (primary/total),
+	act_id     = 1,
+	last_appl. = 1,
+	protocols  = 2/10/4 (gcs/repl/appl),
+	vote policy= 0,
+	group UUID = 81ddcec6-7b45-11ea-91f9-5657fbaa9e47
+2020-04-10T16:08:48.012278Z 0 [Note] [MY-000000] [Galera] Flow-control interval: [100, 100]
+2020-04-10T16:08:48.012481Z 0 [Note] [MY-000000] [Galera] Restored state OPEN -> JOINED (2)
+2020-04-10T16:08:48.012798Z 1 [Note] [MY-000000] [Galera] ####### processing CC 2, local, ordered
+2020-04-10T16:08:48.013031Z 1 [Note] [MY-000000] [Galera] Drain monitors from 1 upto 1
+2020-04-10T16:08:48.013247Z 1 [Note] [MY-000000] [Galera] REPL Protocols: 10 (5, 3)
+2020-04-10T16:08:48.013477Z 1 [Note] [MY-000000] [Galera] ####### My UUID: 8f942c30-7b45-11ea-a7cc-f24718bda93e
+2020-04-10T16:08:48.013712Z 1 [Note] [MY-000000] [Galera] Server pxc-cluster-node-1 connected to cluster at position 81ddcec6-7b45-11ea-91f9-5657fbaa9e47:2 with ID 8f942c30-7b45-11ea-a7cc-f24718bda93e
+2020-04-10T16:08:48.013937Z 1 [Note] [MY-000000] [WSREP] Server status change disconnected -> connected
+2020-04-10T16:08:48.014171Z 1 [Note] [MY-000000] [WSREP] wsrep_notify_cmd is not defined, skipping notification.
+2020-04-10T16:08:48.014431Z 1 [Note] [MY-000000] [Galera] ####### ST not required
+2020-04-10T16:08:48.014664Z 1 [Note] [MY-000000] [Galera] Cert index reset to 00000000-0000-0000-0000-000000000000:-1 (proto: 10), state transfer needed: no
+2020-04-10T16:08:48.014923Z 0 [Note] [MY-000000] [Galera] Member 0.0 (pxc-cluster-node-1) synced with group.
+2020-04-10T16:08:48.015164Z 0 [Note] [MY-000000] [Galera] Shifting JOINED -> SYNCED (TO: 2)
+2020-04-10T16:08:48.015469Z 0 [Note] [MY-000000] [Galera] Service thread queue flushed.
+2020-04-10T16:08:48.015744Z 1 [Note] [MY-000000] [Galera] ####### Assign initial position for certification: 00000000-0000-0000-0000-000000000000:-1, protocol version: 5
+2020-04-10T16:08:48.016000Z 1 [Note] [MY-000000] [Galera] ####### Adjusting cert position: -1 -> 2
+2020-04-10T16:08:48.016261Z 0 [Note] [MY-000000] [Galera] Service thread queue flushed.
+2020-04-10T16:08:48.016545Z 1 [Note] [MY-000000] [Galera] ####### Setting monitor position to 2
+2020-04-10T16:08:48.016811Z 1 [Note] [MY-000000] [Galera] ####### Resetting gcache as cluster is being bootstrapped
+2020-04-10T16:08:48.018533Z 1 [Note] [MY-000000] [Galera] Recording CC from group: 2
+2020-04-10T16:08:48.018809Z 1 [Note] [MY-000000] [Galera] Lowest cert index boundary for CC from group: 2
+2020-04-10T16:08:48.019082Z 1 [Note] [MY-000000] [Galera] Min available from gcache for CC from group: 1
+2020-04-10T16:08:48.019429Z 1 [Note] [MY-000000] [Galera] ================================================
+View:
+  id: 81ddcec6-7b45-11ea-91f9-5657fbaa9e47:2
+  status: primary
+  protocol_version: 4
+  capabilities: MULTI-MASTER, CERTIFICATION, PARALLEL_APPLYING, REPLAY, ISOLATION, PAUSE, CAUSAL_READ, INCREMENTAL_WS, UNORDERED, PREORDERED, STREAMING, NBO
+  final: no
+  own_index: 0
+  members(1):
+	0: 8f942c30-7b45-11ea-a7cc-f24718bda93e, pxc-cluster-node-1
+=================================================
+2020-04-10T16:08:48.019704Z 1 [Note] [MY-000000] [WSREP] Server status change connected -> joiner
+2020-04-10T16:08:48.019987Z 1 [Note] [MY-000000] [WSREP] wsrep_notify_cmd is not defined, skipping notification.
+2020-04-10T16:08:48.020275Z 1 [Note] [MY-000000] [WSREP] Server status change joiner -> initializing
+2020-04-10T16:08:48.020561Z 1 [Note] [MY-000000] [WSREP] wsrep_notify_cmd is not defined, skipping notification.
+2020-04-10T16:08:48.022456Z 0 [Warning] [MY-013245] [Server] The SSL library function CRYPTO_set_mem_functions failed. This is typically caused by the SSL library already being used. As a result the SSL memory allocation will not be instrumented.
+2020-04-10T16:08:48.763949Z 6 [System] [MY-000000] [WSREP] PXC upgrade completed successfully
+2020-04-10T16:08:48.923110Z 0 [Warning] [MY-010068] [Server] CA certificate ca.pem is self signed.
+2020-04-10T16:08:48.953166Z 0 [Note] [MY-000000] [WSREP] Initialized wsrep sidno 2
+2020-04-10T16:08:48.953193Z 0 [Note] [MY-000000] [WSREP] wsrep_init_schema_and_SR (nil)
+2020-04-10T16:08:48.957859Z 0 [Note] [MY-000000] [Galera] Server initialized
+2020-04-10T16:08:48.957884Z 0 [Note] [MY-000000] [WSREP] Server status change initializing -> initialized
+2020-04-10T16:08:48.957905Z 0 [Note] [MY-000000] [WSREP] wsrep_notify_cmd is not defined, skipping notification.
+2020-04-10T16:08:48.958027Z 1 [Note] [MY-000000] [Galera] Bootstrapping a new cluster, setting initial position to 00000000-0000-0000-0000-000000000000:-1
+2020-04-10T16:08:48.960956Z 10 [Note] [MY-000000] [WSREP] Recovered cluster id 81ddcec6-7b45-11ea-91f9-5657fbaa9e47
+2020-04-10T16:08:48.961111Z 1 [Note] [MY-000000] [WSREP] Server status change initialized -> joined
+2020-04-10T16:08:48.961130Z 1 [Note] [MY-000000] [WSREP] wsrep_notify_cmd is not defined, skipping notification.
+2020-04-10T16:08:48.961164Z 1 [Note] [MY-000000] [WSREP] wsrep_notify_cmd is not defined, skipping notification.
+2020-04-10T16:08:48.963863Z 0 [System] [MY-010931] [Server] /usr/sbin/mysqld: ready for connections. Version: '8.0.18-9'  socket: '/var/run/mysqld/mysqld.sock'  port: 3306  Percona XtraDB Cluster (GPL), Release rel9, Revision fdf3f68, WSREP version 26.4.3.
+2020-04-10T16:08:48.965371Z 1 [Note] [MY-000000] [Galera] Server pxc-cluster-node-1 synced with group
+2020-04-10T16:08:48.965394Z 1 [Note] [MY-000000] [WSREP] Server status change joined -> synced
+2020-04-10T16:08:48.965406Z 1 [Note] [MY-000000] [WSREP] Synchronized with group, ready for connections
+2020-04-10T16:08:48.965421Z 1 [Note] [MY-000000] [WSREP] wsrep_notify_cmd is not defined, skipping notification.
+2020-04-10T16:08:48.965554Z 12 [Note] [MY-000000] [WSREP] Starting applier thread 12
+2020-04-10T16:08:48.965647Z 13 [Note] [MY-000000] [WSREP] Starting applier thread 13
+2020-04-10T16:08:48.965762Z 14 [Note] [MY-000000] [WSREP] Starting applier thread 14
+2020-04-10T16:08:48.967192Z 15 [Note] [MY-000000] [WSREP] Starting applier thread 15
+2020-04-10T16:08:48.967288Z 16 [Note] [MY-000000] [WSREP] Starting applier thread 16
+2020-04-10T16:08:48.967416Z 17 [Note] [MY-000000] [WSREP] Starting applier thread 17
+2020-04-10T16:08:48.972063Z 18 [Note] [MY-000000] [WSREP] Starting applier thread 18
+2020-04-10T16:08:48.983572Z 0 [System] [MY-011323] [Server] X Plugin ready for connections. Socket: '/var/run/mysqld/mysqlx.sock' bind-address: '::' port: 33060
+2020-04-10T16:08:54.234320Z 0 [Note] [MY-000000] [WSREP] Received shutdown signal. Will sleep for 10 secs before initiating shutdown. pxc_maint_mode switched to SHUTDOWN
+2020-04-10T16:09:05.024447Z 0 [Note] [MY-000000] [WSREP] Shutdown replication
+2020-04-10T16:09:05.024560Z 0 [Note] [MY-000000] [WSREP] Server status change synced -> disconnecting
+2020-04-10T16:09:05.024612Z 0 [Note] [MY-000000] [WSREP] wsrep_notify_cmd is not defined, skipping notification.
+2020-04-10T16:09:05.024685Z 0 [Note] [MY-000000] [Galera] Closing send monitor...
+2020-04-10T16:09:05.024726Z 0 [Note] [MY-000000] [Galera] Closed send monitor.
+2020-04-10T16:09:05.024761Z 0 [Note] [MY-000000] [Galera] gcomm: terminating thread
+2020-04-10T16:09:05.024804Z 0 [Note] [MY-000000] [Galera] gcomm: joining thread
+2020-04-10T16:09:05.024901Z 0 [Note] [MY-000000] [Galera] gcomm: closing backend
+2020-04-10T16:09:05.025004Z 0 [Note] [MY-000000] [Galera] PC protocol downgrade 1 -> 0
+2020-04-10T16:09:05.025062Z 0 [Note] [MY-000000] [Galera] Current view of cluster as seen by this node
+view ((empty))
+2020-04-10T16:09:05.025361Z 0 [Note] [MY-000000] [Galera] gcomm: closed
+2020-04-10T16:09:05.025437Z 0 [Note] [MY-000000] [Galera] New SELF-LEAVE.
+2020-04-10T16:09:05.025563Z 0 [Note] [MY-000000] [Galera] Flow-control interval: [0, 0]
+2020-04-10T16:09:05.025601Z 0 [Note] [MY-000000] [Galera] Received SELF-LEAVE. Closing connection.
+2020-04-10T16:09:05.025632Z 0 [Note] [MY-000000] [Galera] Shifting SYNCED -> CLOSED (TO: 2)
+2020-04-10T16:09:05.025677Z 0 [Note] [MY-000000] [Galera] RECV thread exiting 0: Success
+2020-04-10T16:09:05.025821Z 1 [Note] [MY-000000] [Galera] ####### processing CC -1, local, ordered
+2020-04-10T16:09:05.025868Z 1 [Note] [MY-000000] [Galera] Drain monitors from 2 upto 2
+2020-04-10T16:09:05.025924Z 1 [Note] [MY-000000] [Galera] ####### My UUID: 8f942c30-7b45-11ea-a7cc-f24718bda93e
+2020-04-10T16:09:05.025957Z 1 [Note] [MY-000000] [Galera] ####### ST not required
+2020-04-10T16:09:05.026249Z 0 [Note] [MY-000000] [Galera] recv_thread() joined.
+2020-04-10T16:09:05.026293Z 0 [Note] [MY-000000] [Galera] Closing replication queue.
+2020-04-10T16:09:05.026322Z 0 [Note] [MY-000000] [Galera] Closing slave action queue.
+2020-04-10T16:09:05.026392Z 1 [Note] [MY-000000] [Galera] ================================================
+View:
+  id: 81ddcec6-7b45-11ea-91f9-5657fbaa9e47:-1
+  status: non-primary
+  protocol_version: 4
+  capabilities: MULTI-MASTER, CERTIFICATION, PARALLEL_APPLYING, REPLAY, ISOLATION, PAUSE, CAUSAL_READ, INCREMENTAL_WS, UNORDERED, PREORDERED, STREAMING, NBO
+  final: yes
+  own_index: -1
+  members(0):
+=================================================
+2020-04-10T16:09:05.026444Z 1 [Note] [MY-000000] [Galera] Non-primary view
+2020-04-10T16:09:05.026473Z 1 [Note] [MY-000000] [WSREP] Server status change disconnecting -> disconnected
+2020-04-10T16:09:05.026497Z 1 [Note] [MY-000000] [WSREP] wsrep_notify_cmd is not defined, skipping notification.
+2020-04-10T16:09:05.026534Z 1 [Note] [MY-000000] [WSREP] wsrep_notify_cmd is not defined, skipping notification.
+2020-04-10T16:09:05.028966Z 1 [Note] [MY-000000] [WSREP] Applier thread exiting ret: 0 thd: 1
+2020-04-10T16:09:05.029281Z 0 [Note] [MY-000000] [WSREP] Waiting for active wsrep applier to exit
+2020-04-10T16:09:05.029328Z 0 [Note] [MY-000000] [WSREP] Waiting for (7) applier thread(s) to terminate
+2020-04-10T16:09:05.036230Z 12 [Note] [MY-000000] [WSREP] Applier thread exiting ret: 6 thd: 12
+2020-04-10T16:09:05.036550Z 13 [Note] [MY-000000] [WSREP] Applier thread exiting ret: 6 thd: 13
+2020-04-10T16:09:05.036776Z 14 [Note] [MY-000000] [WSREP] Applier thread exiting ret: 6 thd: 14
+2020-04-10T16:09:05.036990Z 16 [Note] [MY-000000] [WSREP] Applier thread exiting ret: 6 thd: 16
+2020-04-10T16:09:05.037193Z 15 [Note] [MY-000000] [WSREP] Applier thread exiting ret: 6 thd: 15
+2020-04-10T16:09:05.037471Z 17 [Note] [MY-000000] [WSREP] Applier thread exiting ret: 6 thd: 17
+2020-04-10T16:09:05.037694Z 18 [Note] [MY-000000] [WSREP] Applier thread exiting ret: 6 thd: 18
+2020-04-10T16:09:06.029746Z 0 [Note] [MY-000000] [WSREP] All applier thread terminated. Will now terminate rollback thread
+2020-04-10T16:09:06.029847Z 0 [Note] [MY-000000] [WSREP] Waiting for rollback thread to terminate
+2020-04-10T16:09:06.029898Z 2 [Note] [MY-000000] [WSREP] rollbacker thread exiting 2
+2020-04-10T16:09:07.030085Z 0 [Note] [MY-000000] [WSREP] Rollback thread terminated
+2020-04-10T16:09:07.030930Z 0 [Note] [MY-000000] [Galera] dtor state: CLOSED
+2020-04-10T16:09:07.031002Z 0 [Note] [MY-000000] [Galera] MemPool(TrxHandleSlave): hit ratio: 0, misses: 0, in use: 0, in pool: 0
+2020-04-10T16:09:07.037931Z 0 [Note] [MY-000000] [Galera] apply mon: entered 0
+2020-04-10T16:09:07.044044Z 0 [Note] [MY-000000] [Galera] apply mon: entered 0
+2020-04-10T16:09:07.049717Z 0 [Note] [MY-000000] [Galera] mon: entered 3 oooe fraction 0 oool fraction 0
+2020-04-10T16:09:07.049769Z 0 [Note] [MY-000000] [Galera] cert index usage at exit 0
+2020-04-10T16:09:07.049798Z 0 [Note] [MY-000000] [Galera] cert trx map usage at exit 0
+2020-04-10T16:09:07.049825Z 0 [Note] [MY-000000] [Galera] deps set usage at exit 0
+2020-04-10T16:09:07.049857Z 0 [Note] [MY-000000] [Galera] avg deps dist 0
+2020-04-10T16:09:07.049887Z 0 [Note] [MY-000000] [Galera] avg cert interval 0
+2020-04-10T16:09:07.049914Z 0 [Note] [MY-000000] [Galera] cert index size 0
+2020-04-10T16:09:07.050019Z 0 [Note] [MY-000000] [Galera] Service thread queue flushed.
+2020-04-10T16:09:07.050108Z 0 [Note] [MY-000000] [Galera] wsdb trx map usage 0 conn query map usage 0
+2020-04-10T16:09:07.050148Z 0 [Note] [MY-000000] [Galera] MemPool(LocalTrxHandle): hit ratio: 0, misses: 0, in use: 0, in pool: 0
+2020-04-10T16:09:07.050369Z 0 [Note] [MY-000000] [Galera] Shifting CLOSED -> DESTROYED (TO: 2)
+2020-04-10T16:09:07.052033Z 0 [Note] [MY-000000] [Galera] Flushing memory map to disk...
+2020-04-10T16:09:08.215909Z 0 [System] [MY-010910] [Server] /usr/sbin/mysqld: Shutdown complete (mysqld 8.0.18-9)  Percona XtraDB Cluster (GPL), Release rel9, Revision fdf3f68, WSREP version 26.4.3.
+ INFO: Skipping wsrep-recover for 81ddcec6-7b45-11ea-91f9-5657fbaa9e47:2 pair
+ INFO: Assigning 81ddcec6-7b45-11ea-91f9-5657fbaa9e47:2 to wsrep_start_position
+2020-04-10T16:09:10.799620Z 0 [Warning] [MY-011068] [Server] The syntax 'expire-logs-days' is deprecated and will be removed in a future release. Please use binlog_expire_logs_seconds instead.
+2020-04-10T16:09:10.799633Z 0 [Warning] [MY-011070] [Server] 'Disabling symbolic links using --skip-symbolic-links (or equivalent) is the default. Consider not using this option as it' is deprecated and will be removed in a future release.
+2020-04-10T16:09:10.801863Z 0 [Note] [MY-010949] [Server] Basedir set to /usr/.
+2020-04-10T16:09:10.801882Z 0 [System] [MY-010116] [Server] /usr/sbin/mysqld (mysqld 8.0.18-9) starting as process 4211
+2020-04-10T16:09:10.805039Z 0 [Note] [MY-000000] [Galera] Loading provider /usr/lib/galera4/libgalera_smm.so initial position: 81ddcec6-7b45-11ea-91f9-5657fbaa9e47:2
+2020-04-10T16:09:10.805178Z 0 [Note] [MY-000000] [Galera] wsrep_load(): loading provider library '/usr/lib/galera4/libgalera_smm.so'
+2020-04-10T16:09:10.808024Z 0 [Note] [MY-000000] [Galera] wsrep_load(): Galera 4.3(r752664d) by Codership Oy <info@codership.com> loaded successfully.
+2020-04-10T16:09:10.808106Z 0 [Note] [MY-000000] [Galera] CRC-32C: using hardware acceleration.
+2020-04-10T16:09:10.808500Z 0 [Note] [MY-000000] [Galera] Found saved state: 81ddcec6-7b45-11ea-91f9-5657fbaa9e47:2, safe_to_bootstrap: 1
+2020-04-10T16:09:10.808675Z 0 [Note] [MY-000000] [Galera] GCache DEBUG: opened preamble:
+Version: 2
+UUID: 81ddcec6-7b45-11ea-91f9-5657fbaa9e47
+Seqno: 1 - 2
+Offset: 1280
+Synced: 1
+2020-04-10T16:09:10.808744Z 0 [Note] [MY-000000] [Galera] Recovering GCache ring buffer: version: 2, UUID: 81ddcec6-7b45-11ea-91f9-5657fbaa9e47, offset: 1280
+2020-04-10T16:09:10.808884Z 0 [Note] [MY-000000] [Galera] GCache::RingBuffer initial scan...  0.0% (        0/134217752 bytes) complete.
+2020-04-10T16:09:10.808980Z 0 [Note] [MY-000000] [Galera] GCache::RingBuffer initial scan...100.0% (134217752/134217752 bytes) complete.
+2020-04-10T16:09:10.809048Z 0 [Note] [MY-000000] [Galera] Recovering GCache ring buffer: found gapless sequence 1-2
+2020-04-10T16:09:10.809144Z 0 [Note] [MY-000000] [Galera] GCache::RingBuffer unused buffers scan...  0.0% (  0/336 bytes) complete.
+2020-04-10T16:09:10.809234Z 0 [Note] [MY-000000] [Galera] GCache::RingBuffer unused buffers scan...100.0% (336/336 bytes) complete.
+2020-04-10T16:09:10.809313Z 0 [Note] [MY-000000] [Galera] GCache DEBUG: RingBuffer::recover(): found 0/2 locked buffers
+2020-04-10T16:09:10.809388Z 0 [Note] [MY-000000] [Galera] GCache DEBUG: RingBuffer::recover(): used space: 336/134217728
+2020-04-10T16:09:10.812766Z 0 [Note] [MY-000000] [Galera] Passing config to GCS: base_dir = /var/lib/mysql/; base_host = 192.168.70.61; base_port = 4567; cert.log_conflicts = no; cert.optimistic_pa = yes; debug = no; evs.auto_evict = 0; evs.delay_margin = PT1S; evs.delayed_keep_period = PT30S; evs.inactive_check_period = PT0.5S; evs.inactive_timeout = PT15S; evs.join_retrans_period = PT1S; evs.max_install_timeouts = 3; evs.send_window = 10; evs.stats_report_period = PT1M; evs.suspect_timeout = PT5S; evs.user_send_window = 4; evs.view_forget_timeout = PT24H; gcache.dir = /var/lib/mysql/; gcache.freeze_purge_at_seqno = -1; gcache.keep_pages_count = 0; gcache.keep_pages_size = 0; gcache.mem_size = 0; gcache.name = galera.cache; gcache.page_size = 128M; gcache.recover = yes; gcache.size = 128M; gcomm.thread_prio = ; gcs.fc_debug = 0; gcs.fc_factor = 1.0; gcs.fc_limit = 100; gcs.fc_master_slave = no; gcs.max_packet_size = 64500; gcs.max_throttle = 0.25; gcs.recv_q_hard_limit = 9223372036854775807; gcs.recv_q_soft_limit = 0.25; gcs.sync_donor = no; gmcast.segment = 0; gmcast.version = 0; pc.announce_timeout = PT3S; pc.checksum = false; pc.ignore_quorum = false; pc.ignore_sb = false; pc.npvo = false; pc.recovery = true; pc.version = 0; pc.wait_prim = true; pc.wait_prim_timeout = PT30S; pc.weight = 1; protonet.backend = asio; protonet.version = 0; repl.causal_read_timeout = PT30S; repl.commit_order = 3; repl.key_format = FLAT8; repl.max_ws_size = 2147483647; repl.proto_max = 10; socket.checksum = 2; socket.recv_buf_size = 212992; 
+2020-04-10T16:09:10.835831Z 0 [Note] [MY-000000] [Galera] Service thread queue flushed.
+2020-04-10T16:09:10.836024Z 0 [Note] [MY-000000] [Galera] ####### Assign initial position for certification: 81ddcec6-7b45-11ea-91f9-5657fbaa9e47:2, protocol version: -1
+2020-04-10T16:09:10.836165Z 0 [Note] [MY-000000] [WSREP] Starting replication
+2020-04-10T16:09:10.836272Z 0 [Note] [MY-000000] [Galera] Connecting with bootstrap option: 1
+2020-04-10T16:09:10.836399Z 0 [Note] [MY-000000] [Galera] Setting GCS initial position to 81ddcec6-7b45-11ea-91f9-5657fbaa9e47:2
+2020-04-10T16:09:10.836586Z 0 [Note] [MY-000000] [Galera] protonet asio version 0
+2020-04-10T16:09:10.836824Z 0 [Note] [MY-000000] [Galera] Using CRC-32C for message checksums.
+2020-04-10T16:09:10.836970Z 0 [Note] [MY-000000] [Galera] backend: asio
+2020-04-10T16:09:10.837144Z 0 [Note] [MY-000000] [Galera] gcomm thread scheduling priority set to other:0 
+2020-04-10T16:09:10.837355Z 0 [Warning] [MY-000000] [Galera] Fail to access the file (/var/lib/mysql//gvwstate.dat) error (No such file or directory). It is possible if node is booting for first time or re-booting after a graceful shutdown
+2020-04-10T16:09:10.837482Z 0 [Note] [MY-000000] [Galera] Restoring primary-component from disk failed. Either node is booting for first time or re-booting after a graceful shutdown
+2020-04-10T16:09:10.837829Z 0 [Note] [MY-000000] [Galera] GMCast version 0
+2020-04-10T16:09:10.838179Z 0 [Note] [MY-000000] [Galera] (9d3066c2, 'tcp://0.0.0.0:4567') listening at tcp://0.0.0.0:4567
+2020-04-10T16:09:10.838322Z 0 [Note] [MY-000000] [Galera] (9d3066c2, 'tcp://0.0.0.0:4567') multicast: , ttl: 1
+2020-04-10T16:09:10.838837Z 0 [Note] [MY-000000] [Galera] EVS version 1
+2020-04-10T16:09:10.839079Z 0 [Note] [MY-000000] [Galera] gcomm: bootstrapping new group 'pxc-cluster'
+2020-04-10T16:09:10.839245Z 0 [Note] [MY-000000] [Galera] start_prim is enabled, turn off pc_recovery
+2020-04-10T16:09:10.840196Z 0 [Note] [MY-000000] [Galera] EVS version upgrade 0 -> 1
+2020-04-10T16:09:10.840365Z 0 [Note] [MY-000000] [Galera] PC protocol upgrade 0 -> 1
+2020-04-10T16:09:10.840544Z 0 [Note] [MY-000000] [Galera] Node 9d3066c2 state primary
+2020-04-10T16:09:10.840733Z 0 [Note] [MY-000000] [Galera] Current view of cluster as seen by this node
+view (view_id(PRIM,9d3066c2,1)
+memb {
+	9d3066c2,0
+	}
+joined {
+	}
+left {
+	}
+partitioned {
+	}
+)
+2020-04-10T16:09:10.840903Z 0 [Note] [MY-000000] [Galera] Save the discovered primary-component to disk
+2020-04-10T16:09:10.844150Z 0 [Note] [MY-000000] [Galera] discarding pending addr without UUID: tcp://192.168.70.61:4567
+2020-04-10T16:09:10.844320Z 0 [Note] [MY-000000] [Galera] discarding pending addr proto entry 0x55ef13b408c0
+2020-04-10T16:09:10.844519Z 0 [Note] [MY-000000] [Galera] discarding pending addr without UUID: tcp://192.168.70.62:4567
+2020-04-10T16:09:10.844688Z 0 [Note] [MY-000000] [Galera] discarding pending addr proto entry 0x55ef13b41170
+2020-04-10T16:09:10.844873Z 0 [Note] [MY-000000] [Galera] discarding pending addr without UUID: tcp://192.168.70.63:4567
+2020-04-10T16:09:10.845054Z 0 [Note] [MY-000000] [Galera] discarding pending addr proto entry 0x55ef13b41a50
+2020-04-10T16:09:10.845259Z 0 [Note] [MY-000000] [Galera] gcomm: connected
+2020-04-10T16:09:10.845719Z 0 [Note] [MY-000000] [Galera] Changing maximum packet size to 64500, resulting msg size: 32636
+2020-04-10T16:09:10.845962Z 0 [Note] [MY-000000] [Galera] Shifting CLOSED -> OPEN (TO: 0)
+2020-04-10T16:09:10.846206Z 0 [Note] [MY-000000] [Galera] Opened channel 'pxc-cluster'
+2020-04-10T16:09:10.846839Z 1 [Note] [MY-000000] [WSREP] Starting applier thread 1
+2020-04-10T16:09:10.847164Z 2 [Note] [MY-000000] [WSREP] Starting rollbacker thread 2
+2020-04-10T16:09:10.847457Z 0 [Note] [MY-000000] [Galera] New COMPONENT: primary = yes, bootstrap = no, my_idx = 0, memb_num = 1
+2020-04-10T16:09:10.847773Z 0 [Note] [MY-000000] [Galera] STATE_EXCHANGE: sent state UUID: 9d31f0bc-7b45-11ea-8cd9-ae85954ffffc
+2020-04-10T16:09:10.847990Z 0 [Note] [MY-000000] [Galera] STATE EXCHANGE: sent state msg: 9d31f0bc-7b45-11ea-8cd9-ae85954ffffc
+2020-04-10T16:09:10.848215Z 0 [Note] [MY-000000] [Galera] STATE EXCHANGE: got state msg: 9d31f0bc-7b45-11ea-8cd9-ae85954ffffc from 0 (pxc1)
+2020-04-10T16:09:10.848449Z 0 [Note] [MY-000000] [Galera] Quorum results:
+	version    = 6,
+	component  = PRIMARY,
+	conf_id    = 0,
+	members    = 1/1 (primary/total),
+	act_id     = 2,
+	last_appl. = 2,
+	protocols  = 2/10/4 (gcs/repl/appl),
+	vote policy= 0,
+	group UUID = 81ddcec6-7b45-11ea-91f9-5657fbaa9e47
+2020-04-10T16:09:10.848699Z 0 [Note] [MY-000000] [Galera] Flow-control interval: [100, 100]
+2020-04-10T16:09:10.848925Z 0 [Note] [MY-000000] [Galera] Restored state OPEN -> JOINED (3)
+2020-04-10T16:09:10.849196Z 1 [Note] [MY-000000] [Galera] ####### processing CC 3, local, ordered
+2020-04-10T16:09:10.849439Z 1 [Note] [MY-000000] [Galera] Drain monitors from 2 upto 2
+2020-04-10T16:09:10.849667Z 1 [Note] [MY-000000] [Galera] REPL Protocols: 10 (5, 3)
+2020-04-10T16:09:10.849909Z 1 [Note] [MY-000000] [Galera] ####### My UUID: 9d3066c2-7b45-11ea-baab-6691b0588a1b
+2020-04-10T16:09:10.850156Z 1 [Note] [MY-000000] [Galera] Server pxc1 connected to cluster at position 81ddcec6-7b45-11ea-91f9-5657fbaa9e47:3 with ID 9d3066c2-7b45-11ea-baab-6691b0588a1b
+2020-04-10T16:09:10.850389Z 1 [Note] [MY-000000] [WSREP] Server status change disconnected -> connected
+2020-04-10T16:09:10.850664Z 1 [Note] [MY-000000] [WSREP] wsrep_notify_cmd is not defined, skipping notification.
+2020-04-10T16:09:10.850950Z 1 [Note] [MY-000000] [Galera] ####### ST not required
+2020-04-10T16:09:10.851197Z 1 [Note] [MY-000000] [Galera] Cert index reset to 00000000-0000-0000-0000-000000000000:-1 (proto: 10), state transfer needed: no
+2020-04-10T16:09:10.851470Z 0 [Note] [MY-000000] [Galera] Member 0.0 (pxc1) synced with group.
+2020-04-10T16:09:10.851723Z 0 [Note] [MY-000000] [Galera] Shifting JOINED -> SYNCED (TO: 3)
+2020-04-10T16:09:10.851999Z 0 [Note] [MY-000000] [Galera] Service thread queue flushed.
+2020-04-10T16:09:10.852294Z 1 [Note] [MY-000000] [Galera] ####### Assign initial position for certification: 00000000-0000-0000-0000-000000000000:-1, protocol version: 5
+2020-04-10T16:09:10.852566Z 1 [Note] [MY-000000] [Galera] ####### Adjusting cert position: -1 -> 3
+2020-04-10T16:09:10.852902Z 0 [Note] [MY-000000] [Galera] Service thread queue flushed.
+2020-04-10T16:09:10.853203Z 1 [Note] [MY-000000] [Galera] ####### Setting monitor position to 3
+2020-04-10T16:09:10.853483Z 1 [Note] [MY-000000] [Galera] ####### Resetting gcache as cluster is being bootstrapped
+2020-04-10T16:09:10.863232Z 1 [Note] [MY-000000] [Galera] Recording CC from group: 3
+2020-04-10T16:09:10.863525Z 1 [Note] [MY-000000] [Galera] Lowest cert index boundary for CC from group: 3
+2020-04-10T16:09:10.863807Z 1 [Note] [MY-000000] [Galera] Min available from gcache for CC from group: 1
+2020-04-10T16:09:10.864129Z 1 [Note] [MY-000000] [Galera] ================================================
+View:
+  id: 81ddcec6-7b45-11ea-91f9-5657fbaa9e47:3
+  status: primary
+  protocol_version: 4
+  capabilities: MULTI-MASTER, CERTIFICATION, PARALLEL_APPLYING, REPLAY, ISOLATION, PAUSE, CAUSAL_READ, INCREMENTAL_WS, UNORDERED, PREORDERED, STREAMING, NBO
+  final: no
+  own_index: 0
+  members(1):
+	0: 9d3066c2-7b45-11ea-baab-6691b0588a1b, pxc1
+=================================================
+2020-04-10T16:09:10.864446Z 1 [Note] [MY-000000] [WSREP] Server status change connected -> joiner
+2020-04-10T16:09:10.864739Z 1 [Note] [MY-000000] [WSREP] wsrep_notify_cmd is not defined, skipping notification.
+2020-04-10T16:09:10.865041Z 1 [Note] [MY-000000] [WSREP] Server status change joiner -> initializing
+2020-04-10T16:09:10.865340Z 1 [Note] [MY-000000] [WSREP] wsrep_notify_cmd is not defined, skipping notification.
+2020-04-10T16:09:10.867526Z 0 [Warning] [MY-013245] [Server] The SSL library function CRYPTO_set_mem_functions failed. This is typically caused by the SSL library already being used. As a result the SSL memory allocation will not be instrumented.
+2020-04-10T16:09:10.869060Z 0 [Note] [MY-012366] [InnoDB] Using Linux native AIO
+2020-04-10T16:09:10.869543Z 0 [Note] [MY-010747] [Server] Plugin 'FEDERATED' is disabled.
+2020-04-10T16:09:10.871650Z 3 [Note] [MY-012932] [InnoDB] PUNCH HOLE support available
+2020-04-10T16:09:10.872003Z 3 [Note] [MY-012943] [InnoDB] Mutexes and rw_locks use GCC atomic builtins
+2020-04-10T16:09:10.872335Z 3 [Note] [MY-012944] [InnoDB] Uses event mutexes
+2020-04-10T16:09:10.872666Z 3 [Note] [MY-012945] [InnoDB] GCC builtin __atomic_thread_fence() is used for memory barrier
+2020-04-10T16:09:10.873079Z 3 [Note] [MY-012948] [InnoDB] Compressed tables use zlib 1.2.8
+2020-04-10T16:09:10.873776Z 3 [Note] [MY-013251] [InnoDB] Number of pools: 1
+2020-04-10T16:09:10.874286Z 3 [Note] [MY-012951] [InnoDB] Using CPU crc32 instructions
+2020-04-10T16:09:10.876221Z 3 [Note] [MY-012203] [InnoDB] Directories to scan './;./;./'
+2020-04-10T16:09:10.876617Z 3 [Note] [MY-012204] [InnoDB] Scanning './'
+2020-04-10T16:09:10.878323Z 3 [Note] [MY-012208] [InnoDB] Completed space ID check of 7 files.
+2020-04-10T16:09:10.879847Z 3 [Note] [MY-012955] [InnoDB] Initializing buffer pool, total size = 128.000000M, instances = 1, chunk size =128.000000M 
+2020-04-10T16:09:10.891830Z 3 [Note] [MY-012957] [InnoDB] Completed initialization of buffer pool
+2020-04-10T16:09:11.002968Z 0 [Note] [MY-011952] [InnoDB] If the mysqld execution user is authorized, page cleaner and LRU manager thread priority can be changed. See the man page of setpriority().
+2020-04-10T16:09:11.014647Z 3 [Note] [MY-011825] [InnoDB] Crash recovery did not find the parallel doublewrite buffer at /var/lib/mysql/xb_doublewrite
+2020-04-10T16:09:11.093034Z 3 [Note] [MY-013086] [InnoDB] Starting to parse redo log at lsn = 20098069, whereas checkpoint_lsn = 20098069
+2020-04-10T16:09:11.097726Z 3 [Note] [MY-013083] [InnoDB] Log background threads are being started...
+2020-04-10T16:09:11.314665Z 3 [Note] [MY-011825] [InnoDB] Created parallel doublewrite buffer at /var/lib/mysql/xb_doublewrite, size 3932160 bytes
+2020-04-10T16:09:11.315170Z 3 [Note] [MY-012532] [InnoDB] Applying a batch of 0 redo log records ...
+2020-04-10T16:09:11.315535Z 3 [Note] [MY-012535] [InnoDB] Apply batch completed!
+2020-04-10T16:09:11.316049Z 3 [Note] [MY-013252] [InnoDB] Using undo tablespace './undo_001'.
+2020-04-10T16:09:11.316614Z 3 [Note] [MY-013252] [InnoDB] Using undo tablespace './undo_002'.
+2020-04-10T16:09:11.320445Z 3 [Note] [MY-012910] [InnoDB] Opened 2 existing undo tablespaces.
+2020-04-10T16:09:11.320837Z 3 [Note] [MY-011980] [InnoDB] GTID recovery trx_no: 2073
+2020-04-10T16:09:11.336014Z 3 [Note] [MY-012923] [InnoDB] Creating shared tablespace for temporary tables
+2020-04-10T16:09:11.336556Z 3 [Note] [MY-012265] [InnoDB] Setting file './ibtmp1' size to 12 MB. Physically writing the file full; Please wait ...
+2020-04-10T16:09:11.358692Z 3 [Note] [MY-012266] [InnoDB] File './ibtmp1' size is now 12 MB.
+2020-04-10T16:09:11.359411Z 3 [Note] [MY-011825] [InnoDB] Scanning temp tablespace dir:'./#innodb_temp/'
+2020-04-10T16:09:11.388373Z 3 [Note] [MY-013018] [InnoDB] Created 128 and tracked 128 new rollback segment(s) in the temporary tablespace. 128 are now active.
+2020-04-10T16:09:11.403255Z 3 [Note] [MY-012976] [InnoDB] Percona XtraDB (http://www.percona.com) 8.0.18-9 started; log sequence number 20098069
+2020-04-10T16:09:11.411578Z 3 [Note] [MY-011089] [Server] Data dictionary restarting version '80017'.
+2020-04-10T16:09:11.510295Z 3 [Note] [MY-012357] [InnoDB] Reading DD tablespace files
+2020-04-10T16:09:11.512078Z 3 [Note] [MY-012356] [InnoDB] Validated 9/9  tablespaces
+2020-04-10T16:09:11.576828Z 3 [Note] [MY-010006] [Server] Using data dictionary with version '80017'.
+2020-04-10T16:09:11.613660Z 6 [System] [MY-000000] [WSREP] PXC upgrade completed successfully
+2020-04-10T16:09:11.614602Z 0 [Note] [MY-010902] [Server] Thread priority attribute setting in Resource Group SQL shall be ignored due to unsupported platform or insufficient privilege.
+2020-04-10T16:09:11.639277Z 0 [Note] [MY-012487] [InnoDB] DDL log recovery : begin
+2020-04-10T16:09:11.639873Z 0 [Note] [MY-012488] [InnoDB] DDL log recovery : end
+2020-04-10T16:09:11.653265Z 0 [Note] [MY-011946] [InnoDB] Loading buffer pool(s) from /var/lib/mysql/ib_buffer_pool
+2020-04-10T16:09:11.654085Z 0 [Note] [MY-011946] [InnoDB] Buffer pool(s) load completed at 200410 16:09:11
+2020-04-10T16:09:11.771597Z 0 [Note] [MY-010182] [Server] Found ca.pem, server-cert.pem and server-key.pem in data directory. Trying to enable SSL support using them.
+2020-04-10T16:09:11.772083Z 0 [Note] [MY-010304] [Server] Skipping generation of SSL certificates as certificate files are present in data directory.
+2020-04-10T16:09:11.773601Z 0 [Warning] [MY-010068] [Server] CA certificate ca.pem is self signed.
+2020-04-10T16:09:11.774102Z 0 [Note] [MY-010308] [Server] Skipping generation of RSA key pair through --sha256_password_auto_generate_rsa_keys as key files are present in data directory.
+2020-04-10T16:09:11.774571Z 0 [Note] [MY-010308] [Server] Skipping generation of RSA key pair through --caching_sha2_password_auto_generate_rsa_keys as key files are present in data directory.
+2020-04-10T16:09:11.775261Z 0 [Note] [MY-010252] [Server] Server hostname (bind-address): '*'; port: 3306
+2020-04-10T16:09:11.775774Z 0 [Note] [MY-010253] [Server] IPv6 is available.
+2020-04-10T16:09:11.776256Z 0 [Note] [MY-010264] [Server]   - '::' resolves to '::';
+2020-04-10T16:09:11.776778Z 0 [Note] [MY-010251] [Server] Server socket created on IP: '::'.
+2020-04-10T16:09:11.798977Z 0 [Note] [MY-011025] [Repl] Failed to start slave threads for channel ''.
+2020-04-10T16:09:11.802251Z 0 [Note] [MY-000000] [WSREP] Initialized wsrep sidno 2
+2020-04-10T16:09:11.802270Z 0 [Note] [MY-000000] [WSREP] wsrep_init_schema_and_SR (nil)
+2020-04-10T16:09:11.806951Z 0 [Note] [MY-000000] [Galera] Server initialized
+2020-04-10T16:09:11.806984Z 0 [Note] [MY-000000] [WSREP] Server status change initializing -> initialized
+2020-04-10T16:09:11.807004Z 0 [Note] [MY-000000] [WSREP] wsrep_notify_cmd is not defined, skipping notification.
+2020-04-10T16:09:11.807075Z 7 [Note] [MY-010051] [Server] Event Scheduler: scheduler thread started with id 7
+2020-04-10T16:09:11.807188Z 1 [Note] [MY-000000] [Galera] Bootstrapping a new cluster, setting initial position to 00000000-0000-0000-0000-000000000000:-1
+2020-04-10T16:09:11.810378Z 10 [Note] [MY-000000] [WSREP] Recovered cluster id 81ddcec6-7b45-11ea-91f9-5657fbaa9e47
+2020-04-10T16:09:11.810670Z 1 [Note] [MY-000000] [WSREP] Server status change initialized -> joined
+2020-04-10T16:09:11.810689Z 1 [Note] [MY-000000] [WSREP] wsrep_notify_cmd is not defined, skipping notification.
+2020-04-10T16:09:11.810713Z 1 [Note] [MY-000000] [WSREP] wsrep_notify_cmd is not defined, skipping notification.
+2020-04-10T16:09:11.813503Z 12 [Note] [MY-000000] [WSREP] Starting applier thread 12
+2020-04-10T16:09:11.813542Z 0 [System] [MY-010931] [Server] /usr/sbin/mysqld: ready for connections. Version: '8.0.18-9'  socket: '/var/run/mysqld/mysqld.sock'  port: 3306  Percona XtraDB Cluster (GPL), Release rel9, Revision fdf3f68, WSREP version 26.4.3.
+2020-04-10T16:09:11.815016Z 1 [Note] [MY-000000] [Galera] Server pxc1 synced with group
+2020-04-10T16:09:11.815039Z 1 [Note] [MY-000000] [WSREP] Server status change joined -> synced
+2020-04-10T16:09:11.815051Z 1 [Note] [MY-000000] [WSREP] Synchronized with group, ready for connections
+2020-04-10T16:09:11.815062Z 1 [Note] [MY-000000] [WSREP] wsrep_notify_cmd is not defined, skipping notification.
+2020-04-10T16:09:11.815193Z 13 [Note] [MY-000000] [WSREP] Starting applier thread 13
+2020-04-10T16:09:11.815335Z 14 [Note] [MY-000000] [WSREP] Starting applier thread 14
+2020-04-10T16:09:11.815468Z 15 [Note] [MY-000000] [WSREP] Starting applier thread 15
+2020-04-10T16:09:11.816791Z 16 [Note] [MY-000000] [WSREP] Starting applier thread 16
+2020-04-10T16:09:11.816926Z 17 [Note] [MY-000000] [WSREP] Starting applier thread 17
+2020-04-10T16:09:11.822388Z 18 [Note] [MY-000000] [WSREP] Starting applier thread 18
+2020-04-10T16:09:11.833729Z 0 [Note] [MY-011240] [Server] Plugin mysqlx reported: 'Using SSL configuration from MySQL Server'
+2020-04-10T16:09:11.834298Z 0 [Note] [MY-011243] [Server] Plugin mysqlx reported: 'Using OpenSSL for TLS connections'
+2020-04-10T16:09:11.834348Z 0 [Note] [MY-011332] [Server] Plugin mysqlx reported: 'IPv6 is available'
+2020-04-10T16:09:11.834464Z 0 [Note] [MY-011323] [Server] Plugin mysqlx reported: 'X Plugin ready for connections. bind-address: '::' port: 33060'
+2020-04-10T16:09:11.834490Z 0 [Note] [MY-011323] [Server] Plugin mysqlx reported: 'X Plugin ready for connections. socket: '/var/run/mysqld/mysqlx.sock''
+2020-04-10T16:09:11.834530Z 0 [System] [MY-011323] [Server] X Plugin ready for connections. Socket: '/var/run/mysqld/mysqlx.sock' bind-address: '::' port: 33060
+2020-04-10T16:10:07.420181Z 61 [Note] [MY-010914] [Server] Aborted connection 61 to db: 'sbt' user: 'root' host: 'localhost' (Got an error reading communication packets).
+2020-04-10T16:10:07.421409Z 90 [Note] [MY-010914] [Server] Aborted connection 90 to db: 'sbt' user: 'root' host: 'localhost' (Got an error reading communication packets).
+2020-04-10T16:10:07.422105Z 91 [Note] [MY-010914] [Server] Aborted connection 91 to db: 'sbt' user: 'root' host: 'localhost' (Got an error reading communication packets).
+2020-04-10T16:10:07.422753Z 92 [Note] [MY-010914] [Server] Aborted connection 92 to db: 'sbt' user: 'root' host: 'localhost' (Got an error reading communication packets).
+2020-04-10T16:10:07.423419Z 93 [Note] [MY-010914] [Server] Aborted connection 93 to db: 'sbt' user: 'root' host: 'localhost' (Got an error reading communication packets).
+2020-04-10T16:10:07.424092Z 94 [Note] [MY-010914] [Server] Aborted connection 94 to db: 'sbt' user: 'root' host: 'localhost' (Got an error reading communication packets).
+2020-04-10T16:10:07.424694Z 95 [Note] [MY-010914] [Server] Aborted connection 95 to db: 'sbt' user: 'root' host: 'localhost' (Got an error reading communication packets).
+2020-04-10T16:10:07.425293Z 96 [Note] [MY-010914] [Server] Aborted connection 96 to db: 'sbt' user: 'root' host: 'localhost' (Got an error reading communication packets).
+2020-04-10T16:10:07.425947Z 97 [Note] [MY-010914] [Server] Aborted connection 97 to db: 'sbt' user: 'root' host: 'localhost' (Got an error reading communication packets).
+2020-04-10T16:10:07.426596Z 98 [Note] [MY-010914] [Server] Aborted connection 98 to db: 'sbt' user: 'root' host: 'localhost' (Got an error reading communication packets).
+2020-04-10T16:10:07.427275Z 99 [Note] [MY-010914] [Server] Aborted connection 99 to db: 'sbt' user: 'root' host: 'localhost' (Got an error reading communication packets).
+2020-04-10T16:10:07.427922Z 100 [Note] [MY-010914] [Server] Aborted connection 100 to db: 'sbt' user: 'root' host: 'localhost' (Got an error reading communication packets).
+2020-04-10T16:10:07.428571Z 101 [Note] [MY-010914] [Server] Aborted connection 101 to db: 'sbt' user: 'root' host: 'localhost' (Got an error reading communication packets).
+2020-04-10T16:10:07.429230Z 102 [Note] [MY-010914] [Server] Aborted connection 102 to db: 'sbt' user: 'root' host: 'localhost' (Got an error reading communication packets).
+2020-04-10T16:10:07.429836Z 103 [Note] [MY-010914] [Server] Aborted connection 103 to db: 'sbt' user: 'root' host: 'localhost' (Got an error reading communication packets).
+2020-04-10T16:10:07.430450Z 104 [Note] [MY-010914] [Server] Aborted connection 104 to db: 'sbt' user: 'root' host: 'localhost' (Got an error reading communication packets).
+2020-04-10T16:10:07.431286Z 105 [Note] [MY-010914] [Server] Aborted connection 105 to db: 'sbt' user: 'root' host: 'localhost' (Got an error reading communication packets).
+2020-04-10T16:10:07.431971Z 106 [Note] [MY-010914] [Server] Aborted connection 106 to db: 'sbt' user: 'root' host: 'localhost' (Got an error reading communication packets).
+2020-04-10T16:10:07.432625Z 107 [Note] [MY-010914] [Server] Aborted connection 107 to db: 'sbt' user: 'root' host: 'localhost' (Got an error reading communication packets).
+2020-04-10T16:10:07.433283Z 108 [Note] [MY-010914] [Server] Aborted connection 108 to db: 'sbt' user: 'root' host: 'localhost' (Got an error reading communication packets).
+2020-04-10T16:10:07.434077Z 109 [Note] [MY-010914] [Server] Aborted connection 109 to db: 'sbt' user: 'root' host: 'localhost' (Got an error reading communication packets).
+2020-04-10T16:10:07.434723Z 110 [Note] [MY-010914] [Server] Aborted connection 110 to db: 'sbt' user: 'root' host: 'localhost' (Got an error reading communication packets).
+2020-04-10T16:10:07.435341Z 111 [Note] [MY-010914] [Server] Aborted connection 111 to db: 'sbt' user: 'root' host: 'localhost' (Got an error reading communication packets).
+2020-04-10T16:10:07.435949Z 112 [Note] [MY-010914] [Server] Aborted connection 112 to db: 'sbt' user: 'root' host: 'localhost' (Got an error reading communication packets).
+2020-04-10T16:10:07.436606Z 113 [Note] [MY-010914] [Server] Aborted connection 113 to db: 'sbt' user: 'root' host: 'localhost' (Got an error reading communication packets).
+2020-04-10T16:10:07.437259Z 114 [Note] [MY-010914] [Server] Aborted connection 114 to db: 'sbt' user: 'root' host: 'localhost' (Got an error reading communication packets).
+2020-04-10T16:10:07.437899Z 115 [Note] [MY-010914] [Server] Aborted connection 115 to db: 'sbt' user: 'root' host: 'localhost' (Got an error reading communication packets).
+2020-04-10T16:10:07.438504Z 116 [Note] [MY-010914] [Server] Aborted connection 116 to db: 'sbt' user: 'root' host: 'localhost' (Got an error reading communication packets).
+2020-04-10T16:10:07.439147Z 117 [Note] [MY-010914] [Server] Aborted connection 117 to db: 'sbt' user: 'root' host: 'localhost' (Got an error reading communication packets).
+2020-04-10T16:10:07.439785Z 118 [Note] [MY-010914] [Server] Aborted connection 118 to db: 'sbt' user: 'root' host: 'localhost' (Got an error reading communication packets).
+2020-04-10T16:10:07.440400Z 119 [Note] [MY-010914] [Server] Aborted connection 119 to db: 'sbt' user: 'root' host: 'localhost' (Got an error reading communication packets).
+2020-04-10T16:10:07.441084Z 120 [Note] [MY-010914] [Server] Aborted connection 120 to db: 'sbt' user: 'root' host: 'localhost' (Got an error reading communication packets).
+2020-04-10T16:10:07.441562Z 81 [Note] [MY-010914] [Server] Aborted connection 81 to db: 'sbt' user: 'root' host: 'localhost' (Got an error reading communication packets).
+2020-04-10T16:10:07.442037Z 78 [Note] [MY-010914] [Server] Aborted connection 78 to db: 'sbt' user: 'root' host: 'localhost' (Got an error reading communication packets).
+2020-04-10T16:10:07.442620Z 121 [Note] [MY-010914] [Server] Aborted connection 121 to db: 'sbt' user: 'root' host: 'localhost' (Got an error reading communication packets).
+2020-04-10T16:10:07.443101Z 88 [Note] [MY-010914] [Server] Aborted connection 88 to db: 'sbt' user: 'root' host: 'localhost' (Got an error reading communication packets).
+2020-04-10T16:10:07.443575Z 69 [Note] [MY-010914] [Server] Aborted connection 69 to db: 'sbt' user: 'root' host: 'localhost' (Got an error reading communication packets).
+2020-04-10T16:10:07.444043Z 72 [Note] [MY-010914] [Server] Aborted connection 72 to db: 'sbt' user: 'root' host: 'localhost' (Got an error reading communication packets).
+2020-04-10T16:10:07.444510Z 63 [Note] [MY-010914] [Server] Aborted connection 63 to db: 'sbt' user: 'root' host: 'localhost' (Got an error reading communication packets).
+2020-04-10T16:10:07.444999Z 74 [Note] [MY-010914] [Server] Aborted connection 74 to db: 'sbt' user: 'root' host: 'localhost' (Got an error reading communication packets).
+2020-04-10T16:10:07.445479Z 68 [Note] [MY-010914] [Server] Aborted connection 68 to db: 'sbt' user: 'root' host: 'localhost' (Got an error reading communication packets).
+2020-04-10T16:10:07.445959Z 65 [Note] [MY-010914] [Server] Aborted connection 65 to db: 'sbt' user: 'root' host: 'localhost' (Got an error reading communication packets).
+2020-04-10T16:10:07.446444Z 85 [Note] [MY-010914] [Server] Aborted connection 85 to db: 'sbt' user: 'root' host: 'localhost' (Got an error reading communication packets).
+2020-04-10T16:10:07.446917Z 64 [Note] [MY-010914] [Server] Aborted connection 64 to db: 'sbt' user: 'root' host: 'localhost' (Got an error reading communication packets).
+2020-04-10T16:10:07.447429Z 89 [Note] [MY-010914] [Server] Aborted connection 89 to db: 'sbt' user: 'root' host: 'localhost' (Got an error reading communication packets).
+2020-04-10T16:10:07.447903Z 84 [Note] [MY-010914] [Server] Aborted connection 84 to db: 'sbt' user: 'root' host: 'localhost' (Got an error reading communication packets).
+2020-04-10T16:10:07.448379Z 67 [Note] [MY-010914] [Server] Aborted connection 67 to db: 'sbt' user: 'root' host: 'localhost' (Got an error reading communication packets).
+2020-04-10T16:10:07.448875Z 82 [Note] [MY-010914] [Server] Aborted connection 82 to db: 'sbt' user: 'root' host: 'localhost' (Got an error reading communication packets).
+2020-04-10T16:10:07.449359Z 77 [Note] [MY-010914] [Server] Aborted connection 77 to db: 'sbt' user: 'root' host: 'localhost' (Got an error reading communication packets).
+2020-04-10T16:10:07.449849Z 73 [Note] [MY-010914] [Server] Aborted connection 73 to db: 'sbt' user: 'root' host: 'localhost' (Got an error reading communication packets).
+2020-04-10T16:10:07.450326Z 86 [Note] [MY-010914] [Server] Aborted connection 86 to db: 'sbt' user: 'root' host: 'localhost' (Got an error reading communication packets).
+2020-04-10T16:10:07.450807Z 79 [Note] [MY-010914] [Server] Aborted connection 79 to db: 'sbt' user: 'root' host: 'localhost' (Got an error reading communication packets).
+2020-04-10T16:10:07.451444Z 76 [Note] [MY-010914] [Server] Aborted connection 76 to db: 'sbt' user: 'root' host: 'localhost' (Got an error reading communication packets).
+2020-04-10T16:10:07.451955Z 80 [Note] [MY-010914] [Server] Aborted connection 80 to db: 'sbt' user: 'root' host: 'localhost' (Got an error reading communication packets).
+2020-04-10T16:10:07.452420Z 87 [Note] [MY-010914] [Server] Aborted connection 87 to db: 'sbt' user: 'root' host: 'localhost' (Got an error reading communication packets).
+2020-04-10T16:10:07.452882Z 70 [Note] [MY-010914] [Server] Aborted connection 70 to db: 'sbt' user: 'root' host: 'localhost' (Got an error reading communication packets).
+2020-04-10T16:10:07.453354Z 71 [Note] [MY-010914] [Server] Aborted connection 71 to db: 'sbt' user: 'root' host: 'localhost' (Got an error reading communication packets).
+2020-04-10T16:10:07.453829Z 83 [Note] [MY-010914] [Server] Aborted connection 83 to db: 'sbt' user: 'root' host: 'localhost' (Got an error reading communication packets).
+2020-04-10T16:10:07.454322Z 62 [Note] [MY-010914] [Server] Aborted connection 62 to db: 'sbt' user: 'root' host: 'localhost' (Got an error reading communication packets).
+2020-04-10T16:10:07.455451Z 75 [Note] [MY-010914] [Server] Aborted connection 75 to db: 'sbt' user: 'root' host: 'localhost' (Got an error reading communication packets).
+2020-04-10T16:10:07.455540Z 66 [Note] [MY-010914] [Server] Aborted connection 66 to db: 'sbt' user: 'root' host: 'localhost' (Got an error reading communication packets).
+2020-04-10T16:10:07.456293Z 122 [Note] [MY-010914] [Server] Aborted connection 122 to db: 'sbt' user: 'root' host: 'localhost' (Got an error reading communication packets).
+2020-04-10T16:10:07.457416Z 123 [Note] [MY-010914] [Server] Aborted connection 123 to db: 'sbt' user: 'root' host: 'localhost' (Got an error reading communication packets).
+2020-04-10T16:10:07.457531Z 124 [Note] [MY-010914] [Server] Aborted connection 124 to db: 'sbt' user: 'root' host: 'localhost' (Got an error reading communication packets).
+2020-04-10T16:10:08.363813Z 129 [Note] [MY-010914] [Server] Aborted connection 129 to db: 'sbt' user: 'root' host: 'localhost' (Got an error reading communication packets).
+2020-04-10T16:10:08.364375Z 127 [Note] [MY-010914] [Server] Aborted connection 127 to db: 'sbt' user: 'root' host: 'localhost' (Got an error reading communication packets).
+2020-04-10T16:10:08.364772Z 131 [Note] [MY-010914] [Server] Aborted connection 131 to db: 'sbt' user: 'root' host: 'localhost' (Got an error reading communication packets).
+2020-04-10T16:10:08.365154Z 130 [Note] [MY-010914] [Server] Aborted connection 130 to db: 'sbt' user: 'root' host: 'localhost' (Got an error reading communication packets).
+2020-04-10T16:10:08.365581Z 134 [Note] [MY-010914] [Server] Aborted connection 134 to db: 'sbt' user: 'root' host: 'localhost' (Got an error reading communication packets).
+2020-04-10T16:10:08.365972Z 128 [Note] [MY-010914] [Server] Aborted connection 128 to db: 'sbt' user: 'root' host: 'localhost' (Got an error reading communication packets).
+2020-04-10T16:10:08.366354Z 133 [Note] [MY-010914] [Server] Aborted connection 133 to db: 'sbt' user: 'root' host: 'localhost' (Got an error reading communication packets).
+2020-04-10T16:10:08.366722Z 135 [Note] [MY-010914] [Server] Aborted connection 135 to db: 'sbt' user: 'root' host: 'localhost' (Got an error reading communication packets).
+2020-04-10T16:10:08.367040Z 139 [Note] [MY-010914] [Server] Aborted connection 139 to db: 'sbt' user: 'root' host: 'localhost' (Got an error reading communication packets).
+2020-04-10T16:10:08.367364Z 136 [Note] [MY-010914] [Server] Aborted connection 136 to db: 'sbt' user: 'root' host: 'localhost' (Got an error reading communication packets).
+2020-04-10T16:10:08.367735Z 137 [Note] [MY-010914] [Server] Aborted connection 137 to db: 'sbt' user: 'root' host: 'localhost' (Got an error reading communication packets).
+2020-04-10T16:10:08.368045Z 132 [Note] [MY-010914] [Server] Aborted connection 132 to db: 'sbt' user: 'root' host: 'localhost' (Got an error reading communication packets).
+2020-04-10T16:10:08.368363Z 142 [Note] [MY-010914] [Server] Aborted connection 142 to db: 'sbt' user: 'root' host: 'localhost' (Got an error reading communication packets).
+2020-04-10T16:10:08.368671Z 138 [Note] [MY-010914] [Server] Aborted connection 138 to db: 'sbt' user: 'root' host: 'localhost' (Got an error reading communication packets).
+2020-04-10T16:10:08.369012Z 143 [Note] [MY-010914] [Server] Aborted connection 143 to db: 'sbt' user: 'root' host: 'localhost' (Got an error reading communication packets).
+2020-04-10T16:10:08.369317Z 141 [Note] [MY-010914] [Server] Aborted connection 141 to db: 'sbt' user: 'root' host: 'localhost' (Got an error reading communication packets).
+2020-04-10T16:10:08.369646Z 140 [Note] [MY-010914] [Server] Aborted connection 140 to db: 'sbt' user: 'root' host: 'localhost' (Got an error reading communication packets).
+2020-04-10T16:10:08.370045Z 181 [Note] [MY-010914] [Server] Aborted connection 181 to db: 'sbt' user: 'root' host: 'localhost' (Got an error reading communication packets).
+2020-04-10T16:10:08.370318Z 144 [Note] [MY-010914] [Server] Aborted connection 144 to db: 'sbt' user: 'root' host: 'localhost' (Got an error reading communication packets).
+2020-04-10T16:10:08.370635Z 145 [Note] [MY-010914] [Server] Aborted connection 145 to db: 'sbt' user: 'root' host: 'localhost' (Got an error reading communication packets).
+2020-04-10T16:10:08.370955Z 146 [Note] [MY-010914] [Server] Aborted connection 146 to db: 'sbt' user: 'root' host: 'localhost' (Got an error reading communication packets).
+2020-04-10T16:10:08.371288Z 125 [Note] [MY-010914] [Server] Aborted connection 125 to db: 'sbt' user: 'root' host: 'localhost' (Got an error reading communication packets).
+2020-04-10T16:10:08.371767Z 147 [Note] [MY-010914] [Server] Aborted connection 147 to db: 'sbt' user: 'root' host: 'localhost' (Got an error reading communication packets).
+2020-04-10T16:10:08.372072Z 148 [Note] [MY-010914] [Server] Aborted connection 148 to db: 'sbt' user: 'root' host: 'localhost' (Got an error reading communication packets).
+2020-04-10T16:10:08.372392Z 149 [Note] [MY-010914] [Server] Aborted connection 149 to db: 'sbt' user: 'root' host: 'localhost' (Got an error reading communication packets).
+2020-04-10T16:10:08.372738Z 152 [Note] [MY-010914] [Server] Aborted connection 152 to db: 'sbt' user: 'root' host: 'localhost' (Got an error reading communication packets).
+2020-04-10T16:10:08.373119Z 183 [Note] [MY-010914] [Server] Aborted connection 183 to db: 'sbt' user: 'root' host: 'localhost' (Got an error reading communication packets).
+2020-04-10T16:10:08.373368Z 154 [Note] [MY-010914] [Server] Aborted connection 154 to db: 'sbt' user: 'root' host: 'localhost' (Got an error reading communication packets).
+2020-04-10T16:10:08.373702Z 151 [Note] [MY-010914] [Server] Aborted connection 151 to db: 'sbt' user: 'root' host: 'localhost' (Got an error reading communication packets).
+2020-04-10T16:10:08.374164Z 150 [Note] [MY-010914] [Server] Aborted connection 150 to db: 'sbt' user: 'root' host: 'localhost' (Got an error reading communication packets).
+2020-04-10T16:10:08.374393Z 184 [Note] [MY-010914] [Server] Aborted connection 184 to db: 'sbt' user: 'root' host: 'localhost' (Got an error reading communication packets).
+2020-04-10T16:10:08.374628Z 177 [Note] [MY-010914] [Server] Aborted connection 177 to db: 'sbt' user: 'root' host: 'localhost' (Got an error reading communication packets).
+2020-04-10T16:10:08.374969Z 153 [Note] [MY-010914] [Server] Aborted connection 153 to db: 'sbt' user: 'root' host: 'localhost' (Got an error reading communication packets).
+2020-04-10T16:10:08.375309Z 169 [Note] [MY-010914] [Server] Aborted connection 169 to db: 'sbt' user: 'root' host: 'localhost' (Got an error reading communication packets).
+2020-04-10T16:10:08.375644Z 157 [Note] [MY-010914] [Server] Aborted connection 157 to db: 'sbt' user: 'root' host: 'localhost' (Got an error reading communication packets).
+2020-04-10T16:10:08.375962Z 159 [Note] [MY-010914] [Server] Aborted connection 159 to db: 'sbt' user: 'root' host: 'localhost' (Got an error reading communication packets).
+2020-04-10T16:10:08.376293Z 172 [Note] [MY-010914] [Server] Aborted connection 172 to db: 'sbt' user: 'root' host: 'localhost' (Got an error reading communication packets).
+2020-04-10T16:10:08.376612Z 163 [Note] [MY-010914] [Server] Aborted connection 163 to db: 'sbt' user: 'root' host: 'localhost' (Got an error reading communication packets).
+2020-04-10T16:10:08.376942Z 158 [Note] [MY-010914] [Server] Aborted connection 158 to db: 'sbt' user: 'root' host: 'localhost' (Got an error reading communication packets).
+2020-04-10T16:10:08.377284Z 156 [Note] [MY-010914] [Server] Aborted connection 156 to db: 'sbt' user: 'root' host: 'localhost' (Got an error reading communication packets).
+2020-04-10T16:10:08.377602Z 167 [Note] [MY-010914] [Server] Aborted connection 167 to db: 'sbt' user: 'root' host: 'localhost' (Got an error reading communication packets).
+2020-04-10T16:10:08.377919Z 173 [Note] [MY-010914] [Server] Aborted connection 173 to db: 'sbt' user: 'root' host: 'localhost' (Got an error reading communication packets).
+2020-04-10T16:10:08.378263Z 155 [Note] [MY-010914] [Server] Aborted connection 155 to db: 'sbt' user: 'root' host: 'localhost' (Got an error reading communication packets).
+2020-04-10T16:10:08.378571Z 174 [Note] [MY-010914] [Server] Aborted connection 174 to db: 'sbt' user: 'root' host: 'localhost' (Got an error reading communication packets).
+2020-04-10T16:10:08.378883Z 178 [Note] [MY-010914] [Server] Aborted connection 178 to db: 'sbt' user: 'root' host: 'localhost' (Got an error reading communication packets).
+2020-04-10T16:10:08.379198Z 176 [Note] [MY-010914] [Server] Aborted connection 176 to db: 'sbt' user: 'root' host: 'localhost' (Got an error reading communication packets).
+2020-04-10T16:10:08.379560Z 168 [Note] [MY-010914] [Server] Aborted connection 168 to db: 'sbt' user: 'root' host: 'localhost' (Got an error reading communication packets).
+2020-04-10T16:10:08.379876Z 162 [Note] [MY-010914] [Server] Aborted connection 162 to db: 'sbt' user: 'root' host: 'localhost' (Got an error reading communication packets).
+2020-04-10T16:10:08.380196Z 161 [Note] [MY-010914] [Server] Aborted connection 161 to db: 'sbt' user: 'root' host: 'localhost' (Got an error reading communication packets).
+2020-04-10T16:10:08.380514Z 166 [Note] [MY-010914] [Server] Aborted connection 166 to db: 'sbt' user: 'root' host: 'localhost' (Got an error reading communication packets).
+2020-04-10T16:10:08.380842Z 179 [Note] [MY-010914] [Server] Aborted connection 179 to db: 'sbt' user: 'root' host: 'localhost' (Got an error reading communication packets).
+2020-04-10T16:10:08.381174Z 171 [Note] [MY-010914] [Server] Aborted connection 171 to db: 'sbt' user: 'root' host: 'localhost' (Got an error reading communication packets).
+2020-04-10T16:10:08.381592Z 175 [Note] [MY-010914] [Server] Aborted connection 175 to db: 'sbt' user: 'root' host: 'localhost' (Got an error reading communication packets).
+2020-04-10T16:10:08.381981Z 170 [Note] [MY-010914] [Server] Aborted connection 170 to db: 'sbt' user: 'root' host: 'localhost' (Got an error reading communication packets).
+2020-04-10T16:10:08.382347Z 180 [Note] [MY-010914] [Server] Aborted connection 180 to db: 'sbt' user: 'root' host: 'localhost' (Got an error reading communication packets).
+2020-04-10T16:10:08.382590Z 165 [Note] [MY-010914] [Server] Aborted connection 165 to db: 'sbt' user: 'root' host: 'localhost' (Got an error reading communication packets).
+2020-04-10T16:10:08.382902Z 164 [Note] [MY-010914] [Server] Aborted connection 164 to db: 'sbt' user: 'root' host: 'localhost' (Got an error reading communication packets).
+2020-04-10T16:10:08.383570Z 160 [Note] [MY-010914] [Server] Aborted connection 160 to db: 'sbt' user: 'root' host: 'localhost' (Got an error reading communication packets).
+2020-04-10T16:10:08.383780Z 186 [Note] [MY-010914] [Server] Aborted connection 186 to db: 'sbt' user: 'root' host: 'localhost' (Got an error reading communication packets).
+2020-04-10T16:10:08.384099Z 185 [Note] [MY-010914] [Server] Aborted connection 185 to db: 'sbt' user: 'root' host: 'localhost' (Got an error reading communication packets).
+2020-04-10T16:10:08.384491Z 182 [Note] [MY-010914] [Server] Aborted connection 182 to db: 'sbt' user: 'root' host: 'localhost' (Got an error reading communication packets).
+2020-04-10T16:10:08.384830Z 187 [Note] [MY-010914] [Server] Aborted connection 187 to db: 'sbt' user: 'root' host: 'localhost' (Got an error reading communication packets).
+2020-04-10T16:10:08.384924Z 188 [Note] [MY-010914] [Server] Aborted connection 188 to db: 'sbt' user: 'root' host: 'localhost' (Got an error reading communication packets).
+2020-04-10T16:10:08.385197Z 126 [Note] [MY-010914] [Server] Aborted connection 126 to db: 'sbt' user: 'root' host: 'localhost' (Got an error reading communication packets).

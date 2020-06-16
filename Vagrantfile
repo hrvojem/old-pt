@@ -3,12 +3,12 @@
 
 playbook = "playbooks/clean.yml"
 deb_distro = "bento/ubuntu-18.04"
-deb1_playbook = "playbooks/pxc80.yml"
-deb_common_playbook = "playbooks/pxc80_common.yml"
-deb_garbd_playbook = "playbooks/pxc80_garbd.yml"
-rhel_distro = "bento/centos-8"
-rhel1_playbook = "playbooks/percona1_pxc80.yml"
-rhel_playbook = "playbooks/percona2_pxc80.yml"
+deb1_playbook = "playbooks/pxc57.yml"
+deb_common_playbook = "playbooks/pxc57_common.yml"
+deb_garbd_playbook = "playbooks/pxc57_garbd.yml"
+rhel_distro = "bento/centos-7"
+rhel1_playbook = "playbooks/percona1_pxc57.yml"
+rhel_playbook = "playbooks/percona2_pxc57.yml"
 rhel_garbd_playbook = "playbooks/percona4_pxc57.yml"
 
 Vagrant.configure("2") do |config|
@@ -80,6 +80,20 @@ Vagrant.configure("2") do |config|
     bionic_config.vm.host_name = "bionic"
     bionic_config.vm.network :private_network, ip: "192.168.70.32"
   end
+
+  config.vm.define :focal do |focal_config|
+    focal_config.vm.box = "bento/ubuntu-20.04" 
+#   config.vm.provision "shell", path: "zesty.sh"
+    config.vm.provision "ansible" do |ansible|
+      ansible.playbook = playbook
+      ansible.host_key_checking = "false"
+    end
+    focal_config.vm.provider :virtualbox do |vb|
+      vb.customize ["modifyvm", :id, "--memory", "2048", "--ioapic", "on" ]
+    end
+    focal_config.vm.host_name = "focal"
+  end
+
 
   config.vm.define :centos6 do |centos6_config|
     centos6_config.vm.box = "bento/centos-6"
@@ -196,6 +210,9 @@ Vagrant.configure("2") do |config|
     end
     percona1_config.vm.box = rhel_distro
     percona1_config.vm.host_name = "percona1"
+    percona1_config.vm.provider :virtualbox do |vb|
+      vb.customize ["modifyvm", :id, "--memory", "2048", "--ioapic", "on" ]
+    end
     percona1_config.vm.network :private_network, ip: "192.168.70.71"
   end
   config.vm.define :percona2 do |percona2_config|
@@ -205,6 +222,9 @@ Vagrant.configure("2") do |config|
     end
     percona2_config.vm.box = rhel_distro
     percona2_config.vm.host_name = "percona2"
+    percona2_config.vm.provider :virtualbox do |vb|
+      vb.customize ["modifyvm", :id, "--memory", "2048", "--ioapic", "on" ]
+    end
    percona2_config.vm.network :private_network, ip: "192.168.70.72"
   end
   config.vm.define :percona3 do |percona3_config|
@@ -214,6 +234,9 @@ Vagrant.configure("2") do |config|
     end
     percona3_config.vm.box = rhel_distro
     percona3_config.vm.host_name = "percona3"
+    percona3_config.vm.provider :virtualbox do |vb|
+      vb.customize ["modifyvm", :id, "--memory", "2048", "--ioapic", "on" ]
+    end
     percona3_config.vm.network :private_network, ip: "192.168.70.73"
   end
 
