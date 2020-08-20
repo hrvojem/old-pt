@@ -45,7 +45,8 @@
     when: ansible_os_family == "RedHat" and ansible_distribution_major_version == "6"
 
   - name: enable testing repo
-    command: percona-release enable original testing
+    command: percona-release enable original release
+#   command: percona-release enable original testing
 
   - name: disable the mysql module on RHEL/CentOS 8
     command: /usr/bin/dnf module disable mysql -y

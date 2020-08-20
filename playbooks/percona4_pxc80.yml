@@ -35,8 +35,14 @@
     yum: name=https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm state=present
     when: ansible_os_family == "RedHat" and ansible_distribution_major_version == "8"
 
+# - name: enable testing repo
+#   command:  percona-release setup -y pxc-80
+
   - name: enable testing repo
-    command:  percona-release setup pxc-80
+    command:  percona-release enable-only pxc-80 testing
+
+  - name: enable tools repo
+    command:  percona-release enable tools release
 
   - name: install garb
     yum:

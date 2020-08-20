@@ -24,9 +24,10 @@
 
   - name: change the default repo to main
     command: percona-release setup pxc-80
+#   command: percona-release enable-only pxc-80 testing
 
-# - name: add the experimental tools repo
-#   command: percona-release enable tools release
+  - name: add the experimental tools repo
+    command: percona-release enable tools release
 
   - name: install vim, pv, python-mysqldb, and PXC-8.0
     apt:
@@ -44,8 +45,8 @@
   - name: start the service to see if it works with default config
     command: systemctl start mysql
 
-# - name: check version
-#   command: /vagrant/version_check.sh pxc80
+  - name: check version
+    command: /vagrant/version_check.sh pxc80
 
   - name: stop the service to see if it works with default config
     command: systemctl stop mysql

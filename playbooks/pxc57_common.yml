@@ -14,7 +14,7 @@
     when: ansible_os_family == "Debian"
 
   - name: enable testing repo
-    command: percona-release enable original testing
+    command: percona-release enable original release
 
   - debug: var=ansible_all_ipv4_addresses
 
@@ -34,7 +34,6 @@
       - pv
       - unzip
       - sysbench
-      - python-mysqldb
       - percona-xtradb-cluster-57
 
   - name: stop mysql service

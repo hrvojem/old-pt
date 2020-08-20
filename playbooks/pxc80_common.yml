@@ -13,7 +13,7 @@
       deb: https://repo.percona.com/apt/percona-release_latest.generic_all.deb
     when: ansible_os_family == "Debian"
 
-  - name: change the default repo to testing
+  - name: change the default repo to main
     command: percona-release setup pxc-80
 
 # - name: add the experimental tools repo

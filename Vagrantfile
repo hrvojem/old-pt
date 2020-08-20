@@ -2,35 +2,22 @@
 # vi: set ft=ruby :
 
 playbook = "playbooks/clean.yml"
-deb_distro = "bento/ubuntu-18.04"
-deb1_playbook = "playbooks/pxc57.yml"
-deb_common_playbook = "playbooks/pxc57_common.yml"
-deb_garbd_playbook = "playbooks/pxc57_garbd.yml"
-rhel_distro = "bento/centos-7"
+deb_distro = "bento/ubuntu-16.04"
+deb1_playbook = "playbooks/clean.yml"
+deb_common_playbook = "playbooks/clean.yml"
+deb_garbd_playbook = "playbooks/pxc80_garbd.yml"
+rhel_distro = "bento/centos-8"
 rhel1_playbook = "playbooks/percona1_pxc57.yml"
 rhel_playbook = "playbooks/percona2_pxc57.yml"
-rhel_garbd_playbook = "playbooks/percona4_pxc57.yml"
+rhel_garbd_playbook = "playbooks/percona4_pxc80.yml"
 
 Vagrant.configure("2") do |config|
   # All Vagrant configuration is done here. The most pxb configuration
   # options are documented and commented below. For a complete reference,
   # please see the online documentation at vagrantup.com.
 
-  config.vm.define :jessie do |jessie_config|
-    jessie_config.vm.box = "bento/debian-8"
-    config.vm.provision "ansible" do |ansible|
-      ansible.playbook = playbook
-      ansible.host_key_checking = "false"
-    end
-    jessie_config.vm.host_name = "jessie"
-    jessie_config.vm.provider :virtualbox do |vb|
-      vb.customize ["modifyvm", :id, "--memory", "1024", "--ioapic", "on" ]
-    end
-  end
-
   config.vm.define :stretch do |stretch_config|
     stretch_config.vm.box = "bento/debian-9"
-#   config.vm.provision "shell", path: "rhel8.sh"
     config.vm.provision "ansible" do |ansible|
       ansible.playbook = playbook
       ansible.host_key_checking = "false"
@@ -52,7 +39,6 @@ Vagrant.configure("2") do |config|
       vb.customize ["modifyvm", :id, "--memory", "1024", "--ioapic", "on" ]
     end
   end
-
 
   config.vm.define :xenial do |xenial_config|
     xenial_config.vm.box = "bento/ubuntu-16.04"
@@ -83,7 +69,6 @@ Vagrant.configure("2") do |config|
 
   config.vm.define :focal do |focal_config|
     focal_config.vm.box = "bento/ubuntu-20.04" 
-#   config.vm.provision "shell", path: "zesty.sh"
     config.vm.provision "ansible" do |ansible|
       ansible.playbook = playbook
       ansible.host_key_checking = "false"

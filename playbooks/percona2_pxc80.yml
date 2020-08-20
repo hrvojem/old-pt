@@ -39,14 +39,14 @@
     yum: name=https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm state=present
     when: ansible_os_family == "RedHat" and ansible_distribution_major_version == "7"
 
-  - name: enable pxc-80 repo
-    command: percona-release setup pxc-80
-
 # - name: enable pxc-80 repo
-#   command: percona-release enable-only pxc-80 testing
+#   command: percona-release setup -y pxc-80
 
-# - name: enable tools release repo
-#   command: percona-release enable tools release
+  - name: enable pxc-80 repo
+    command: percona-release enable-only pxc-80 testing
+
+  - name: enable tools release repo
+    command: percona-release enable tools release
 
   - name: disable the mysql module on RHEL/CentOS 8
     command: /usr/bin/dnf module disable mysql -y
