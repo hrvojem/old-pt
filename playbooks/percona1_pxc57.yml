@@ -36,28 +36,31 @@
     yum: name=https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm state=present
     when: ansible_os_family == "RedHat" and ansible_distribution_major_version == "7"
 
-  - name: add the epel repo for centos6
-    yum: name=https://dl.fedoraproject.org/pub/epel/epel-release-latest-6.noarch.rpm state=present
-    when: ansible_os_family == "RedHat" and ansible_distribution_major_version == "6"
-
-  - name: add the epel repo for centos6
+  - name: add the epel repo for centos8
     yum: name=https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm state=present
     when: ansible_os_family == "RedHat" and ansible_distribution_major_version == "8"
+
+  - name: fix centos6 repos
+    command: /vagrant/centos6.sh
+    when: ansible_os_family == "RedHat" and ansible_distribution_major_version == "6"
 
   - name: disable the mysql module on RHEL/CentOS 8
     command: /usr/bin/dnf module disable mysql -y
     when: ansible_os_family == "RedHat" and ansible_distribution_major_version == "8"
 
-  - name: install PXC
-    yum: 
-      name: "{{ packages }}"
-      state: present 
-    vars:
-      packages:
-      - Percona-XtraDB-Cluster-full-57.x86_64 
-      - pv 
-      - sysbench
-    when: ansible_os_family == "RedHat"
+# - name: break yourself
+#   command: /vagrant/stop.sh
+
+# - name: install PXC
+#   yum: 
+#     name: "{{ packages }}"
+#     state: present 
+#   vars:
+#     packages:
+#     - Percona-XtraDB-Cluster-full-57.x86_64 
+#     - pv 
+#     - sysbench
+#   when: ansible_os_family == "RedHat"
  
   - name: install python mysql rpm packages for CentOS 6 and 7
     yum:

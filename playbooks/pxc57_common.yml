@@ -13,8 +13,11 @@
       deb: https://repo.percona.com/apt/percona-release_latest.generic_all.deb
     when: ansible_os_family == "Debian"
 
+  - name: disable all repos
+    command: percona-release disable all
+
   - name: enable testing repo
-    command: percona-release enable original release
+    command: percona-release enable original testing
 
   - debug: var=ansible_all_ipv4_addresses
 

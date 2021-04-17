@@ -1,0 +1,120 @@
+# tasks file for innodb-cluster-server
+- hosts: all
+  name: install and set up the innodb cluster node from the upstream repo
+  become: true
+  become_method: sudo
+
+  tasks:
+
+  - name: Install MySQL apt repository package
+    apt:
+      deb: https://dev.mysql.com/get/mysql-apt-config_0.8.16-1_all.deb
+    when: ansible_os_family == "Debian"
+
+  - name: setup hosts file
+    copy:
+      content: |
+        127.0.0.1 {{ ansible_hostname }} localhost
+        192.168.80.71 ps-node1
+        192.168.80.72 ps-node2
+        192.168.80.73 ps-node3
+        192.168.80.74 mysql-router
+        ::1     localhost ip6-localhost ip6-loopback
+        ff02::1 ip6-allnodes
+        ff02::2 ip6-allrouters
+      dest: /etc/hosts
+      force: yes
+      group: root
+      owner: root
+      mode: 0644
+  
+  - name: install MySQL Server deb packages
+    apt:
+      name: "{{ packages }}"
+      update_cache: yes
+      state: latest
+    vars:
+      packages:
+      - mysql-client                   
+      - mysql-common                   
+      - mysql-community-client         
+      - mysql-community-client-core    
+      - mysql-community-client-plugins 
+      - mysql-community-server         
+      - mysql-community-server-core
+    when: ansible_os_family == "Debian"
+
+  - name: install Percona Server rpm packages
+    yum:
+      name: "{{ packages }}"
+      state: latest
+    vars:
+      packages:
+      - percona-server-server
+      - percona-server-client
+      - percona-server-test
+      - percona-server-devel
+      - percona-server-tokudb
+      - percona-server-rocksdb
+    when: ansible_os_family == "RedHat"
+
+  - name: start mysql service
+    service:
+      name: mysql
+      state: started
+
+  - name: setup mysql user on Centos/RedHat
+    shell: |
+      mysql --connect-expired-password -uroot --password="$(grep 'temporary password' /var/log/mysqld.log | awk '{print $NF}')" -e "ALTER USER 'root'@'localhost' IDENTIFIED BY 'Test1234#';"
+      mysql -uroot -pTest1234# -e "create user root@'%' identified with caching_sha2_password by 'Test1234#'"
+      mysql -uroot -pTest1234# -e "grant all privileges on *.* to root@'%' with grant option;"
+      mysql -uroot -pTest1234# -e "create user sysbench@'%' identified with mysql_native_password by 'Test1234#'"
+      mysql -uroot -pTest1234# -e "grant all privileges on *.* to sysbench@'%';"
+    when: ansible_os_family == "RedHat"
+
+  - name: setup mysql user on Debian/Ubuntu
+    shell: |
+      mysql -uroot -e "create user root@'%' identified with caching_sha2_password by 'Test1234#'"
+      mysql -uroot -e "grant all privileges on *.* to root@'%' with grant option;"
+      mysql -uroot -e "create user sysbench@'%' identified with mysql_native_password by 'Test1234#'"
+      mysql -uroot -e "grant all privileges on *.* to sysbench@'%';"
+      mysql -uroot -e "alter user root@localhost identified with caching_sha2_password by 'Test1234#';"
+    when: ansible_os_family == "Debian"
+
+  - name: add options to my.cnf on Debian/Ubuntu
+    blockinfile:
+      path: /etc/mysql/my.cnf
+      block: |
+        [mysqld]
+        plugin_load_add='group_replication.so'
+        server_id={{ 10000 | random }}
+        binlog_checksum=NONE
+        enforce_gtid_consistency=ON
+        gtid_mode=ON
+        group_replication_group_name="aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"
+        group_replication_start_on_boot=OFF
+        relay_log={{ ansible_hostname }}-relay-bin
+        innodb_dedicated_server=ON
+        group_replication_ip_allowlist='192.168.80.71/24, 192.168.80.72/24, 192.168.80.73/24, 192.168.80.74/24'
+    when: ansible_os_family == "Debian"
+
+  - name: add options to my.cnf on Centos/RedHat
+    blockinfile:
+      path: /etc/my.cnf
+      block: |
+        plugin_load_add='group_replication.so'
+        server_id={{ 10000 | random }}
+        binlog_checksum=NONE
+        enforce_gtid_consistency=ON
+        gtid_mode=ON
+        group_replication_group_name="aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"
+        group_replication_start_on_boot=OFF
+        relay_log={{ ansible_hostname }}-relay-bin
+        innodb_dedicated_server=ON
+        group_replication_ip_allowlist='192.168.80.71/24, 192.168.80.72/24, 192.168.80.73/24, 192.168.80.74/24'
+    when: ansible_os_family == "RedHat"
+
+  - name: restart mysql service
+    service:
+      name: mysql
+      state: restarted

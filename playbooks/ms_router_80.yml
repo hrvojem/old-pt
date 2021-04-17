@@ -1,0 +1,81 @@
+# tasks file for ps-innodb-cluster-server
+- hosts: all
+  name: install and set up the innodb cluster node from the percona repo
+  become: true
+  become_method: sudo
+
+  tasks:
+
+  - name: Install MySQL apt repository package
+    apt:
+      deb: https://dev.mysql.com/get/mysql-apt-config_0.8.16-1_all.deb
+    when: ansible_os_family == "Debian"
+
+  - name: setup hosts file
+    copy:
+      content: |
+        127.0.0.1 {{ ansible_hostname }} localhost
+        192.168.80.71 ps-node1
+        192.168.80.72 ps-node2
+        192.168.80.73 ps-node3
+        192.168.80.74 mysql-router
+        ::1     localhost ip6-localhost ip6-loopback
+        ff02::1 ip6-allnodes
+        ff02::2 ip6-allrouters
+      dest: /etc/hosts
+      force: yes
+      group: root
+      owner: root
+      mode: 0644
+
+  - name: install router and shell deb packages
+    apt:
+      name: "{{ packages }}"
+      update_cache: yes
+      state: latest
+    vars:
+      packages:
+      - mysql-router
+      - mysql-shell
+#     - sysbench
+      - jq
+    when: ansible_os_family == "Debian"
+
+  - name: install router and shell rpm packages
+    yum:
+      name: "{{ packages }}"
+      state: latest
+    vars:
+      packages:
+      - percona-mysql-router
+      - percona-mysql-shell
+      - sysbench
+      - jq
+    when: ansible_os_family == "RedHat"
+
+  - name: create cluster
+    shell: mysqlsh --uri=root@ps-node1 --password=Test1234# -- dba create-cluster testCluster
+
+  - pause:
+      seconds: 10
+
+  - name: add slave1
+    shell: mysqlsh --uri=root@ps-node1 --password=Test1234# -- cluster add-instance root@ps-node2:3306 --password=Test1234# --recoveryMethod=clone
+
+  - name: add slave2
+    shell: mysqlsh --uri=root@ps-node1 --password=Test1234# -- cluster add-instance root@ps-node3:3306 --password=Test1234# --recoveryMethod=clone
+
+  - name: bootstrap router
+    shell: echo "Test1234#" | sudo mysqlrouter --bootstrap root@ps-node1 --user=mysqlrouter
+
+  - name: restart mysqlrouter service
+    service:
+      name: mysqlrouter
+      state: restarted
+
+  - name: create sbtest database
+    shell: mysqlsh root@localhost:6446 --password=Test1234# --sql -e 'create database sbtest;'
+
+# - name: run sysbench
+#   shell: sysbench --report-interval=1 --tables=2 --table-size=100000 --time=0 --events=0 --threads=1 --rand-type=pareto --db-driver=mysql --mysql-user=sysbench --mysql-password=Test1234# --mysql-host=mysql-router --mysql-port=6446 --mysql-db=sbtest --mysql-storage-engine=innodb /usr/share/sysbench/oltp_read_write.lua prepare
+

@@ -9,7 +9,7 @@ GALERA_GROUP="pxc-cluster"
 
 # Optional Galera internal options string (e.g. SSL settings)
 # see http://galeracluster.com/documentation-webpages/galeraparameters.html
-# GALERA_OPTIONS=""
+GALERA_OPTIONS="socket.ssl_ca=/vagrant/support-files/certs/ca.pem;socket.ssl_cert=/vagrant/support-files/certs/server-cert.pem;socket.ssl_key=/vagrant/support-files/certs/server-key.pem;socket.ssl_cipher=AES128-SHA256"
 
 # Log file for garbd. Optional, by default logs to syslog
 # Deprecated for CentOS7, use journalctl to query the log for garbd

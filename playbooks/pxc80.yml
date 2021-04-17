@@ -23,8 +23,8 @@
     when: ansible_os_family == "Debian"
 
   - name: change the default repo to main
-    command: percona-release setup pxc-80
-#   command: percona-release enable-only pxc-80 testing
+#   command: percona-release setup pxc-80
+    command: percona-release enable-only pxc-80 testing
 
   - name: add the experimental tools repo
     command: percona-release enable tools release
@@ -35,6 +35,7 @@
       update_cache: yes
     vars:
       packages:
+#     - policycoreutils-python
       - vim
       - pv
       - percona-xtradb-cluster-full
@@ -44,9 +45,6 @@
 
   - name: start the service to see if it works with default config
     command: systemctl start mysql
-
-  - name: check version
-    command: /vagrant/version_check.sh pxc80
 
   - name: stop the service to see if it works with default config
     command: systemctl stop mysql
@@ -61,6 +59,9 @@
 
   - name: install plugins
     command: /vagrant/plugins_test_pxc_80.sh
+
+  - name: check version
+    command: /vagrant/version_check.sh pxc80
 
 # - name: run sysbench tpcc prepare script
 #   command: /usr/share/sysbench/tpcc.lua --mysql-user=sysbench --mysql-db=sbt --time=30 --threads=64 --report-interval=1 --tables=3 --scale=10 --db-driver=mysql --use_fk=0 --force_pk=1 --trx_level=RC prepare

@@ -1,15 +1,18 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-playbook = "playbooks/clean.yml"
-deb_distro = "bento/ubuntu-16.04"
-deb1_playbook = "playbooks/clean.yml"
-deb_common_playbook = "playbooks/clean.yml"
+playbook = "playbooks/psmdb_40.yml"
+deb_distro = "bento/ubuntu-18.04"
+deb1_playbook = "playbooks/pxc57.yml"
+deb_common_playbook = "playbooks/pxc57_common.yml"
 deb_garbd_playbook = "playbooks/pxc80_garbd.yml"
-rhel_distro = "bento/centos-8"
+rhel_distro = "bento/centos-7"
 rhel1_playbook = "playbooks/percona1_pxc57.yml"
 rhel_playbook = "playbooks/percona2_pxc57.yml"
 rhel_garbd_playbook = "playbooks/percona4_pxc80.yml"
+node_distro = "bento/debian-10"
+node_playbook = "playbooks/ms_node_80.yml"
+router_playbook = "playbooks/ms_router_80.yml"
 
 Vagrant.configure("2") do |config|
   # All Vagrant configuration is done here. The most pxb configuration
@@ -55,7 +58,6 @@ Vagrant.configure("2") do |config|
 
   config.vm.define :bionic do |bionic_config|
     bionic_config.vm.box = "bento/ubuntu-18.04" 
-    config.vm.provision "shell", path: "zesty.sh"
     config.vm.provision "ansible" do |ansible|
       ansible.playbook = playbook
       ansible.host_key_checking = "false"
@@ -68,17 +70,29 @@ Vagrant.configure("2") do |config|
   end
 
   config.vm.define :focal do |focal_config|
-    focal_config.vm.box = "bento/ubuntu-20.04" 
+    focal_config.vm.box = "ubuntu/focal64"
+#   focal_config.vm.box = "bento/ubuntu-20.04" 
     config.vm.provision "ansible" do |ansible|
       ansible.playbook = playbook
       ansible.host_key_checking = "false"
     end
     focal_config.vm.provider :virtualbox do |vb|
-      vb.customize ["modifyvm", :id, "--memory", "2048", "--ioapic", "on" ]
+      vb.customize ["modifyvm", :id, "--memory", "8192", "--ioapic", "on" ]
     end
     focal_config.vm.host_name = "focal"
   end
 
+  config.vm.define :groovy do |groovy_config|
+    groovy_config.vm.box = "bento/ubuntu-20.10"
+    config.vm.provision "ansible" do |ansible|
+      ansible.playbook = playbook
+      ansible.host_key_checking = "false"
+    end
+    groovy_config.vm.provider :virtualbox do |vb|
+      vb.customize ["modifyvm", :id, "--memory", "2048", "--ioapic", "on" ]
+    end
+    groovy_config.vm.host_name = "groovy"
+  end
 
   config.vm.define :centos6 do |centos6_config|
     centos6_config.vm.box = "bento/centos-6"
@@ -99,7 +113,7 @@ Vagrant.configure("2") do |config|
       ansible.host_key_checking = "false"
     end
     centos7_config.vm.provider :virtualbox do |vb|
-      vb.customize ["modifyvm", :id, "--memory", "4048", "--ioapic", "on", "--cpus", "2" ]
+      vb.customize ["modifyvm", :id, "--memory", "24384", "--ioapic", "on", "--cpus", "12" ]
     end
     centos7_config.vm.host_name = "centos7"
   end
@@ -112,6 +126,7 @@ Vagrant.configure("2") do |config|
     end
     centos8_config.vm.provider :virtualbox do |vb|
       vb.customize ["modifyvm", :id, "--memory", "4048", "--ioapic", "on", "--cpus", "2" ]
+#     vb.customize ["modifyvm", :id, "--memory", "24384", "--ioapic", "on", "--cpus", "12" ]
     end
     centos8_config.vm.host_name = "centos8"
   end
@@ -235,9 +250,55 @@ Vagrant.configure("2") do |config|
     percona4_config.vm.network :private_network, ip: "192.168.70.74"
   end
 
-  config.vm.define :freebsd do |freebsd_config|
-    freebsd_config.vm.box = "bento/freebsd-11.0"
-    freebsd_config.vm.host_name = "freebsd"
+  config.vm.define :ps_node1 do |ps_node1_config|
+    config.vm.provision "ansible" do |ansible|
+      ansible.playbook = node_playbook
+      ansible.host_key_checking = "false"
+    end
+    ps_node1_config.vm.box = node_distro
+    ps_node1_config.vm.host_name = "ps-node1"
+    ps_node1_config.vm.provider :virtualbox do |vb|
+      vb.customize ["modifyvm", :id, "--memory", "2048", "--ioapic", "on" ]
+    end
+    ps_node1_config.vm.network :private_network, ip: "192.168.80.71"
   end
 
+  config.vm.define :ps_node2 do |ps_node2_config|
+    config.vm.provision "ansible" do |ansible|
+      ansible.playbook = node_playbook
+      ansible.host_key_checking = "false"
+    end
+    ps_node2_config.vm.box = node_distro
+    ps_node2_config.vm.host_name = "ps-node2"
+    ps_node2_config.vm.provider :virtualbox do |vb|
+      vb.customize ["modifyvm", :id, "--memory", "2048", "--ioapic", "on" ]
+    end
+   ps_node2_config.vm.network :private_network, ip: "192.168.80.72"
+  end
+
+  config.vm.define :ps_node3 do |ps_node3_config|
+    config.vm.provision "ansible" do |ansible|
+      ansible.playbook = node_playbook
+      ansible.host_key_checking = "false"
+    end
+    ps_node3_config.vm.box = node_distro
+    ps_node3_config.vm.host_name = "ps-node3"
+    ps_node3_config.vm.provider :virtualbox do |vb|
+      vb.customize ["modifyvm", :id, "--memory", "2048", "--ioapic", "on" ]
+    end
+    ps_node3_config.vm.network :private_network, ip: "192.168.80.73"
+  end
+
+  config.vm.define :router do |router_config|
+    config.vm.provision "ansible" do |ansible|
+      ansible.playbook = router_playbook
+      ansible.host_key_checking = "false"
+    end
+    router_config.vm.box = node_distro
+    router_config.vm.host_name = "mysql-router"
+    router_config.vm.provider :virtualbox do |vb|
+      vb.customize ["modifyvm", :id, "--memory", "2048", "--ioapic", "on" ]
+    end
+    router_config.vm.network :private_network, ip: "192.168.80.74"
+  end
 end

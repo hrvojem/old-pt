@@ -1,0 +1,52 @@
+---
+# This playbook checks pdps
+
+- hosts: all
+  become: true
+  become_method: sudo
+
+  tasks:
+
+  tasks:
+  - name: include tasks for test env setup
+    include: ../tasks/test_prep.yml
+
+  - name: Install percona repository package for debian
+    apt:
+     deb: https://repo.percona.com/apt/percona-release_latest.generic_all.deb
+    when: ansible_os_family == "Debian"
+
+  - name: add the main Percona yum repos for centos
+    yum: name=https://repo.percona.com/yum/percona-release-latest.noarch.rpm
+    when: ansible_os_family == "RedHat"
+
+  - name: include tasks for enabling main repo
+    command: percona-release setup pdps-8.0.20
+
+  - name: install deb packages 
+    apt: name={{item}} update_cache=yes
+    with_items: 
+    - vim
+    - percona-xtrabackup-80
+    - percona-toolkit
+    - percona-orchestrator
+    - percona-orchestrator-cli
+    - percona-orchestrator-client
+    - percona-mysql-shell
+    - proxysql2
+    - percona-mysql-router
+    when: ansible_os_family == "Debian"
+
+  - name: install packages in centos
+    yum: name={{item}} state=present
+    with_items:
+    - percona-xtrabackup-80
+    - percona-toolkit
+    - percona-orchestrator
+    - percona-orchestrator-cli
+    - percona-orchestrator-client
+    - percona-mysql-shell
+    - proxysql2
+    - percona-mysql-router
+    - libselinux-python
+    when: ansible_os_family == "RedHat"

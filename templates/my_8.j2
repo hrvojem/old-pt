@@ -1,19 +1,21 @@
 # Template my.cnf for PXC
 # Edit to your requirements.
 [client]
-socket=/var/run/mysqld/mysqld.sock
+socket=/var/lib/mysql/mysql.sock
 
 [mysqld]
 server-id=1
 datadir=/var/lib/mysql
-socket=/var/run/mysqld/mysqld.sock
-log-error=/var/log/mysql/error.log
+socket=/var/lib/mysql/mysql.sock
+log-error=/var/log/mysqld.log
 pid-file=/var/run/mysqld/mysqld.pid
-expire_logs_days=7
 log_error_verbosity=3
 
-# Disabling symbolic-links is recommended to prevent assorted security risks
-symbolic-links=0
+# Disable encryption
+# pxc_encrypt_cluster_traffic=OFF
+
+# Binary log expiration period is 604800 seconds, which equals 7 days
+binlog_expire_logs_seconds=604800
 
 ######## wsrep ###############
 # Path to Galera library
@@ -24,14 +26,11 @@ wsrep_provider=/usr/lib/galera4/libgalera_smm.so
 #in order to do that you need to bootstrap this node
 wsrep_cluster_address=gcomm://192.168.70.61,192.168.70.62,192.168.70.63
 
-# Disable encryption
-# pxc_encrypt_cluster_traffic=OFF
-
 # In order for Galera to work correctly binlog format should be ROW
 binlog_format=ROW
 
 # Slave thread to use
-wsrep_slave_threads= 8
+wsrep_slave_threads=8
 
 wsrep_log_conflicts
 
@@ -39,13 +38,13 @@ wsrep_log_conflicts
 innodb_autoinc_lock_mode=2
 
 # Node IP address
-wsrep_node_address={{ man_ip }}
+wsrep_node_address={{ansible_eth1.ipv4.address}}
 
 # Cluster name
 wsrep_cluster_name=pxc-cluster
 
 #If wsrep_node_name is not specified,  then system hostname will be used
-#wsrep_node_name=pxc-cluster-node-1
+wsrep_node_name=pxc-cluster-node-1
 
 #pxc_strict_mode allowed values: DISABLED,PERMISSIVE,ENFORCING,MASTER
 pxc_strict_mode=ENFORCING
@@ -56,18 +55,12 @@ wsrep_sst_method=xtrabackup-v2
 #Certs
 
 [mysqld]
-ssl-ca = /vagrant/certs/ca.pem
-ssl-cert = /vagrant/certs/server-cert.pem
-ssl-key = /vagrant/certs/server-key.pem
+ssl-ca = /vagrant/support-files/certs/ca.pem
+ssl-cert = /vagrant/support-files/certs/server-cert.pem
+ssl-key = /vagrant/support-files/certs/server-key.pem
 
 [client]
-ssl-ca = /vagrant/certs/ca.pem
-ssl-cert = /vagrant/certs/client-cert.pem
-ssl-key = /vagrant/certs/client-key.pem
+ssl-ca = /vagrant/support-files/certs/ca.pem
+ssl-cert = /vagrant/support-files/certs/client-cert.pem
+ssl-key = /vagrant/support-files/certs/client-key.pem
 
-###########################################
-
-[mysqld_safe]
-pid-file = /var/run/mysqld/mysqld.pid
-socket   = /var/run/mysqld/mysqld.sock
-nice     = 0

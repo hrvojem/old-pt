@@ -22,7 +22,7 @@
     when: ansible_os_family == "Debian"
 
   - name: enable testing repo
-    command: percona-release enable original release
+    command: percona-release enable original testing
 
   - name: install python mysql deb packages
     apt:

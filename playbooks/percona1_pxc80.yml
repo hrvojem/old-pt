@@ -6,9 +6,6 @@
   become_method: sudo
 
   tasks:
-# - name: remove mysql-libs
-#   yum: name=mysql-libs state=absent
-#   when: ansible_os_family == "RedHat" and ansible_distribution_major_version == "6"
 
   - name: install libselinux-python
     yum: 
@@ -16,6 +13,7 @@
       state: present 
     vars:
       packages:
+      - policycoreutils-python
       - libselinux-python
     when: (ansible_distribution == "Amazon") or (ansible_os_family == "RedHat" and ansible_distribution_major_version == "7")
 
@@ -75,9 +73,6 @@
   - name: set root password
     command: /vagrant/setpass_57.sh
 
-  - name: check PXC-8.0 version
-    command: /vagrant/version_check.sh pxc80
-
   - name: stop service on CentOS 7/8
     command: systemctl stop mysql
     when: ansible_os_family == "RedHat" 
@@ -86,6 +81,15 @@
     template: src=../templates/my_rpm_80.j2 dest=/etc/my.cnf
     when: ansible_os_family == "RedHat" 
 
+  - name: copy pxc certs
+    copy: 
+      src: ../support-files/certs/
+      dest: /etc/mysql/certs/
+    when: ansible_os_family == "RedHat" 
+
+# - name: stop the play
+#   command: /vagrant/stop.sh
+
   - name: bootstrap cluster on CentOS 7/8
     command: systemctl start mysql@bootstrap.service
     when: ansible_os_family == "RedHat" 
@@ -93,9 +97,12 @@
   - name: install plugins
     command: /vagrant/plugins_test_pxc_80.sh
 
-  - name: run sysbench tpcc prepare script
-    command: /usr/share/sysbench/tpcc.lua --mysql-user=sysbench --mysql-password=test --mysql-db=sbtest --time=30 --threads=64 --report-interval=1 --tables=3 --scale=10 --db-driver=mysql --use_fk=0 --force_pk=1 --trx_level=RC prepare 
+  - name: check PXC-8.0 version
+    command: /vagrant/version_check.sh pxc80
 
-  - name: run sysbench tpcc benchmark
-    command: /usr/share/sysbench/tpcc.lua --mysql-user=sysbench --mysql-password=test --mysql-db=sbtest --time=30 --threads=64 --report-interval=1 --tables=3 --scale=10 --db-driver=mysql --use_fk=0 --force_pk=1 --trx_level=RC run
+# - name: run sysbench tpcc prepare script
+#   command: /usr/share/sysbench/tpcc.lua --mysql-user=sysbench --mysql-password=test --mysql-db=sbtest --time=30 --threads=64 --report-interval=1 --tables=3 --scale=10 --db-driver=mysql --use_fk=0 --force_pk=1 --trx_level=RC prepare 
+
+# - name: run sysbench tpcc benchmark
+#   command: /usr/share/sysbench/tpcc.lua --mysql-user=sysbench --mysql-password=test --mysql-db=sbtest --time=30 --threads=64 --report-interval=1 --tables=3 --scale=10 --db-driver=mysql --use_fk=0 --force_pk=1 --trx_level=RC run
 
