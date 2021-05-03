@@ -8,7 +8,7 @@ if [ -f /etc/redhat-release ]; then
 		cp /vagrant/templates/group_replication.j2 /etc/my.cnf.d/gr.cnf
 	else
 		echo "copy gr.cnf"
-		cp /vagrant/templates/group_replication.j2 /etc/mysql/percona-server.conf.d/gr.cnf
+		cp /vagrant/templates/group_replication.j2 /etc/mysql/conf.d/gr.cnf
 fi
 
 echo "restart service"
