@@ -11,8 +11,8 @@ rhel1_playbook = "playbooks/percona1_pxc57.yml"
 rhel_playbook = "playbooks/percona2_pxc57.yml"
 rhel_garbd_playbook = "playbooks/percona4_pxc80.yml"
 node_distro = "bento/debian-10"
-node_playbook = "playbooks/ms_node_80.yml"
-router_playbook = "playbooks/ms_router_80.yml"
+node_playbook = "playbooks/node_80.yml"
+router_playbook = "playbooks/router_80.yml"
 
 Vagrant.configure("2") do |config|
   # All Vagrant configuration is done here. The most pxb configuration
@@ -21,8 +21,8 @@ Vagrant.configure("2") do |config|
 
   config.vm.define :stretch do |stretch_config|
     stretch_config.vm.box = "bento/debian-9"
-    config.vm.provision "ansible" do |ansible|
-      ansible.playbook = playbook
+    stretch_config.vm.provision "ansible" do |ansible|
+	    ansible.playbook = "playbooks/clean.yml"
       ansible.host_key_checking = "false"
     end
     stretch_config.vm.host_name = "stretch"
@@ -70,8 +70,7 @@ Vagrant.configure("2") do |config|
   end
 
   config.vm.define :focal do |focal_config|
-    focal_config.vm.box = "ubuntu/focal64"
-#   focal_config.vm.box = "bento/ubuntu-20.04" 
+    focal_config.vm.box = "bento/ubuntu-20.04" 
     config.vm.provision "ansible" do |ansible|
       ansible.playbook = playbook
       ansible.host_key_checking = "false"
@@ -301,4 +300,5 @@ Vagrant.configure("2") do |config|
     end
     router_config.vm.network :private_network, ip: "192.168.80.74"
   end
+
 end
