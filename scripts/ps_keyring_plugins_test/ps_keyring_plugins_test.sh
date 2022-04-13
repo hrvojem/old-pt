@@ -6,7 +6,7 @@ if [ -f /etc/mysql/my.cnf ]; then
 else
   MYCNF="/etc/my.cnf"
 fi
- 
+
 LOG="/tmp/keyring_plugins_test_run.log"
 echo -n > ${LOG}
 
@@ -16,19 +16,18 @@ if [ -z "$1" ]; then
 elif [ "$1" != "ps57" -a "$1" != "ps80" ]; then
   echo "Version not recognized!"
   exit 1
-else
-  VERSION="$1"
+#else
+#  VERSION="$1"
 fi
 
-if [ "$VERSION" == "ps57" ]; then
-  opt_enc="ENCRYPTION='Y'"
-  binlog_enc="encrypt_binlog=ON"
-else
-  opt_enc=""
+#if [ "$VERSION" == "ps57" ]; then
+opt_enc="ENCRYPTION='Y'"
+#  binlog_enc="encrypt_binlog=ON"
+#else
+#  opt_enc=""
 # binlog_enc="encrypt_binlog=ON"
 # binlog_enc="binlog_encryption=ON"
-  binlog_enc=" "
-fi
+#fi
 
 echo "Adding the config vars" | tee -a ${LOG}
 service mysql stop
@@ -52,11 +51,11 @@ mysql -e "CREATE FUNCTION keyring_key_remove returns integer SONAME 'keyring_udf
 mysql -e "CREATE FUNCTION keyring_key_generate returns integer SONAME 'keyring_udf.so';"
 mysql -e "CREATE FUNCTION keyring_key_store returns integer SONAME 'keyring_udf.so';"
 
-echo " keyring_file plugin test" | tee -a ${LOG}
+echo "keyring_file plugin test" | tee -a ${LOG}
 # keyring_file plugin test
 mysql -e "CREATE DATABASE IF NOT EXISTS test;"
 mysql --database=test -e "CREATE TABLESPACE ts1 ADD DATAFILE 'ts1.ibd' ENCRYPTION='Y';"
-mysql --database=test -e "CREATE TABLE keyring_file_test (a INT PRIMARY KEY) TABLESPACE ts1 ${opt_enc};"
+mysql --database=test -e "CREATE TABLE keyring_file_test (a INT PRIMARY KEY) TABLESPACE ts1 ENCRYPTION='Y';"
 mysql --database=test -e "INSERT INTO keyring_file_test VALUES (1),(2),(3);"
 mysql --database=test -e "ALTER INSTANCE ROTATE INNODB MASTER KEY;"
 result=$(mysql --database=test -N -s -e "CHECKSUM TABLE keyring_file_test;" | awk -F' ' '{print $2}')
@@ -69,13 +68,13 @@ mysql --database=test -e "DROP TABLESPACE ts1;"
 mysql -e "DROP DATABASE test;"
 mysql -e "UNINSTALL PLUGIN keyring_file;"
 
-echo "service restart so that plugins don't mess with eachother" | tee -a ${LOG}
+echo "service restart so that plugins don't mess with each other" | tee -a ${LOG}
 # service restart so that plugins don't mess with eachother
 service mysql stop
 sleep 10
 sed -i '/early_plugin_load=/d' ${MYCNF}
 sed -i '/\[mysqld\]/a early_plugin_load=keyring_vault.so' ${MYCNF}
-sed -i '/\[mysqld\]/a keyring_vault_config="/vagrant/scripts/ps_keyring_plugins_test/keyring_vault_test.cnf"' ${MYCNF}
+sed -i '/\[mysqld\]/a keyring_vault_config="/package-testing/scripts/ps_keyring_plugins_test/keyring_vault_test.cnf"' ${MYCNF}
 service mysql start
 sleep 10
 
@@ -85,7 +84,7 @@ echo "keyring_vault plugin test" | tee -a ${LOG}
 #mysql -e "SET GLOBAL keyring_vault_config='/package-testing/scripts/ps_keyring_plugins_test/keyring_vault_test.cnf';"
 mysql -e "CREATE DATABASE IF NOT EXISTS test;"
 mysql --database=test -e "CREATE TABLESPACE ts1 ADD DATAFILE 'ts1.ibd' ENCRYPTION='Y';"
-mysql --database=test -e "CREATE TABLE keyring_vault_test (a INT PRIMARY KEY) TABLESPACE ts1 ${opt_enc};"
+mysql --database=test -e "CREATE TABLE keyring_vault_test (a INT PRIMARY KEY) TABLESPACE ts1 ENCRYPTION='Y';"
 mysql --database=test -e "INSERT INTO keyring_vault_test VALUES (1),(2),(3);"
 mysql --database=test -e "ALTER INSTANCE ROTATE INNODB MASTER KEY;"
 result=$(mysql --database=test -N -s -e "CHECKSUM TABLE keyring_vault_test;" | awk -F' ' '{print $2}')

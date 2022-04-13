@@ -2,9 +2,9 @@
 # vi: set ft=ruby :
 
 playbook = "playbooks/clean.yml"
-deb_distro = "bento/ubuntu-18.04"
-deb1_playbook = "playbooks/pxc57.yml"
-deb_common_playbook = "playbooks/pxc57_common.yml"
+deb_distro = "bento/debian-10"
+deb1_playbook = "playbooks/pxc80.yml"
+deb_common_playbook = "playbooks/pxc80_common.yml"
 deb_garbd_playbook = "playbooks/pxc80_garbd.yml"
 rhel_distro = "bento/centos-7"
 rhel1_playbook = "playbooks/percona1_pxc57.yml"
@@ -22,12 +22,13 @@ Vagrant.configure("2") do |config|
   config.vm.define :stretch do |stretch_config|
     stretch_config.vm.box = "bento/debian-9"
     stretch_config.vm.provision "ansible" do |ansible|
-	    ansible.playbook = "playbooks/clean.yml"
+	    ansible.playbook = playbook
       ansible.host_key_checking = "false"
     end
     stretch_config.vm.host_name = "stretch"
     stretch_config.vm.provider :virtualbox do |vb|
-      vb.customize ["modifyvm", :id, "--memory", "1024", "--ioapic", "on" ]
+      vb.customize ["modifyvm", :id, "--memory", "24384", "--ioapic", "on", "--cpus", "12" ]
+#     vb.customize ["modifyvm", :id, "--memory", "1024", "--ioapic", "on" ]
     end
   end
 
@@ -43,6 +44,18 @@ Vagrant.configure("2") do |config|
     end
   end
 
+  config.vm.define :bullseye do |bullseye_config|
+    bullseye_config.vm.box = "bento/debian-11"
+    config.vm.provision "ansible" do |ansible|
+      ansible.playbook = playbook
+      ansible.host_key_checking = "false"
+    end
+    bullseye_config.vm.host_name = "bullseye"
+    bullseye_config.vm.provider :virtualbox do |vb|
+      vb.customize ["modifyvm", :id, "--memory", "4096", "--ioapic", "on" ]
+    end
+  end
+
   config.vm.define :xenial do |xenial_config|
     xenial_config.vm.box = "bento/ubuntu-16.04"
     config.vm.provision "ansible" do |ansible|
@@ -50,7 +63,7 @@ Vagrant.configure("2") do |config|
       ansible.host_key_checking = "false"
     end
     xenial_config.vm.provider :virtualbox do |vb|
-      vb.customize ["modifyvm", :id, "--memory", "2048", "--ioapic", "on" ]
+      vb.customize ["modifyvm", :id, "--memory", "102400", "--ioapic", "on", "--cpus", "11" ]
     end
     xenial_config.vm.host_name = "xenial"
     xenial_config.vm.network :private_network, ip: "192.168.70.31"
@@ -129,6 +142,20 @@ Vagrant.configure("2") do |config|
     end
     centos8_config.vm.host_name = "centos8"
   end
+
+  config.vm.define :rocky do |rocky_config|
+    rocky_config.vm.box = "bento/rockylinux-8"
+    config.vm.provision "ansible" do |ansible|
+      ansible.playbook = playbook
+      ansible.host_key_checking = "false"
+    end
+    rocky_config.vm.provider :virtualbox do |vb|
+      vb.customize ["modifyvm", :id, "--memory", "4048", "--ioapic", "on", "--cpus", "2" ]
+#     vb.customize ["modifyvm", :id, "--memory", "24384", "--ioapic", "on", "--cpus", "12" ]
+    end
+    rocky_config.vm.host_name = "rocky"
+  end
+
 
   config.vm.define :amazon2 do |amazon2_config|
     amazon2_config.vm.box = "bento/amazonlinux-2"
